@@ -39,7 +39,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
     private void initData() {
         initToken();
         boolean isFirst = (boolean) SharedPreferencesUtils.getParam(mContext,"isFirst",true);
-        if (false){
+        if (isFirst){
             mIntent.setClass(mContext, GuideActivity.class);
             startActivity(mIntent);
             finish();
@@ -50,12 +50,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
                     .subscribe(new Consumer<Long>() {
                         @Override
                         public void accept(Long aLong) throws Exception {
-
-                            if (TextUtils.isEmpty(token)) {
-                                mIntent.setClass(mContext, LoginActivity.class);
-                            } else {
-                                mIntent.setClass(mContext, MainActivity.class);
-                            }
+                            mIntent.setClass(mContext, MainActivity.class);
                             startActivity(mIntent);
                             finish();
                         }

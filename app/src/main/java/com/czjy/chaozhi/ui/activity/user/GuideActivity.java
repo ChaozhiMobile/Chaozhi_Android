@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.NoActionBarActivity;
+import com.czjy.chaozhi.ui.activity.MainActivity;
 import com.czjy.chaozhi.ui.adapter.GuideViewPagerAdapter;
+import com.czjy.chaozhi.ui.fragment.home.HomeFragment;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.glide.CommonGlideImageLoader;
 
@@ -33,7 +35,7 @@ public class GuideActivity extends NoActionBarActivity implements ViewPager.OnPa
     @BindView(R.id.guide_start)
     TextView ivGuideStart;
     //引导页面图片资源
-
+    private  int[] pics = {R.drawable.img_welcome_1, R.drawable.img_welcome_2, R.drawable.img_welcome_3, R.drawable.img_welcome_4};
     private GuideViewPagerAdapter mAdapter;
     private List<View> mViews;
 
@@ -47,7 +49,7 @@ public class GuideActivity extends NoActionBarActivity implements ViewPager.OnPa
     @OnClick(R.id.guide_start)
     public void onViewClicked() {
         SharedPreferencesUtils.setParam(mContext, "isFirst", false);
-        Intent intent = new Intent(mContext, LoginActivity.class);
+        Intent intent = new Intent(mContext, MainActivity.class);
         startActivity(intent);
         finish();
 
@@ -89,9 +91,10 @@ public class GuideActivity extends NoActionBarActivity implements ViewPager.OnPa
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(mParams);
             iv.setScaleType(ImageView.ScaleType.FIT_XY);
+            iv.setBackgroundResource(pics[i]);
             mViews.add(iv);
         }
-        mAdapter = new GuideViewPagerAdapter(mViews,mContext);
+        mAdapter = new GuideViewPagerAdapter(mViews);
         vpGuide.setAdapter(mAdapter);
         vpGuide.addOnPageChangeListener(this);
     }

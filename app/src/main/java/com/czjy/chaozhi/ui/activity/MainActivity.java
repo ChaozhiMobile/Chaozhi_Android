@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.MainPresenter;
 import com.czjy.chaozhi.presenter.main.contract.MainContract;
 import com.czjy.chaozhi.ui.activity.setting.SelectSubjectActivity;
+import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.ui.fragment.home.HomeFragment;
 import com.czjy.chaozhi.ui.fragment.home.LearnFragment;
 import com.czjy.chaozhi.ui.fragment.home.LimitlessFragment;
@@ -103,18 +105,33 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         switchFragment(0);
                         break;
                     case R.id.navigation_learn://学习
-                        switchFragment(1);
+                        if (TextUtils.isEmpty(App.getInstance().getToken())) {
+                            gotoLogin();
+                        } else {
+                            switchFragment(1);
+                        }
                         break;
                     case R.id.navigation_wx://无限
                         switchFragment(2);
                         break;
                     case R.id.navigation_user://个人中心
-                        switchFragment(3);
+                        if (TextUtils.isEmpty(App.getInstance().getToken())) {
+                            gotoLogin();
+                        } else {
+                            switchFragment(3);
+                        }
                         break;
                 }
                 return true;
             }
         });
+    }
+
+
+    private void gotoLogin() {
+        Intent intent = new Intent();
+        intent.setClass(mContext, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void initFragment() {

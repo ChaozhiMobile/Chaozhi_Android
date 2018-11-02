@@ -18,11 +18,9 @@ import java.util.List;
  */
 public class GuideViewPagerAdapter extends PagerAdapter {
     private List<View> mViews;
-    private Context mContext;
-    private  int[] pics = {R.drawable.img_welcome_1, R.drawable.img_welcome_2, R.drawable.img_welcome_3, R.drawable.img_welcome_4};
-    public GuideViewPagerAdapter(List<View> mViews,Context context) {
+
+    public GuideViewPagerAdapter(List<View> mViews) {
         this.mViews = mViews;
-        this.mContext = context;
     }
 
     @Override
@@ -37,14 +35,12 @@ public class GuideViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-
-        container.removeView(mViews.get(position));
+        container.removeView((View)object);
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         container.addView(mViews.get(position));
-        CommonGlideImageLoader.getInstance().displayLocalImage(mContext, mContext.getResources().getDrawable(pics[position]), (ImageView) mViews.get(position));
         return mViews.get(position);
     }
 }
