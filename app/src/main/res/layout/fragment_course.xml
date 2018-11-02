@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/course_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/img_feature_product"
+        />
+
+
+    <TextView
+        android:id="@+id/course_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ACI国际心理咨询师"
+        android:textColor="@color/_4A4A4A"
+        android:textSize="17sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toRightOf="@id/course_img"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/course_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="基础班"
+        android:textColor="@color/_8C9AA8"
+        android:textSize="14sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintLeft_toRightOf="@id/course_img"
+        app:layout_constraintTop_toBottomOf="@id/course_title"
+        />
+
+    <TextView
+        android:id="@+id/course_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1293分钟"
+        android:textColor="@color/_C31A1F"
+        android:textSize="16sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toRightOf="@id/course_img"
+        app:layout_constraintTop_toBottomOf="@id/course_type"
+        />
+
+    <TextView
+        android:id="@+id/course_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上课总时长"
+        android:textColor="@color/_8C9AA8"
+        android:textSize="12sp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toRightOf="@id/course_img"
+        app:layout_constraintTop_toBottomOf="@id/course_time"
+        />
+
+    <TextView
+        android:id="@+id/course_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1293道"
+        android:textColor="@color/_C31A1F"
+        android:textSize="16sp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/course_time"
+        app:layout_constraintLeft_toRightOf="@id/course_time"
+        />
+
+    <TextView
+        android:id="@+id/course_question_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="完成总题数"
+        android:textColor="@color/_8C9AA8"
+        android:textSize="12sp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/course_time_title"
+        app:layout_constraintLeft_toRightOf="@id/course_time_title"
+        />
+
+
+</android.support.constraint.ConstraintLayout>

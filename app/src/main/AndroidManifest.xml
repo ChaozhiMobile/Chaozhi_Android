@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.czjy.chaozhi">
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+
+    <application
+        android:name="com.czjy.chaozhi.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.czjy.chaozhi.ui.activity.user.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.user.ResetPwdActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.user.RegisterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.user.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.web.CouponActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.web.MessageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.web.OrdersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.setting.SelectSubjectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.user.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.czjy.chaozhi.ui.activity.web.WebDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.czjy.chaozhi.ui.activity.web.SimpleWebActivity"
+            android:screenOrientation="portrait"
+            />
+
+    </application>
+
+</manifest>

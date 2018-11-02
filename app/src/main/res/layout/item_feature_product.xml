@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="126dp"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/item_product_img"
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:scaleType="fitXY"
+        />
+
+
+    <TextView
+        android:id="@+id/item_product_text"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:text="ACI国际心理咨询师"
+        android:textColor="@color/_000000"
+        android:textSize="10sp"
+        android:paddingStart="8dp"
+        android:gravity="center_vertical"
+        android:background="@color/_F5F5F5"
+        />
+
+</LinearLayout>
