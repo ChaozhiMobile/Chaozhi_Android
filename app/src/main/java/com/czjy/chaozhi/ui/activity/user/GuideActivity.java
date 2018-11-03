@@ -34,8 +34,6 @@ public class GuideActivity extends NoActionBarActivity implements ViewPager.OnPa
     ViewPager vpGuide;
     @BindView(R.id.guide_start)
     TextView ivGuideStart;
-    //引导页面图片资源
-    private  int[] pics = {R.drawable.img_welcome_1, R.drawable.img_welcome_2, R.drawable.img_welcome_3, R.drawable.img_welcome_4};
     private GuideViewPagerAdapter mAdapter;
     private List<View> mViews;
 
@@ -85,13 +83,9 @@ public class GuideActivity extends NoActionBarActivity implements ViewPager.OnPa
 
     private void initView() {
         mViews = new ArrayList<>();
-        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         //初始化引导图片列表
         for (int i = 0; i < 4; i++) {
             ImageView iv = new ImageView(this);
-            iv.setLayoutParams(mParams);
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            iv.setBackgroundResource(pics[i]);
             mViews.add(iv);
         }
         mAdapter = new GuideViewPagerAdapter(mViews);
