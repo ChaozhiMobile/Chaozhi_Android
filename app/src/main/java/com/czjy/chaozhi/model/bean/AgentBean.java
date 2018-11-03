@@ -7,14 +7,14 @@ public class AgentBean {
 
 
     private String token;
-    private boolean isWifi;
+    private String wifi;
 
-    public boolean isWifi() {
-        return isWifi;
+    public String getWifi() {
+        return wifi;
     }
 
-    public void setWifi(boolean wifi) {
-        isWifi = wifi;
+    public void setWifi(String wifi) {
+        this.wifi = wifi;
     }
 
     public String getToken() {

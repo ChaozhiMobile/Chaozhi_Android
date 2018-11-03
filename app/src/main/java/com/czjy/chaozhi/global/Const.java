@@ -31,7 +31,7 @@ public class Const {
     //学习录播
     public static final String ROUTER_VIDEO = "#/hybrid/study/video/";
     //无限
-    public static final String ROUTER_INFINITE = "#/hybrid/Infinite/";
+    public static final String ROUTER_INFINITE = "#/hybrid/Infinite";
     //首页-每日新知
     public static final String ROUTER_NEWS = "#/hybrid/infinite/news/";
     //首页-课程

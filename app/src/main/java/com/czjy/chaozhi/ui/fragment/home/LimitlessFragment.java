@@ -71,7 +71,7 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
     private void initData() {
         AgentBean agentBean = new AgentBean();
         agentBean.setToken(App.getInstance().getToken());
-        agentBean.setWifi((boolean) SharedPreferencesUtils.getParam(mContext, Const.KEY_WIFI, false));
+        agentBean.setWifi((String) SharedPreferencesUtils.getParam(mContext, Const.KEY_WIFI, "0"));
         agentToken = new Gson().toJson(agentBean);
     }
 

@@ -24,6 +24,7 @@ import com.czjy.chaozhi.presenter.web.contract.WebDetailContract;
 import com.czjy.chaozhi.ui.activity.MainActivity;
 import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
+import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -65,8 +66,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     private void initData() {
         AgentBean agentBean = new AgentBean();
+        agentBean.setWifi((String) SharedPreferencesUtils.getParam(mContext, Const.KEY_WIFI, "0"));
         agentBean.setToken(App.getInstance().getToken());
-        agentBean.setWifi((boolean) SharedPreferencesUtils.getParam(mContext, Const.KEY_WIFI, false));
         agentToken = new Gson().toJson(agentBean);
     }
 
@@ -113,6 +114,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         settings.setUserAgentString(userAgent + "&&" + agentToken);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.clearCache(true);
+
+        LogUtil.i("UserAgent："+settings.getUserAgentString());
     }
 
 

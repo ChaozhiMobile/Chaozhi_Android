@@ -48,7 +48,11 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
         mWifi.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                SharedPreferencesUtils.setParam(mContext, Const.KEY_WIFI, isChecked);
+                if (isChecked==true) {
+                    SharedPreferencesUtils.setParam(mContext, Const.KEY_WIFI, "1");
+                } else {
+                    SharedPreferencesUtils.setParam(mContext, Const.KEY_WIFI, "0");
+                }
             }
         });
     }
