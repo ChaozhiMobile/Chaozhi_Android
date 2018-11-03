@@ -88,6 +88,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void setActionBar() {
         mTitle.setText("");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mIntent.setClass(mContext, MainActivity.class);
+                startActivity(mIntent);
+                finish();
+            }
+        });
     }
 
 
@@ -97,6 +105,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         SharedPreferencesUtils.setParam(mContext, Const.KEY_PHONE, mPhone.getText().toString());
         App.getInstance().setToken(response.getToken());
         App.getInstance().setPhone(mPhone.getText().toString());
+        mIntent.setClass(mContext, MainActivity.class);
+        startActivity(mIntent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         mIntent.setClass(mContext, MainActivity.class);
         startActivity(mIntent);
         finish();

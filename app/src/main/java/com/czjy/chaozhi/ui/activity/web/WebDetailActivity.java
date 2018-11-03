@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.view.View;
 import android.webkit.HttpAuthHandler;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -16,8 +18,11 @@ import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.AgentBean;
+import com.czjy.chaozhi.model.bean.WebBean;
 import com.czjy.chaozhi.presenter.web.WebDetailPresenter;
 import com.czjy.chaozhi.presenter.web.contract.WebDetailContract;
+import com.czjy.chaozhi.ui.activity.MainActivity;
+import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
@@ -34,7 +39,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     private String agentToken;
     private String url;
-
+    private Intent mIntent = new Intent();
 
     public static void action(Context context, String url) {
         Intent intent = new Intent(context, WebDetailActivity.class);
@@ -53,7 +58,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     private void initIntent() {
         Intent intent = getIntent();
-        if (intent!=null){
+        if (intent != null) {
             url = intent.getStringExtra("url");
         }
     }
@@ -67,6 +72,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     private void initWebView() {
         initSetting();
+        mWebView.addJavascriptInterface(new JSBridge(), "webkit");
         mWebView.loadUrl(Const.H5_URL + url);
 
     }
@@ -83,7 +89,16 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     @Override
     public void setActionBar() {
-
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();
+                } else {
+                    finish();
+                }
+            }
+        });
     }
 
 
@@ -138,5 +153,35 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         } else {
             super.onBackPressed();
         }
+    }
+
+    private class JSBridge {
+
+        @JavascriptInterface
+        public void open(String data) {
+            WebBean webBean = new Gson().fromJson(data, WebBean.class);
+            switch (webBean.getType()) {
+                case "web":
+                    mWebView.loadUrl(webBean.getUrl());
+                    break;
+                case "app":
+                    switch (webBean.getTo()) {
+                        case "home":
+                            mIntent.setClass(mContext, MainActivity.class);
+                            break;
+                        case "login":
+                            mIntent.setClass(mContext, LoginActivity.class);
+                            break;
+                    }
+                    startActivity(mIntent);
+                    break;
+            }
+        }
+
+        @JavascriptInterface
+        public void close(String data) {
+            finish();
+        }
+
     }
 }

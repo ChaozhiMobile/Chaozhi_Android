@@ -11,9 +11,6 @@ import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.ui.activity.user.RegisterActivity;
 import com.czjy.chaozhi.ui.activity.user.ResetPwdActivity;
 import com.czjy.chaozhi.ui.activity.user.WelcomeActivity;
-import com.czjy.chaozhi.ui.activity.web.CouponActivity;
-import com.czjy.chaozhi.ui.activity.web.MessageActivity;
-import com.czjy.chaozhi.ui.activity.web.OrdersActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 
 import dagger.Component;
@@ -37,12 +34,6 @@ public interface ActivityComponent {
     void inject(ResetPwdActivity resetPwdActivity);
 
     void inject(MainActivity mainActivity);
-
-    void inject(CouponActivity couponActivity);
-
-    void inject(MessageActivity messageActivity);
-
-    void inject(OrdersActivity ordersActivity);
 
     void inject(SelectSubjectActivity selectSubjectActivity);
 

@@ -18,9 +18,6 @@ import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.MinePresenter;
 import com.czjy.chaozhi.presenter.main.contract.MineContract;
 import com.czjy.chaozhi.ui.activity.setting.SettingActivity;
-import com.czjy.chaozhi.ui.activity.web.CouponActivity;
-import com.czjy.chaozhi.ui.activity.web.MessageActivity;
-import com.czjy.chaozhi.ui.activity.web.OrdersActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.ui.adapter.MineAdapter;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
@@ -125,16 +122,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         switch (position) {
             case 0://课程订单
-                mIntent.setClass(mContext,OrdersActivity.class);
-                startActivity(mIntent);
+                WebDetailActivity.action(mContext,Const.ROUTER_ORDERS);
                 break;
             case 1://我的优惠券
-                mIntent.setClass(mContext,CouponActivity.class);
-                startActivity(mIntent);
+                WebDetailActivity.action(mContext,Const.ROUTER_COUPON);
                 break;
             case 2://我的消息
-                mIntent.setClass(mContext,MessageActivity.class);
-                startActivity(mIntent);
+                WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE);
                 break;
             case 3://问题反馈
                 WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK);

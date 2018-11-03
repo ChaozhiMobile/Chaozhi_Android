@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.global.Const;
@@ -82,8 +83,11 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
                 startActivity(mIntent);
                 break;
             case R.id.setting_logout:
+                App.getInstance().setToken("");
+                SharedPreferencesUtils.setParam(mContext,Const.KEY_TOKEN,"");
                 mIntent.setClass(mContext,LoginActivity.class);
                 startActivity(mIntent);
+                finish();
                 break;
         }
     }

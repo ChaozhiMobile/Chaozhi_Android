@@ -1,9 +1,11 @@
 package com.czjy.chaozhi.ui.fragment.home;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.webkit.HttpAuthHandler;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,9 +16,13 @@ import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseFragment;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.AgentBean;
+import com.czjy.chaozhi.model.bean.WebBean;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.LimitlessPresenter;
 import com.czjy.chaozhi.presenter.main.contract.LimitlessContract;
+import com.czjy.chaozhi.ui.activity.MainActivity;
+import com.czjy.chaozhi.ui.activity.user.LoginActivity;
+import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
@@ -33,7 +39,7 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
     WebView mWebView;
 
     private String agentToken;
-
+    private Intent mIntent = new Intent();
 
     public static LimitlessFragment newInstance() {
         LimitlessFragment limitlessFragment = new LimitlessFragment();
@@ -71,6 +77,7 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
 
     private void initWebView() {
         initSetting();
+        mWebView.addJavascriptInterface(new JSBridge(), "webkit");
         mWebView.loadUrl(Const.H5_URL + Const.ROUTER_INFINITE);
     }
 
@@ -123,6 +130,37 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
         if (index == 2) {
             mWebView.loadUrl(Const.H5_URL + Const.ROUTER_INFINITE);
         }
+    }
+
+
+    private class JSBridge {
+
+        @JavascriptInterface
+        public void open(String data) {
+            WebBean webBean = new Gson().fromJson(data, WebBean.class);
+            switch (webBean.getType()) {
+                case "web":
+                    mWebView.loadUrl(webBean.getUrl());
+                    break;
+                case "app":
+                    switch (webBean.getTo()) {
+                        case "home":
+                            mIntent.setClass(mContext, MainActivity.class);
+                            break;
+                        case "login":
+                            mIntent.setClass(mContext, LoginActivity.class);
+                            break;
+                    }
+                    startActivity(mIntent);
+                    break;
+            }
+        }
+
+        @JavascriptInterface
+        public void close(String data) {
+
+        }
+
     }
 
 
