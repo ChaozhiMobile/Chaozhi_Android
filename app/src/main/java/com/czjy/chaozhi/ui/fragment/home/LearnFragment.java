@@ -202,6 +202,11 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
             noBookLayout.setVisibility(View.GONE);
             bookLayout.setVisibility(View.VISIBLE);
             this.mPurchProducts = purchProducts;
+
+            PurchProduct purchProduct0 = mPurchProducts.get(0);
+            if (purchProduct0 != null) {
+                productId = purchProduct0.getProduct_id();
+            }
             mFragments.clear();
             mRadioGroup.removeAllViews();
             RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(CommonUtil.dp2px(getActivity(), 8), CommonUtil.dp2px(getActivity(), 8));
