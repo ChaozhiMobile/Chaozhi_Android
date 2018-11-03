@@ -29,7 +29,7 @@ public class LearnPresenter extends RxPresenter<LearnContract.View> implements L
 
     @Override
     public void getPurchProducts() {
-        Disposable disposable = mApiFactory.getHomeApi().getPurchProducts(1)
+        Disposable disposable = mApiFactory.getHomeApi().getPurchProducts(1,1)
                 .compose(RxSchedulers.io_main())
                 .compose(RxResult.handleResult())
                 .subscribe(new Consumer<List<PurchProduct>>() {

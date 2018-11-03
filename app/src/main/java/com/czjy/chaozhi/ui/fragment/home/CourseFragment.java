@@ -70,7 +70,7 @@ public class CourseFragment extends Fragment {
             CommonGlideImageLoader.getInstance().displayNetImageWithCircle(getActivity(), "http:" + mPurchProduct.getProduct_img(), mImg,getActivity().getResources().getDrawable(R.drawable.img_feature_product));
             mTitle.setText(mPurchProduct.getProduct_name());
             mType.setText(mPurchProduct.getProduct_sub_name());
-            mTime.setText(String.format("%d分钟", mPurchProduct.getUser_time()));
+            mTime.setText(String.format("%d节", mPurchProduct.getUser_time()));
             mQuestion.setText(String.format("%d道", mPurchProduct.getUser_question()));
         }
     }

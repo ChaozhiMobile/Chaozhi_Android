@@ -41,7 +41,8 @@ public interface HomeApi {
      */
     @FormUrlEncoded
     @POST("api/course/list")
-    Observable<HttpResponse<List<PurchProduct>>> getPurchProducts(@Field("is_newest_info") int newInfo);
+    Observable<HttpResponse<List<PurchProduct>>> getPurchProducts(@Field("is_newest_info") int newInfo,
+                                                                  @Field("is_progress") int progress);
 
 
     @FormUrlEncoded
