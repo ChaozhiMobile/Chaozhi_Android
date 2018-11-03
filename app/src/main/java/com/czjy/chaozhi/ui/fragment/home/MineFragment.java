@@ -94,7 +94,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initItem() {
         mItems = new ArrayList<>();
         mItems.add(new MineItem(R.mipmap.ic_course, "课程订单", false));
-        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的优惠券", false));
+//        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的优惠券", false));
         mItems.add(new MineItem(R.mipmap.ic_message, "我的消息", true));
         mItems.add(new MineItem(R.mipmap.ic_feedback, "问题反馈", false));
         mItems.add(new MineItem(R.mipmap.ic_setting, "系统设置", false));
@@ -124,16 +124,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             case 0://课程订单
                 WebDetailActivity.action(mContext,Const.ROUTER_ORDERS);
                 break;
-            case 1://我的优惠券
-                WebDetailActivity.action(mContext,Const.ROUTER_COUPON);
-                break;
-            case 2://我的消息
+//            case 1://我的优惠券
+//                WebDetailActivity.action(mContext,Const.ROUTER_COUPON);
+//                break;
+            case 1://我的消息
                 WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE);
                 break;
-            case 3://问题反馈
+            case 2://问题反馈
                 WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK);
                 break;
-            case 4://系统设置
+            case 3://系统设置
                 mIntent.setClass(mContext,SettingActivity.class);
                 startActivity(mIntent);
                 break;
