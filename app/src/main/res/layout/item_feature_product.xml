@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="126dp"
+    android:minHeight="120dp"
     android:orientation="vertical"
     >
 
@@ -18,14 +18,14 @@
     <TextView
         android:id="@+id/item_product_text"
         android:layout_width="match_parent"
-        android:layout_height="27dp"
-        android:text="ACI国际心理咨询师"
-        android:textColor="@color/_000000"
-        android:textSize="11sp"
-        android:fontFamily="sans-serif-medium"
-        android:paddingStart="8dp"
-        android:gravity="center_vertical"
+        android:layout_height="30dp"
         android:background="@color/_F5F5F5"
-        />
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:text="ACI国际心理咨询师"
+        android:textAlignment="center"
+        android:textColor="@color/_000000"
+        android:textSize="11sp" />
 
 </LinearLayout>
