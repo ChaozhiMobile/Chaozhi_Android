@@ -27,6 +27,7 @@ import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.ui.activity.web.SimpleWebActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
+import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -143,6 +144,9 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
 
         @JavascriptInterface
         public void open(String data) {
+
+            LogUtil.i("H5调原生返回值："+data);
+
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
