@@ -99,6 +99,8 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
         settings.setUserAgentString(userAgent + "&&" + agentToken);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.clearCache(true);
+
+        LogUtil.i("UserAgent："+settings.getUserAgentString());
     }
 
 

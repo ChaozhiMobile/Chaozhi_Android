@@ -17,6 +17,7 @@ import com.czjy.chaozhi.base.SimpleActivity;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.AgentBean;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
+import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -91,6 +92,8 @@ public class SimpleWebActivity extends SimpleActivity {
         settings.setUserAgentString(userAgent + "&&" + agentToken);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.clearCache(true);
+
+        LogUtil.i("UserAgent："+settings.getUserAgentString());
     }
 
 

@@ -1,6 +1,7 @@
 package com.czjy.chaozhi.model.response;
 
 
+import com.czjy.chaozhi.global.Const;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class SubjectsResponse {
         if (img.contains("http")) {
             return img;
         } else {
-            return "http:" + img;
+            return Const.HTTP + img;
         }
     }
 
