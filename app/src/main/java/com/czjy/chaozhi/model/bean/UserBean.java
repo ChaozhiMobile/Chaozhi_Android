@@ -1,5 +1,7 @@
 package com.czjy.chaozhi.model.bean;
 
+import com.czjy.chaozhi.global.Const;
+
 /**
  * Created by huyg on 2018/9/28.
  */
@@ -173,16 +175,14 @@ public class UserBean {
     }
 
     public String getHead_img_url() {
-        return head_img_url;
+        if (head_img_url.contains("http")) {
+            return head_img_url;
+        } else {
+            return Const.HTTP + head_img_url;
+        }
     }
 
     public void setHead_img_url(String head_img_url) {
-        if (head_img_url.contains("http")) {
-            this.head_img_url = head_img_url;
-        } else {
-            this.head_img_url = "http:" + head_img_url;
-
-        }
-
+        this.head_img_url = head_img_url;
     }
 }

@@ -1,5 +1,7 @@
 package com.czjy.chaozhi.model.bean;
 
+import com.czjy.chaozhi.global.Const;
+
 /**
  * Created by huyg on 2018/10/8.
  */
@@ -34,16 +36,15 @@ public class TeacherBean {
     }
 
     public String getPhoto() {
-        return photo;
+        if (photo.contains("http")) {
+            return photo;
+        } else {
+            return Const.HTTP + photo;
+        }
     }
 
     public void setPhoto(String photo) {
-        if (photo.contains("http")){
-            this.photo = photo;
-        }else{
-            this.photo = "http:"+photo;
-        }
-
+        this.photo = photo;
     }
 
     public String getInfo() {

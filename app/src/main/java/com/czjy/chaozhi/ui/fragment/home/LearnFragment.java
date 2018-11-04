@@ -244,7 +244,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
         List<PurchProduct.NewestInfoBean.LearnCourseListBean> listBeans = adapter.getData();
         PurchProduct.NewestInfoBean.LearnCourseListBean learnCourseListBean = listBeans.get(position);
         if (learnCourseListBean != null) {
-            SimpleWebActivity.action(mContext, Const.HTTP + learnCourseListBean.getView_url());
+            SimpleWebActivity.action(mContext, learnCourseListBean.getView_url());
         }
     }
 

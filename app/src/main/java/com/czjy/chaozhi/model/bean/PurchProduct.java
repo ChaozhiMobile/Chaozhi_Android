@@ -3,6 +3,8 @@ package com.czjy.chaozhi.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.czjy.chaozhi.global.Const;
+
 import java.util.List;
 
 /**
@@ -142,7 +144,11 @@ public class PurchProduct implements Parcelable {
     }
 
     public String getProduct_img() {
-        return product_img;
+        if (product_img.contains("http")) {
+            return product_img;
+        } else {
+            return Const.HTTP + product_img;
+        }
     }
 
     public void setProduct_img(String product_img) {
@@ -357,7 +363,11 @@ public class PurchProduct implements Parcelable {
             }
 
             public String getView_url() {
-                return view_url;
+                if (view_url.contains("http")) {
+                    return view_url;
+                } else {
+                    return Const.HTTP + view_url;
+                }
             }
 
             public void setView_url(String view_url) {
