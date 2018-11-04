@@ -1,5 +1,7 @@
 package com.czjy.chaozhi.model.bean;
 
+import com.czjy.chaozhi.global.Const;
+
 /**
  * Created by huyg on 2018/10/21.
  */
@@ -46,7 +48,11 @@ public class NewBean {
     }
 
     public String getImg() {
-        return img;
+        if (img.contains("http")) {
+            return img;
+        } else {
+            return Const.HTTP + img;
+        }
     }
 
     public void setImg(String img) {

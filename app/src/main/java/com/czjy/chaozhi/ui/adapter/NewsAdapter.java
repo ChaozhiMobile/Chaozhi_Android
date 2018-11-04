@@ -24,7 +24,7 @@ public class NewsAdapter extends BaseQuickAdapter<NewBean,BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, NewBean item) {
         ImageView imageView = helper.getView(R.id.item_new_img);
-        CommonGlideImageLoader.getInstance().displayNetImage(mContext,"http:"+item.getImg(),imageView);
+        CommonGlideImageLoader.getInstance().displayNetImage(mContext,item.getImg(),imageView);
         helper.setText(R.id.item_new_title,item.getTitle());
         helper.setText(R.id.item_new_content,Html.fromHtml(item.getSubtitle()));
 

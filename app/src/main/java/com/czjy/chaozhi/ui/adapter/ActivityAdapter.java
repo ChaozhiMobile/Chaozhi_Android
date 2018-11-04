@@ -24,7 +24,7 @@ public class ActivityAdapter extends BaseQuickAdapter<ActivityBean,BaseViewHolde
     @Override
     protected void convert(BaseViewHolder helper, ActivityBean item) {
         ImageView imageView = helper.getView(R.id.item_activity_img);
-        CommonGlideImageLoader.getInstance().displayNetImage(mContext, "http:"+item.getImg(),imageView);
+        CommonGlideImageLoader.getInstance().displayNetImage(mContext, item.getImg(),imageView);
         helper.setText(R.id.item_activity_title,item.getTitle());
         helper.setText(R.id.item_activity_content,item.getSubtitle());
     }

@@ -13,7 +13,7 @@ public class GlideImageLoader extends ImageLoader {
 
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        CommonGlideImageLoader.getInstance().displayNetImage(context, "http:"+path, imageView);
+        CommonGlideImageLoader.getInstance().displayNetImage(context, (String)path, imageView);
     }
 
 
