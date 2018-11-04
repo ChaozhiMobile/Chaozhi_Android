@@ -152,6 +152,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void showUserInfo(UserBean userBean) {
-        CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext,"http:"+userBean.getHead_img_url(),mAvatar,mContext.getResources().getDrawable(R.mipmap.ic_red_mine));
+        CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext,userBean.getHead_img_url(),mAvatar,mContext.getResources().getDrawable(R.mipmap.ic_red_mine));
     }
 }

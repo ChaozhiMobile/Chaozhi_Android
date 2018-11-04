@@ -38,7 +38,12 @@ public class TeacherBean {
     }
 
     public void setPhoto(String photo) {
-        this.photo = photo;
+        if (photo.contains("http")){
+            this.photo = photo;
+        }else{
+            this.photo = "http:"+photo;
+        }
+
     }
 
     public String getInfo() {

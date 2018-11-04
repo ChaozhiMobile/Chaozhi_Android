@@ -225,7 +225,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 mTeacherScroll.addView(initTeacherView(), params);
                 mTeacherName.setText(teacherBean.getName());
                 mTeacherPostion.setText(teacherBean.getInfo());
-                CommonGlideImageLoader.getInstance().displayNetImage(mContext, "http:" + teacherBean.getPhoto(), mTeacherImg);
+                CommonGlideImageLoader.getInstance().displayNetImage(mContext, teacherBean.getPhoto(), mTeacherImg);
             }
 
         } else {

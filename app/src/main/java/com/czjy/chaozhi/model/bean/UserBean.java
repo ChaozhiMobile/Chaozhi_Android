@@ -177,6 +177,12 @@ public class UserBean {
     }
 
     public void setHead_img_url(String head_img_url) {
-        this.head_img_url = head_img_url;
+        if (head_img_url.contains("http")) {
+            this.head_img_url = head_img_url;
+        } else {
+            this.head_img_url = "http:" + head_img_url;
+
+        }
+
     }
 }
