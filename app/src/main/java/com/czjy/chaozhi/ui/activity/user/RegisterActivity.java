@@ -49,7 +49,7 @@ public class RegisterActivity extends BaseActivity<RegPresenter> implements RegC
         String phone = mPhone.getText().toString().trim();
         switch (view.getId()) {
             case R.id.register_get_code:
-                if (TextUtils.isEmpty(phone)){
+                if (TextUtils.isEmpty(phone)) {
                     toast("请输入手机号");
                     return;
                 }
@@ -61,7 +61,10 @@ public class RegisterActivity extends BaseActivity<RegPresenter> implements RegC
                         .doOnNext(new Consumer<Long>() {
                             @Override
                             public void accept(Long aLong) throws Exception {
-                                mGetCode.setText(String.format("%d秒", 60 - aLong));
+                                if (!isFinishing()){
+                                    mGetCode.setText(String.format("%d秒", 60 - aLong));
+                                }
+
                             }
                         })
                         .doOnComplete(new Action() {
@@ -142,7 +145,13 @@ public class RegisterActivity extends BaseActivity<RegPresenter> implements RegC
     @Override
     protected void onStop() {
         super.onStop();
-        if (mDisposable!=null){
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDisposable != null) {
             mDisposable.dispose();
         }
     }

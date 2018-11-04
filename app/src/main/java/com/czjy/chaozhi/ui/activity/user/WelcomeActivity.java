@@ -83,9 +83,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
     @Override
     protected void onStop() {
         super.onStop();
-        if (mDisposable != null) {
-            mDisposable.dispose();
-        }
+
     }
 
     @Override
@@ -93,5 +91,11 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
         mToolbar.setVisibility(View.GONE);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
+    }
 }
