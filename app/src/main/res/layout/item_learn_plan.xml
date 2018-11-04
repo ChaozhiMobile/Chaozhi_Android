@@ -45,7 +45,7 @@
                 android:lines="1"
                 android:text="学习时间: 08月19日 19:00"
                 android:textColor="@color/_B4B4B4"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 

@@ -1,6 +1,8 @@
 package com.czjy.chaozhi.ui.activity.setting;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +35,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     @BindView(R.id.setting_modify_pwd)
     LinearLayout mModifyPwd;
     @BindView(R.id.setting_version)
-    LinearLayout mVersion;
+    TextView mVersion;
     @BindView(R.id.setting_logout)
     TextView mLogout;
 
@@ -55,6 +57,20 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
                 }
             }
         });
+        initVersion();
+
+    }
+
+    private void initVersion() {
+        PackageManager manager = mContext.getPackageManager();
+        String name = "";
+        try {
+            PackageInfo info = manager.getPackageInfo(mContext.getPackageName(), 0);
+            name = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        mVersion.setText(String.format("V%s", name));
     }
 
     @Override

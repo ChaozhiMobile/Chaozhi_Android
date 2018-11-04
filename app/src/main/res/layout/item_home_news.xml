@@ -27,6 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="2018年ACI心理咨询师健康"
+        android:fontFamily="sans-serif-medium"
         android:textColor="@color/_1D1D26"
         android:textSize="14sp"
         android:lines="1"

@@ -23,6 +23,8 @@
         android:text="ACI国际心理咨询师"
         android:textColor="@color/_4A4A4A"
         android:textSize="17sp"
+        android:lines="1"
+        android:ellipsize="end"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toRightOf="@id/course_img"
@@ -75,7 +77,7 @@
         android:text="1293道"
         android:textColor="@color/_C31A1F"
         android:textSize="16sp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="60dp"
         app:layout_constraintBaseline_toBaselineOf="@id/course_time"
         app:layout_constraintLeft_toRightOf="@id/course_time"
         />
@@ -87,9 +89,8 @@
         android:text="完成总题数"
         android:textColor="@color/_8C9AA8"
         android:textSize="12sp"
-        android:layout_marginLeft="30dp"
         app:layout_constraintBaseline_toBaselineOf="@id/course_time_title"
-        app:layout_constraintLeft_toRightOf="@id/course_time_title"
+        app:layout_constraintLeft_toLeftOf="@id/course_question"
         />
 
 

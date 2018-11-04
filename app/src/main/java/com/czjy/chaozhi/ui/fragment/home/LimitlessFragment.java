@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.support.v7.widget.Toolbar;
 import android.webkit.HttpAuthHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.R;
@@ -22,6 +24,7 @@ import com.czjy.chaozhi.presenter.main.LimitlessPresenter;
 import com.czjy.chaozhi.presenter.main.contract.LimitlessContract;
 import com.czjy.chaozhi.ui.activity.MainActivity;
 import com.czjy.chaozhi.ui.activity.user.LoginActivity;
+import com.czjy.chaozhi.ui.activity.web.SimpleWebActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
@@ -37,6 +40,8 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
 
     @BindView(R.id.webview)
     WebView mWebView;
+    @BindView(R.id.toolbar_title)
+    TextView mTitle;
 
     private String agentToken;
     private Intent mIntent = new Intent();
@@ -64,6 +69,7 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
     }
 
     private void initView() {
+        mTitle.setText("无限");
         initWebView();
     }
 
@@ -140,7 +146,7 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
-                    mWebView.loadUrl(webBean.getUrl());
+                    SimpleWebActivity.action(mContext,webBean.getUrl());
                     break;
                 case "app":
                     switch (webBean.getTo()) {

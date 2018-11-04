@@ -166,7 +166,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
-                    mWebView.loadUrl(webBean.getUrl());
+                    SimpleWebActivity.action(mContext,webBean.getUrl());
                     break;
                 case "app":
                     switch (webBean.getTo()) {
