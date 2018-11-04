@@ -20,6 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -72,4 +77,6 @@ dependencies {
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
     implementation 'com.tencent.bugly:crashreport:2.6.6'
     implementation 'com.tencent.bugly:nativecrashreport:3.3.1'
+
+    implementation (name: 'alipaySdk', ext: 'aar')
 }

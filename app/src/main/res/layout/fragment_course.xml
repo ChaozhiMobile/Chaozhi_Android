@@ -18,17 +18,19 @@
 
     <TextView
         android:id="@+id/course_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="ACI国际心理咨询师"
+        android:text="ACI国际心理咨询师ACI国际心理咨询师"
         android:textColor="@color/_4A4A4A"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:lines="1"
         android:ellipsize="end"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toRightOf="@id/course_img"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toEndOf="@id/course_img"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
     <TextView

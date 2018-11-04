@@ -212,7 +212,7 @@
 
                 <ImageView
                     android:id="@+id/live_img"
-                    android:layout_width="162dp"
+                    android:layout_width="138dp"
                     android:layout_height="99dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
