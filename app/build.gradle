@@ -71,4 +71,5 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:2.6.6'
     implementation 'com.tencent.bugly:nativecrashreport:3.3.1'
     implementation files('libs/alipaySdk-20180601.jar')
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 }

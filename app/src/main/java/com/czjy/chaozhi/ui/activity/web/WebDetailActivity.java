@@ -4,16 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -60,7 +64,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private Runnable payRunnable;
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_AUTH_FLAG = 2;
-
+    private static final int TAKE_PHOTO = 1111;
+    private ValueCallback<Uri[]> mFilePathCallback;
     public static void action(Context context, String url) {
         Intent intent = new Intent(context, WebDetailActivity.class);
         intent.putExtra("url", url);
@@ -197,10 +202,16 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         settings.setUserAgentString(userAgent + "&&" + agentToken);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.clearCache(true);
-
+        mWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                mFilePathCallback = filePathCallback;
+                getPhoto();
+                return true;
+            }
+        });
         LogUtil.i("UserAgent：" + settings.getUserAgentString());
     }
-
 
     private class MyWebViewClient extends WebViewClient {
         @Override
@@ -318,4 +329,42 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         startActivity(intent);
     }
 
+    private void getPhoto() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent,TAKE_PHOTO);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==TAKE_PHOTO){
+            if (data!=null){
+                uploadImgFromSysPhotos(resultCode,data);
+            }
+        }
+    }
+
+    private void uploadImgFromSysPhotos(int resultCode, Intent intent) {
+
+        if (mFilePathCallback != null) {//5.0+
+
+            Uri[] uris = new Uri[1];
+
+            uris[0] = intent == null || resultCode != RESULT_OK ? null
+
+                    : intent.getData();
+
+            if (uris[0]!=null){
+
+                mFilePathCallback.onReceiveValue(uris);
+
+            }
+
+            mFilePathCallback = null;
+
+        }
+
+    }
 }

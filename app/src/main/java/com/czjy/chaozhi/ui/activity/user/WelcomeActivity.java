@@ -1,7 +1,12 @@
 package com.czjy.chaozhi.ui.activity.user;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.czjy.chaozhi.App;
@@ -12,12 +17,15 @@ import com.czjy.chaozhi.presenter.user.WelcomePresenter;
 import com.czjy.chaozhi.presenter.user.contract.WelcomeContract;
 import com.czjy.chaozhi.ui.activity.MainActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -29,11 +37,13 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
     private Disposable mDisposable;
     private String token;
     private Intent mIntent = new Intent();
+    private RxPermissions mRxPermissions;
+    private boolean isGranted = true;
 
     @Override
     protected void init() {
         initView();
-        initData();
+        requestPermissions();
     }
 
     private void initData() {
@@ -97,5 +107,20 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
         if (mDisposable != null) {
             mDisposable.dispose();
         }
+    }
+
+    private void requestPermissions() {
+        mRxPermissions = new RxPermissions(mContext);
+        mRxPermissions
+                .request(Manifest.permission.CAMERA
+                        , Manifest.permission.READ_PHONE_STATE
+                        , Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+                    if (granted) {
+                        initData();
+                    } else {
+                        finish();
+                    }
+                });
     }
 }

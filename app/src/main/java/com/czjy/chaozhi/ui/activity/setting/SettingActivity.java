@@ -16,6 +16,7 @@ import com.czjy.chaozhi.presenter.setting.contract.SettingContract;
 import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.ui.activity.user.ResetPwdActivity;
 import com.czjy.chaozhi.ui.activity.web.SimpleWebActivity;
+import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.suke.widget.SwitchButton;
 
@@ -93,10 +94,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_about:
-                mIntent.setClass(mContext,SimpleWebActivity.class);
-                mIntent.putExtra(Const.KEY_URL,"");
-                mIntent.putExtra(Const.KEY_WEB_TITLE,"关于");
-                startActivity(mIntent);
+                WebDetailActivity.action(mContext,Const.ROUTER_ABOUT);
                 break;
             case R.id.setting_modify_pwd:
                 mIntent.setClass(mContext,ResetPwdActivity.class);
