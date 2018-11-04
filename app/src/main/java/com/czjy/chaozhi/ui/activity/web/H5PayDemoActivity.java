@@ -78,10 +78,6 @@ public class H5PayDemoActivity extends Activity {
 		mWebView.setVerticalScrollbarOverlay(true);
 		mWebView.setWebViewClient(new MyWebViewClient());
 		mWebView.loadUrl(url);
-
-		// 启用 WebView 调试模式。
-		// 注意：请勿在实际 App 中打开！
-		WebView.setWebContentsDebuggingEnabled(true);
 	}
 
 	@Override

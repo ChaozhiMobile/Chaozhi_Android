@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -24,6 +25,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="非WIFI情况下播放视频"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/_4A4A4A"
                 android:textSize="12sp" />
 
@@ -60,6 +62,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="关于超职教育"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/_4A4A4A"
                 android:textSize="12sp" />
 
@@ -93,6 +96,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="修改密码"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/_4A4A4A"
                 android:textSize="12sp" />
 
@@ -111,35 +115,67 @@
             android:layout_height="0.5dp"
             android:background="@color/_E0E0E1" />
 
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@id/item_layout"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/logo_black"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:id="@+id/setting_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="V1.0"
+            android:textColor="@color/_B4B4B4"
+            android:textSize="17sp"
+            android:layout_marginTop="8dp"
+            />
+
         <LinearLayout
-            android:id="@+id/setting_version_layout"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/colorWhite"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="8dp"
             >
 
-
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="当前版本"
-                android:textColor="@color/_4A4A4A"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/setting_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:text="联系我们："
                 android:textColor="@color/_B4B4B4"
-                android:textSize="12sp"
-                android:layout_marginEnd="16dp"
+                android:textSize="15sp"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="400-677-7098"
+                android:textColor="@color/_000012"
+                android:textSize="15sp"
+                />
+
+
+
+
         </LinearLayout>
+
+
 
     </LinearLayout>
 
