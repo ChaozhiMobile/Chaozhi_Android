@@ -126,7 +126,7 @@
                     android:id="@+id/subject_more_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -137,7 +137,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="查看更多"
+                        android:text="查看更多 "
                         android:textColor="@color/_4A4A4A"
                         android:textSize="12sp" />
 

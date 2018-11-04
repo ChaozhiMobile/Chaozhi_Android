@@ -238,7 +238,7 @@
                         android:id="@+id/live_teacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:text="主讲讲师：小跃老师"
                         android:textColor="@color/_C31A1F"
                         android:fontFamily="sans-serif-medium"
@@ -249,10 +249,10 @@
                         android:id="@+id/live_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:text="开始时间：08月19日 19:00"
                         android:textColor="@color/_B4B4B4"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -263,7 +263,7 @@
                             android:id="@+id/live_start"
                             android:layout_width="90dp"
                             android:layout_height="28dp"
-                            android:layout_marginTop="14dp"
+                            android:layout_marginTop="6dp"
                             android:background="@drawable/shape_learn_audition"
                             android:gravity="center"
                             android:text="即将开始"
@@ -274,7 +274,7 @@
                             android:id="@+id/live_into"
                             android:layout_width="90dp"
                             android:layout_height="28dp"
-                            android:layout_marginTop="14dp"
+                            android:layout_marginTop="6dp"
                             android:background="@drawable/shape_audition"
                             android:gravity="center"
                             android:text="进入直播"
