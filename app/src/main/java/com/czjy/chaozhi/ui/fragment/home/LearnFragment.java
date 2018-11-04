@@ -179,9 +179,9 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
                     mLiveStart.setVisibility(View.GONE);
                     mLiveInto.setVisibility(View.VISIBLE);
                 } else if (liveListBean.getStatus() == -1) {
-                    mLiveStart.setVisibility(View.VISIBLE);
-                    mLiveStart.setText("查看回放");
-                    mLiveInto.setVisibility(View.GONE);
+                    mLiveStart.setVisibility(View.GONE);
+                    mLiveInto.setVisibility(View.VISIBLE);
+                    mLiveInto.setText("查看回放");
                 }
             }
         } else {
