@@ -299,7 +299,11 @@ public class PurchProduct implements Parcelable {
             }
 
             public String getLive_url() {
-                return live_url;
+                if (live_url.contains("http")) {
+                    return live_url;
+                } else {
+                    return Const.HTTP + live_url;
+                }
             }
 
             public void setLive_url(String live_url) {

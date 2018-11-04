@@ -83,7 +83,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
                 WebDetailActivity.action(mContext, Const.ROUTER_VIDEO + productId);
                 break;
             case R.id.live_into:
-                SimpleWebActivity.action(mContext, Const.HTTP + this.mLiveBean.getLive_url());
+                SimpleWebActivity.action(mContext, this.mLiveBean.getLive_url());
                 break;
 
         }
