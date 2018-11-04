@@ -15,6 +15,7 @@ public class SubjectsResponse {
 
     /**
      * id : 38
+     * img : //test-aci-api.chaozhiedu.com/api/file/10806
      * name : 职业教育
      * rank : 3
      * pid : 0
@@ -23,6 +24,7 @@ public class SubjectsResponse {
      */
 
     private int id;
+    private String img;
     private String name;
     private int rank;
     private int pid;
@@ -45,6 +47,18 @@ public class SubjectsResponse {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImg() {
+        if (img.contains("http")) {
+            return img;
+        } else {
+            return "http:" + img;
+        }
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getName() {
