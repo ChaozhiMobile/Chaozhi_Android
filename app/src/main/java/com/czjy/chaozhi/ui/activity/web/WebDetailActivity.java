@@ -31,6 +31,7 @@ import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.AgentBean;
 import com.czjy.chaozhi.model.bean.WebBean;
 import com.czjy.chaozhi.model.bean.WebPayBean;
+import com.czjy.chaozhi.model.bean.WxPayBean;
 import com.czjy.chaozhi.presenter.web.WebDetailPresenter;
 import com.czjy.chaozhi.presenter.web.contract.WebDetailContract;
 import com.czjy.chaozhi.ui.activity.MainActivity;
@@ -42,6 +43,9 @@ import com.czjy.chaozhi.util.ToastUtil;
 import com.czjy.chaozhi.util.Utils;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.Map;
 
@@ -66,6 +70,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private static final int SDK_AUTH_FLAG = 2;
     private static final int TAKE_PHOTO = 1111;
     private ValueCallback<Uri[]> mFilePathCallback;
+    private IWXAPI api;
+
     public static void action(Context context, String url) {
         Intent intent = new Intent(context, WebDetailActivity.class);
         intent.putExtra("url", url);
@@ -96,6 +102,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                 mHandler.sendMessage(msg);
             }
         };
+        api = WXAPIFactory.createWXAPI(this, "wxa595f547a6eeeb65");
     }
 
 
@@ -161,9 +168,11 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private void initWebView() {
         initSetting();
         mWebView.addJavascriptInterface(new JSBridge(), "webkit");
-        mWebView.loadUrl(Const.H5_URL + url);
-
-        LogUtil.i("H5Url：" + Const.H5_URL + url);
+        if (url.contains("http")){
+            mWebView.loadUrl(url);
+        }else{
+            mWebView.loadUrl(Const.H5_URL + url);
+        }
     }
 
     @Override
@@ -259,7 +268,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
-                    SimpleWebActivity.action(mContext, webBean.getUrl());
+                    WebDetailActivity.action(mContext, webBean.getUrl());
                     break;
                 case "app":
                     switch (webBean.getTo()) {
@@ -299,6 +308,18 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                         }
                         break;
                     case "wechat":
+                        String payStr = webPayBean.getPayStr();
+                        WxPayBean wxPayBean = new Gson().fromJson(payStr,WxPayBean.class);
+                        PayReq req = new PayReq();
+                        req.appId = wxPayBean.getAppid();
+                        req.partnerId = wxPayBean.getPartnerid();
+                        req.prepayId = wxPayBean.getPrepayid();
+                        req.nonceStr = wxPayBean.getNoncestr();
+                        req.timeStamp = String.valueOf(wxPayBean.getTimestamp());
+                        req.packageValue = wxPayBean.getPackageX();
+                        req.sign = wxPayBean.getSign();
+                        req.extData = "";
+                        api.sendReq(req);
                         break;
                 }
             }
