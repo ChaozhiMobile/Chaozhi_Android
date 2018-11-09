@@ -21,6 +21,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.PayTask;
@@ -41,11 +42,11 @@ import com.czjy.chaozhi.util.PayResult;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.ToastUtil;
 import com.czjy.chaozhi.util.Utils;
+import com.czjy.chaozhi.wxapi.WXPayEntryActivity;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.Map;
 
@@ -71,6 +72,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private static final int TAKE_PHOTO = 1111;
     private ValueCallback<Uri[]> mFilePathCallback;
     private IWXAPI api;
+    private static final int REQ_CODE = 9999;
 
     public static void action(Context context, String url) {
         Intent intent = new Intent(context, WebDetailActivity.class);
@@ -102,7 +104,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                 mHandler.sendMessage(msg);
             }
         };
-        api = WXAPIFactory.createWXAPI(this, "wxa595f547a6eeeb65");
+        api = WXAPIFactory.createWXAPI(this, "wxb4ba3c02aa476ea1",true);
+        api.registerApp("wxb4ba3c02aa476ea1");
     }
 
 
@@ -122,7 +125,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        mWebView.loadUrl("javascript:fn_pay");
+                        mWebView.loadUrl("javascript:fn_pay()");
                     } else {
                         ToastUtil.toast(mContext, "支付失败" + payResult.getResultStatus());
                     }
@@ -302,24 +305,19 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                                 Thread payThread = new Thread(payRunnable);
                                 payThread.start();
                             }else{
-                                h5Pay();
+                                ToastUtil.toast(mContext,"未安装支付宝");
+                                //h5Pay();
                             }
 
                         }
                         break;
                     case "wechat":
+
                         String payStr = webPayBean.getPayStr();
                         WxPayBean wxPayBean = new Gson().fromJson(payStr,WxPayBean.class);
-                        PayReq req = new PayReq();
-                        req.appId = wxPayBean.getAppid();
-                        req.partnerId = wxPayBean.getPartnerid();
-                        req.prepayId = wxPayBean.getPrepayid();
-                        req.nonceStr = wxPayBean.getNoncestr();
-                        req.timeStamp = String.valueOf(wxPayBean.getTimestamp());
-                        req.packageValue = wxPayBean.getPackageX();
-                        req.sign = wxPayBean.getSign();
-                        req.extData = "";
-                        api.sendReq(req);
+                        Intent intent = new Intent(mContext,WXPayEntryActivity.class);
+                        intent.putExtra("wxpay",wxPayBean);
+                        startActivityForResult(intent,REQ_CODE);
                         break;
                 }
             }
@@ -344,7 +342,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
          * H5PayDemoActivity 中的 MyWebViewClient.shouldOverrideUrlLoading() 实现了拦截 URL 唤起支付宝，
          * 可以参考它实现自定义的 URL 拦截逻辑。
          */
-        String url = "https://m.taobao.com";
+        String url = "https://mclient.alipay.com/h5Continue.htm?h5_route_token=303ff0894cd4dccf591b089761dexxxx";
         extras.putString("url", url);
         intent.putExtras(extras);
         startActivity(intent);

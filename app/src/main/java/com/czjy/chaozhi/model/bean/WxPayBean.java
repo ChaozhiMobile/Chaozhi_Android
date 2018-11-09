@@ -1,11 +1,14 @@
 package com.czjy.chaozhi.model.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by huyg on 2018/11/8.
  */
-public class WxPayBean {
+public class WxPayBean implements Parcelable {
 
 
     /**
@@ -26,6 +29,44 @@ public class WxPayBean {
     @SerializedName("package")
     private String packageX;
     private String sign;
+
+    protected WxPayBean(Parcel in) {
+        appid = in.readString();
+        partnerid = in.readString();
+        prepayid = in.readString();
+        noncestr = in.readString();
+        timestamp = in.readInt();
+        packageX = in.readString();
+        sign = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(appid);
+        dest.writeString(partnerid);
+        dest.writeString(prepayid);
+        dest.writeString(noncestr);
+        dest.writeInt(timestamp);
+        dest.writeString(packageX);
+        dest.writeString(sign);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<WxPayBean> CREATOR = new Creator<WxPayBean>() {
+        @Override
+        public WxPayBean createFromParcel(Parcel in) {
+            return new WxPayBean(in);
+        }
+
+        @Override
+        public WxPayBean[] newArray(int size) {
+            return new WxPayBean[size];
+        }
+    };
 
     public String getAppid() {
         return appid;

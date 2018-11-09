@@ -72,7 +72,6 @@ public class SimpleWebActivity extends SimpleActivity {
     private void initWebView() {
         initSetting();
         mWebView.loadUrl(url);
-
     }
 
     @Override

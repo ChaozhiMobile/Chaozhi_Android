@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.czjy.chaozhi">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -50,18 +49,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-
-        <activity
-            android:name="com.czjy.chaozhi.ui.activity.web.CouponActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.czjy.chaozhi.ui.activity.web.MessageActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.czjy.chaozhi.ui.activity.web.OrdersActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name="com.czjy.chaozhi.ui.activity.setting.SelectSubjectActivity"
             android:screenOrientation="portrait" />
@@ -78,8 +65,12 @@
         <activity android:name="com.czjy.chaozhi.ui.activity.web.SimpleWebActivity"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".ui.activity.web.H5PayDemoActivity"
-            android:screenOrientation="portrait"/>
+
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 
