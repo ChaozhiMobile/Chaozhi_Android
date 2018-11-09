@@ -70,6 +70,15 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
             req.sign = wxPayBean.getSign();
             req.extData = "app data";
             boolean status = api.sendReq(req);
+//            PayReq request = new PayReq();
+//            request.appId = "wxa595f547a6eeeb65";
+//            request.partnerId = "1900000109";
+//            request.prepayId = "1101000000140415649af9fc314aa427";
+//            request.packageValue = "Sign=WXPay";
+//            request.nonceStr = "1101000000140429eb40476f8896f4c9";
+//            request.timeStamp = "1398746574";
+//            request.sign = "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
+//            boolean status = api.sendReq(request);
             Log.d(getClass().getSimpleName(), String.valueOf(status));
         }
     }
