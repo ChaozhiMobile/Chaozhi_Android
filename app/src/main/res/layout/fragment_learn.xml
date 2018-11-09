@@ -18,7 +18,10 @@
                 android:id="@+id/learn_title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="@drawable/shape_learn_title">
+                android:background="@drawable/shape_learn_title"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"

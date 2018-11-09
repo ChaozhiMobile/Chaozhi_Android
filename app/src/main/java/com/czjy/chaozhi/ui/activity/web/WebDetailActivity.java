@@ -122,12 +122,28 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                      */
                     String resultInfo = payResult.getResult();// 同步返回需要验证的信息
                     String resultStatus = payResult.getResultStatus();
+
+                    LogUtil.i("支付宝支付结果："+resultStatus);
+
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        mWebView.loadUrl("javascript:fn_pay()");
+                        // mWebView.loadUrl("javascript:fn_pay()");
+
+                        ToastUtil.toast(mContext, "支付成功");
+
+                        // 跳转首页-学习页面
+                        mIntent.setClass(mContext, MainActivity.class);
+                        mIntent.putExtra("flag","支付成功");
+                        startActivity(mIntent);
+
                     } else {
-                        ToastUtil.toast(mContext, "支付失败" + payResult.getResultStatus());
+                        ToastUtil.toast(mContext, "支付失败");
+
+                        // 跳转首页-学习页面
+                        mIntent.setClass(mContext, MainActivity.class);
+                        mIntent.putExtra("flag","支付成功");
+                        startActivity(mIntent);
                     }
                     break;
                 }
@@ -268,6 +284,9 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
         @JavascriptInterface
         public void open(String data) {
+
+            LogUtil.i("H5调原生返回值："+data);
+
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
@@ -294,21 +313,17 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
         @JavascriptInterface
         public void pay(String data) {
-            Log.d(getClass().getSimpleName(), data);
+
+            LogUtil.i("H5调原生返回值："+data);
+
             if (!TextUtils.isEmpty(data)) {
                 WebPayBean webPayBean = new Gson().fromJson(data, WebPayBean.class);
                 switch (webPayBean.getPayType()) {
                     case "alipay":
                         orderInfo = webPayBean.getPayStr();
                         if (!TextUtils.isEmpty(orderInfo)) {
-                            if (Utils.checkAliPayInstalled(mContext)){
-                                Thread payThread = new Thread(payRunnable);
-                                payThread.start();
-                            }else{
-                                ToastUtil.toast(mContext,"未安装支付宝");
-                                //h5Pay();
-                            }
-
+                            Thread payThread = new Thread(payRunnable);
+                            payThread.start();
                         }
                         break;
                     case "wechat":
@@ -324,28 +339,6 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
         }
 
-    }
-
-
-    public void h5Pay() {
-        Intent intent = new Intent(this, H5PayDemoActivity.class);
-        Bundle extras = new Bundle();
-
-        /*
-         * URL 是要测试的网站，在 Demo App 中会使用 H5PayDemoActivity 内的 WebView 打开。
-         *
-         * 可以填写任一支持支付宝支付的网站（如淘宝或一号店），在网站中下订单并唤起支付宝；
-         * 或者直接填写由支付宝文档提供的“网站 Demo”生成的订单地址
-         * （如 https://mclient.alipay.com/h5Continue.htm?h5_route_token=303ff0894cd4dccf591b089761dexxxx）
-         * 进行测试。
-         *
-         * H5PayDemoActivity 中的 MyWebViewClient.shouldOverrideUrlLoading() 实现了拦截 URL 唤起支付宝，
-         * 可以参考它实现自定义的 URL 拦截逻辑。
-         */
-        String url = "https://mclient.alipay.com/h5Continue.htm?h5_route_token=303ff0894cd4dccf591b089761dexxxx";
-        extras.putString("url", url);
-        intent.putExtras(extras);
-        startActivity(intent);
     }
 
     private void getPhoto() {

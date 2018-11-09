@@ -170,7 +170,7 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
 
         @JavascriptInterface
         public void close(String data) {
-
+            LogUtil.i("H5调原生返回值："+data);
         }
 
     }
