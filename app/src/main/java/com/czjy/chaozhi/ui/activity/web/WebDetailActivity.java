@@ -185,8 +185,10 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         mWebView.addJavascriptInterface(new JSBridge(), "webkit");
         if (url.contains("http")){
             mWebView.loadUrl(url);
+            LogUtil.i("H5 Url："+url);
         }else{
             mWebView.loadUrl(Const.H5_URL + url);
+            LogUtil.i("H5 Url："+Const.H5_URL + url);
         }
     }
 
