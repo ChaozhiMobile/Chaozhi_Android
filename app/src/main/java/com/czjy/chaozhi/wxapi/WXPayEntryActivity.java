@@ -1,10 +1,10 @@
 package com.czjy.chaozhi.wxapi;
 
-
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.SimpleActivity;
 import com.czjy.chaozhi.model.bean.WxPayBean;
 import com.czjy.chaozhi.util.ToastUtil;
+import com.facebook.stetho.common.LogUtil;
 import com.tencent.mm.sdk.constants.Build;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -68,9 +68,17 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
             req.timeStamp = String.valueOf(wxPayBean.getTimestamp());
             req.packageValue = wxPayBean.getPackageX();
             req.sign = wxPayBean.getSign();
-            req.extData = "app data";
             boolean status = api.sendReq(req);
-            Log.d(getClass().getSimpleName(), String.valueOf(status));
+
+            LogUtil.i("微信支付参数："
+                    +"\n"+wxPayBean.getAppid()
+                    +"\n"+wxPayBean.getPartnerid()
+                    +"\n"+wxPayBean.getPrepayid()
+                    +"\n"+wxPayBean.getNoncestr()
+                    +"\n"+String.valueOf(wxPayBean.getTimestamp())
+                    +"\n"+wxPayBean.getPackageX()
+                    +"\n"+wxPayBean.getSign());
+            LogUtil.i("微信支付调用结果："+String.valueOf(status));
         }
     }
 
@@ -87,7 +95,7 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
 
     @Override
     public void onResp(BaseResp resp) {
-        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+        Log.d(TAG, "微信支付errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
