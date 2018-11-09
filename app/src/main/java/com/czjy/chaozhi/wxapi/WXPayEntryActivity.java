@@ -107,8 +107,12 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
                 mIntent.setClass(mContext, MainActivity.class);
                 mIntent.putExtra("flag","支付成功");
                 startActivity(mIntent);
-            } else {
+            } else if (resp.errCode == -1) {
                 ToastUtil.toast(mContext, "支付失败");
+                finish();
+            } else if (resp.errCode == -2) {
+                ToastUtil.toast(mContext, "支付取消");
+                finish();
             }
         }
     }
