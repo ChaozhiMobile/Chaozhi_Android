@@ -28,6 +28,7 @@ import com.czjy.chaozhi.ui.fragment.home.LearnFragment;
 import com.czjy.chaozhi.ui.fragment.home.LimitlessFragment;
 import com.czjy.chaozhi.ui.fragment.home.MineFragment;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
+import com.facebook.stetho.common.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,8 +57,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        switchFragment(0);
-        mNavigation.setSelectedItemId(R.id.navigation_home);
+        String flag = intent.getStringExtra("flag");
+        if ("支付成功".equals(flag)) {
+            switchFragment(1);
+            mNavigation.setSelectedItemId(R.id.navigation_learn);
+        } else {
+            switchFragment(0);
+            mNavigation.setSelectedItemId(R.id.navigation_home);
+        }
     }
 
     @Override

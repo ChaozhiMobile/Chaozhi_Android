@@ -1,19 +1,4 @@
-package net.sourceforge.simcpux.wxapi;
-
-
-
-
-
-
-import net.sourceforge.simcpux.Constants;
-import net.sourceforge.simcpux.R;
-
-import com.tencent.mm.sdk.constants.ConstantsAPI;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+package com.czjy.chaozhi.wxapi;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,9 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
-	
-	private static final String TAG = "MicroMsg.SDKSample.WXPayEntryActivity";
+import com.czjy.chaozhi.R;
+import com.facebook.stetho.common.LogUtil;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 	
     private IWXAPI api;
 	
@@ -31,8 +23,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pay_result);
+
+        LogUtil.i("H5调原生返回值");
         
-    	api = WXAPIFactory.createWXAPI(this, Constants.APP_ID);
+    	api = WXAPIFactory.createWXAPI(this, "wxa595f547a6eeeb65");
         api.handleIntent(getIntent(), this);
     }
 
@@ -49,13 +43,9 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 
 	@Override
 	public void onResp(BaseResp resp) {
-		Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
 
 		if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.app_tip);
-			builder.setMessage(getString(R.string.pay_result_callback_msg, String.valueOf(resp.errCode)));
-			builder.show();
+
 		}
 	}
 }
