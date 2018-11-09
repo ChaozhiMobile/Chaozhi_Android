@@ -44,6 +44,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.youth.banner.Banner;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -358,11 +359,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         }
     }
 
-    @Subscribe
+    @Subscribe(sticky = true)
     public void onEvent(UpdateFgEvent event) {
         int index = event.index;
         if (index == 0) {
             initData();
+            EventBus.getDefault().removeStickyEvent(event);
         }
     }
 

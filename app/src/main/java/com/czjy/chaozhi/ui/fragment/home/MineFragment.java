@@ -23,6 +23,7 @@ import com.czjy.chaozhi.ui.adapter.MineAdapter;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.glide.CommonGlideImageLoader;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -141,12 +142,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     }
 
-    @Subscribe
+    @Subscribe(sticky = true)
     public void onEvent(UpdateFgEvent event){
         int index = event.index;
         if (index==3){
             initView();
             initData();
+            EventBus.getDefault().removeStickyEvent(event);
         }
     }
 

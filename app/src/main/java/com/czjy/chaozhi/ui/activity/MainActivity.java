@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         }
         transaction.show(fragments.get(index)).commitAllowingStateLoss();
         mCurrentFragment = fragments.get(index);
-        EventBus.getDefault().post(new UpdateFgEvent(index));
+        EventBus.getDefault().postSticky(new UpdateFgEvent(index));
     }
 
     @Override

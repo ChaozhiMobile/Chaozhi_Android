@@ -27,6 +27,7 @@ import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.ui.adapter.LearnAdapter;
 import com.czjy.chaozhi.util.CommonUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -265,11 +266,12 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
         }
     }
 
-    @Subscribe
+    @Subscribe(sticky = true)
     public void onEvent(UpdateFgEvent event) {
         int index = event.index;
         if (index == 1) {
             initData();
+            EventBus.getDefault().removeStickyEvent(event);
         }
     }
 }

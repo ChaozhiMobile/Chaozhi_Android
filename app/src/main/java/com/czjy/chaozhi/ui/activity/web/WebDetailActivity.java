@@ -45,6 +45,7 @@ import com.czjy.chaozhi.util.Utils;
 import com.czjy.chaozhi.wxapi.WXPayEntryActivity;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
+import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -139,11 +140,6 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
                     } else {
                         ToastUtil.toast(mContext, "支付失败");
-
-                        // 跳转首页-学习页面
-                        mIntent.setClass(mContext, MainActivity.class);
-                        mIntent.putExtra("flag","支付成功");
-                        startActivity(mIntent);
                     }
                     break;
                 }
@@ -189,8 +185,10 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         mWebView.addJavascriptInterface(new JSBridge(), "webkit");
         if (url.contains("http")){
             mWebView.loadUrl(url);
+            LogUtil.i("H5 Url："+url);
         }else{
             mWebView.loadUrl(Const.H5_URL + url);
+            LogUtil.i("H5 Url："+Const.H5_URL + url);
         }
     }
 

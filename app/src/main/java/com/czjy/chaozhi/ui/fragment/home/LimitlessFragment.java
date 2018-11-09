@@ -30,6 +30,7 @@ import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
@@ -133,11 +134,12 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
         }
     }
 
-    @Subscribe
+    @Subscribe(sticky = true)
     public void onEvent(UpdateFgEvent event) {
         int index = event.index;
         if (index == 2) {
             mWebView.loadUrl(Const.H5_URL + Const.ROUTER_INFINITE);
+            EventBus.getDefault().removeStickyEvent(event);
         }
     }
 

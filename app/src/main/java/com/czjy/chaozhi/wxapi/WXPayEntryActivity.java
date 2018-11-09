@@ -1,10 +1,11 @@
 package com.czjy.chaozhi.wxapi;
 
-
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.SimpleActivity;
 import com.czjy.chaozhi.model.bean.WxPayBean;
+import com.czjy.chaozhi.ui.activity.MainActivity;
 import com.czjy.chaozhi.util.ToastUtil;
+import com.facebook.stetho.common.LogUtil;
 import com.tencent.mm.sdk.constants.Build;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -68,18 +69,17 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
             req.timeStamp = String.valueOf(wxPayBean.getTimestamp());
             req.packageValue = wxPayBean.getPackageX();
             req.sign = wxPayBean.getSign();
-            req.extData = "app data";
             boolean status = api.sendReq(req);
-//            PayReq request = new PayReq();
-//            request.appId = "wxa595f547a6eeeb65";
-//            request.partnerId = "1900000109";
-//            request.prepayId = "1101000000140415649af9fc314aa427";
-//            request.packageValue = "Sign=WXPay";
-//            request.nonceStr = "1101000000140429eb40476f8896f4c9";
-//            request.timeStamp = "1398746574";
-//            request.sign = "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
-//            boolean status = api.sendReq(request);
-            Log.d(getClass().getSimpleName(), String.valueOf(status));
+
+            LogUtil.i("微信支付参数："
+                    +"\n"+wxPayBean.getAppid()
+                    +"\n"+wxPayBean.getPartnerid()
+                    +"\n"+wxPayBean.getPrepayid()
+                    +"\n"+wxPayBean.getNoncestr()
+                    +"\n"+String.valueOf(wxPayBean.getTimestamp())
+                    +"\n"+wxPayBean.getPackageX()
+                    +"\n"+wxPayBean.getSign());
+            LogUtil.i("微信支付调用结果："+String.valueOf(status));
         }
     }
 
@@ -96,13 +96,23 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
 
     @Override
     public void onResp(BaseResp resp) {
-        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+        Log.d(TAG, "微信支付errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
+                ToastUtil.toast(mContext, "支付成功");
 
+                // 跳转首页-学习页面
+                Intent mIntent = new Intent();
+                mIntent.setClass(mContext, MainActivity.class);
+                mIntent.putExtra("flag","支付成功");
+                startActivity(mIntent);
             } else if (resp.errCode == -1) {
-
+                ToastUtil.toast(mContext, "支付失败");
+                finish();
+            } else if (resp.errCode == -2) {
+                ToastUtil.toast(mContext, "支付取消");
+                finish();
             }
         }
     }
