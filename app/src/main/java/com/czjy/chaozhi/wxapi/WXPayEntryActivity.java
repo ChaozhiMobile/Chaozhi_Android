@@ -3,6 +3,7 @@ package com.czjy.chaozhi.wxapi;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.SimpleActivity;
 import com.czjy.chaozhi.model.bean.WxPayBean;
+import com.czjy.chaozhi.ui.activity.MainActivity;
 import com.czjy.chaozhi.util.ToastUtil;
 import com.facebook.stetho.common.LogUtil;
 import com.tencent.mm.sdk.constants.Build;
@@ -99,9 +100,15 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
+                ToastUtil.toast(mContext, "支付成功");
 
-            } else if (resp.errCode == -1) {
-
+                // 跳转首页-学习页面
+                Intent mIntent = new Intent();
+                mIntent.setClass(mContext, MainActivity.class);
+                mIntent.putExtra("flag","支付成功");
+                startActivity(mIntent);
+            } else {
+                ToastUtil.toast(mContext, "支付失败");
             }
         }
     }
