@@ -11,7 +11,8 @@
         android:id="@+id/item_product_img"
         android:layout_width="match_parent"
         android:layout_height="99dp"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
+        android:background="@color/_F5F5F5"
         />
 
 
