@@ -293,6 +293,20 @@
             </LinearLayout>
 
 
+
+            <TextView
+                android:id="@+id/learn_none"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:paddingStart="12dp"
+                android:text="您还没开始学习，加油噢"
+                android:textColor="#FF4A4A4A"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/learn_live_layout" />
+
             <TextView
                 android:id="@+id/learn_product_title"
                 android:layout_width="match_parent"
@@ -304,7 +318,9 @@
                 android:text="最新学习课程"
                 android:textColor="#FF4A4A4A"
                 android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/learn_live_layout" />
+                app:layout_constraintTop_toBottomOf="@id/learn_live_layout"
+                android:visibility="gone"
+                />
 
 
             <View
