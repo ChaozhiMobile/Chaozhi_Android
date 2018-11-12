@@ -67,7 +67,7 @@ public class CourseFragment extends Fragment {
 
     private void initView() {
         if (mPurchProduct != null) {
-            CommonGlideImageLoader.getInstance().displayNetImageWithCircle(getActivity(), mPurchProduct.getProduct_img(), mImg,getActivity().getResources().getDrawable(R.drawable.img_feature_product));
+            CommonGlideImageLoader.getInstance().displayNetImageWithCircle(getActivity(), mPurchProduct.getProduct_img(), mImg,getActivity().getResources().getDrawable(R.mipmap.default_course));
             mTitle.setText(mPurchProduct.getProduct_name());
             mType.setText(mPurchProduct.getProduct_sub_name());
             mTime.setText(String.format("%d节", mPurchProduct.getUser_time()));

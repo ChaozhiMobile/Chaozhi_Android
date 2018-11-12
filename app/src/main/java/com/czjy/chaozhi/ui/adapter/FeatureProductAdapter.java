@@ -24,6 +24,6 @@ public class FeatureProductAdapter extends BaseQuickAdapter<ProductBean,BaseView
     protected void convert(BaseViewHolder helper, ProductBean item) {
         helper.setText(R.id.item_product_text,item.getName());
         ImageView imageView = helper.getView(R.id.item_product_img);
-        CommonGlideImageLoader.getInstance().displayNetImage(mContext,item.getImg(),imageView,mContext.getResources().getDrawable(R.drawable.img_feature_product));
+        CommonGlideImageLoader.getInstance().displayNetImage(mContext,item.getImg(),imageView,mContext.getResources().getDrawable(R.mipmap.default_course));
     }
 }
