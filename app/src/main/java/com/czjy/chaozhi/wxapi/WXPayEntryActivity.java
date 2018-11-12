@@ -58,6 +58,7 @@ public class WXPayEntryActivity extends SimpleActivity implements IWXAPIEventHan
 
         if (!isPaySupported) {
             ToastUtil.toast(mContext,"未安装微信，不能使用微信支付");
+            finish();
             return;
         }
         if (wxPayBean != null) {
