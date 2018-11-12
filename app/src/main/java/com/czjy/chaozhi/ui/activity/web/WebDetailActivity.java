@@ -236,7 +236,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                 return true;
             }
         });
-        LogUtil.i("UserAgent：" + settings.getUserAgentString());
+        LogUtil.i("H5 UserAgent：" + settings.getUserAgentString());
     }
 
     private class MyWebViewClient extends WebViewClient {
