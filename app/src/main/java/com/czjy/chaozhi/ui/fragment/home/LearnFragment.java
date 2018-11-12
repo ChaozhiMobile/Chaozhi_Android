@@ -67,6 +67,14 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
     LinearLayout mLiveLayout;
     @BindView(R.id.live_into)
     TextView mLiveInto;
+    @BindView(R.id.learn_product_title)
+    TextView mLearnTitle;
+    @BindView(R.id.line2)
+    View mLine2;
+    @BindView(R.id.learn_none)
+    TextView mNone;
+    @BindView(R.id.learn_live_title)
+    TextView mLearnLiveTitle;
 
     @OnClick({R.id.library_layout, R.id.doc_layout, R.id.live_layout, R.id.video_layout, R.id.live_into})
     public void onClick(View view) {
@@ -159,6 +167,15 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
     }
 
     private void updateLearnCourse(List<PurchProduct.NewestInfoBean.LearnCourseListBean> learnCourses) {
+        if (learnCourses!=null&&learnCourses.size()>0){
+            mLearnTitle.setVisibility(View.VISIBLE);
+            mLine2.setVisibility(View.VISIBLE);
+            mNone.setVisibility(View.GONE);
+        }else {
+            mLearnTitle.setVisibility(View.GONE);
+            mLine2.setVisibility(View.GONE);
+            mNone.setVisibility(View.VISIBLE);
+        }
         mAdapter.setNewData(learnCourses);
     }
 
@@ -166,6 +183,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
     private void updateLiveInfo(List<PurchProduct.NewestInfoBean.LiveListBean> liveInfos) {
         if (liveInfos != null && liveInfos.size() > 0) {
             mLiveLayout.setVisibility(View.VISIBLE);
+            mLearnLiveTitle.setVisibility(View.VISIBLE);
             PurchProduct.NewestInfoBean.LiveListBean liveListBean = liveInfos.get(0);
             this.mLiveBean = liveListBean;
             if (liveListBean != null) {
@@ -187,6 +205,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
             }
         } else {
             mLiveLayout.setVisibility(View.GONE);
+            mLearnLiveTitle.setVisibility(View.GONE);
         }
     }
 
