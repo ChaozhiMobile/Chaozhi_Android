@@ -9,68 +9,63 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
         android:src="@drawable/img_feature_product"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/course_title"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ACI国际心理咨询师ACI国际心理咨询师"
-        android:textColor="@color/_4A4A4A"
-        android:textSize="16sp"
-        android:lines="1"
-        android:ellipsize="end"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toEndOf="@id/course_img"
-        app:layout_constraintTop_toTopOf="parent"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="ACI国际心理咨询师ACI国际心理咨询师"
+        android:textColor="@color/_4A4A4A"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/course_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:text="基础班"
         android:textColor="@color/_8C9AA8"
         android:textSize="14sp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="2dp"
         app:layout_constraintLeft_toRightOf="@id/course_img"
-        app:layout_constraintTop_toBottomOf="@id/course_title"
-        />
+        app:layout_constraintTop_toBottomOf="@id/course_title" />
 
     <TextView
         android:id="@+id/course_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="1dp"
         android:text="1节"
         android:textColor="@color/_C31A1F"
-        android:textSize="16sp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:textSize="15sp"
         app:layout_constraintLeft_toRightOf="@id/course_img"
-        app:layout_constraintTop_toBottomOf="@id/course_type"
-        />
+        app:layout_constraintTop_toBottomOf="@id/course_type" />
 
     <TextView
         android:id="@+id/course_time_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="1dp"
         android:text="上课节数"
         android:textColor="@color/_8C9AA8"
         android:textSize="12sp"
-        android:layout_marginTop="2dp"
-        android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toRightOf="@id/course_img"
-        app:layout_constraintTop_toBottomOf="@id/course_time"
-        />
+        app:layout_constraintTop_toBottomOf="@id/course_time" />
 
     <TextView
         android:id="@+id/course_question"
@@ -78,7 +73,7 @@
         android:layout_height="wrap_content"
         android:text="1293道"
         android:textColor="@color/_C31A1F"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:layout_marginStart="60dp"
         app:layout_constraintBaseline_toBaselineOf="@id/course_time"
         app:layout_constraintLeft_toRightOf="@id/course_time"

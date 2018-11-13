@@ -5,7 +5,6 @@ package com.czjy.chaozhi.global;
  */
 public class Const {
 
-
     public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
 //    public static final String BASE_URL = "http://aci-api.chaozhiedu.com";
     public static final String H5_URL  = "http://test.chaozhiedu.com/mobile/";
