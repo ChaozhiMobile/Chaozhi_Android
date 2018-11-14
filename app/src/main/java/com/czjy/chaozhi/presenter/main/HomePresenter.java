@@ -1,6 +1,7 @@
 package com.czjy.chaozhi.presenter.main;
 
 import com.czjy.chaozhi.base.RxPresenter;
+import com.czjy.chaozhi.model.bean.VersionBean;
 import com.czjy.chaozhi.model.http.ApiFactory;
 import com.czjy.chaozhi.model.response.HomeCategoryResponse;
 import com.czjy.chaozhi.model.response.HomeResponse;

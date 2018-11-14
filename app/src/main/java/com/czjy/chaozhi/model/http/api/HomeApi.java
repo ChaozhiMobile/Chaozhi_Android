@@ -1,6 +1,7 @@
 package com.czjy.chaozhi.model.http.api;
 
 import com.czjy.chaozhi.model.bean.PurchProduct;
+import com.czjy.chaozhi.model.bean.VersionBean;
 import com.czjy.chaozhi.model.http.HttpResponse;
 import com.czjy.chaozhi.model.response.HomeCategoryResponse;
 import com.czjy.chaozhi.model.response.HomeResponse;
@@ -20,6 +21,10 @@ import retrofit2.http.POST;
  */
 public interface HomeApi {
 
+    @FormUrlEncoded
+    @POST("api/app/check-version")
+    Observable<HttpResponse<VersionBean>> checkVersion(@Field("device") String device,
+                                                       @Field("version") String version);
 
     @FormUrlEncoded
     @POST("api/app/home-category")

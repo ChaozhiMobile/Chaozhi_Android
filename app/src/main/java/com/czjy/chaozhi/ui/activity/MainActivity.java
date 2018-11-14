@@ -1,7 +1,13 @@
 package com.czjy.chaozhi.ui.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +24,8 @@ import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.global.Const;
+import com.czjy.chaozhi.model.bean.VersionBean;
+import com.czjy.chaozhi.model.event.UpdateEvent;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.MainPresenter;
 import com.czjy.chaozhi.presenter.main.contract.MainContract;
@@ -28,10 +36,18 @@ import com.czjy.chaozhi.ui.fragment.home.LearnFragment;
 import com.czjy.chaozhi.ui.fragment.home.LimitlessFragment;
 import com.czjy.chaozhi.ui.fragment.home.MineFragment;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
+import com.czjy.chaozhi.util.ToastUtil;
+import com.czjy.chaozhi.witget.dialog.UpdateDialogFragment;
 import com.facebook.stetho.common.LogUtil;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloader;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,6 +69,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private long exitTime;
     private int index;
 
+    public static final String ACCOUNT_DIR = Environment.getExternalStorageDirectory().getAbsolutePath();
+    public static final String APK_PATH = "/apk_cache";
+    private static final int REQ_UPDATE = 999;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -72,7 +91,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         initData();
     }
 
-
     private void initSp() {
         subjectId = (int) SharedPreferencesUtils.getParam(mContext, Const.KEY_SUBJECT, -1);
         if (subjectId == -1) {
@@ -87,7 +105,159 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     private void initData() {
+        initUpdate();
+    }
 
+    @Override
+    public void getVersion(VersionBean versionBean) {
+
+        String url = versionBean.getUrl();
+        String title = versionBean.getTitle();
+        String message = versionBean.getNote();
+        String version = versionBean.getVersion();
+        int grade = versionBean.getGrade();
+
+        LogUtil.i("版本更新===标题："+title+"\n"
+                +"内容："+message+"\n"
+                +"版本："+version+"\n"
+                +"升级："+grade+"\n"
+                +"地址："+url+"\n");
+
+        switch (grade) {
+            case 1://不升级
+                return;
+            case 2://提示更新
+            case 3://强制更新
+                if (!TextUtils.isEmpty(url)) {
+                    UpdateDialogFragment.getInstance(message, grade, url).show(getSupportFragmentManager(), "Show");
+                }
+                break;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(UpdateEvent updateEvent) {
+        LogUtil.i("下载地址："+updateEvent.url);
+        if (updateEvent.url.endsWith(".apk")) {
+            updateApp(updateEvent.url);
+        } else {
+            if (isAvilible(this, "com.tencent.android.qqdownloader")) {
+                launchAppDetail(getApplicationContext(), "com.czjy.chaozhi", "com.tencent.android.qqdownloader");
+            } else {
+                Uri uri = Uri.parse("http://a.app.qq.com/o/simple.jsp?pkgname=com.czjy.chaozhi");
+                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(it);
+            }
+        }
+    }
+
+    private void updateApp(String url) {
+        File f = new File(ACCOUNT_DIR + APK_PATH);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        File downloadFile = new File(f.getAbsoluteFile() + "/" + System.currentTimeMillis() + "temp1.apk");
+        final ProgressDialog progressDialog = new ProgressDialog(mContext);
+        progressDialog.setTitle("下载更新");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgress(0);
+        progressDialog.setMax(100);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        FileDownloader.getImpl().create(url)
+                .setPath(downloadFile.getAbsolutePath(), false)
+                .setListener(new FileDownloadListener() {
+                    @Override
+                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        progressDialog.setMessage("连接中...");
+                    }
+
+                    @Override
+                    protected void connected(BaseDownloadTask task, String etag, boolean isContinue, int soFarBytes, int totalBytes) {
+                    }
+
+                    @Override
+                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        progressDialog.setProgress((int) (((float) soFarBytes / totalBytes) * 100));
+
+                    }
+
+                    @Override
+                    protected void blockComplete(BaseDownloadTask task) {
+                    }
+
+                    @Override
+                    protected void retry(final BaseDownloadTask task, final Throwable ex, final int retryingTimes, final int soFarBytes) {
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        progressDialog.setProgress(100);
+                        progressDialog.dismiss();
+                        if (downloadFile.exists()) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setDataAndType(Uri.parse("file://" + downloadFile.getAbsolutePath()), "application/vnd.android.package-archive");
+                            MainActivity.this.startActivityForResult(intent, REQ_UPDATE);
+                        }
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+                        progressDialog.dismiss();
+                        initUpdate();
+                        ToastUtil.toast(getApplicationContext(),"更新出错");
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+                    }
+                }).start();
+    }
+
+    private void initUpdate() {
+        mPresenter.checkVersion("android","1.0.0");
+    }
+
+    public static boolean isAvilible(Context context, String packageName) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        List<String> pName = new ArrayList<String>();// 用于存储所有已安装程序的包名
+        // 从pinfo中将包名字逐一取出，压入pName list中
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                pName.add(pn);
+            }
+        }
+        return pName.contains(packageName);// 判断pName中是否有目标程序的包名，有TRUE，没有FALSE
+    }
+
+
+    /**
+     * 启动到app详情界面
+     *
+     * @param appPkg    App的包名
+     * @param marketPkg 应用商店包名 ,如果为""则由系统弹出应用商店列表供用户选择,否则调转到目标市场的应用详情界面，某些应用商店可能会失败
+     */
+    public static void launchAppDetail(Context context, String appPkg, String marketPkg) {
+        try {
+            if (TextUtils.isEmpty(appPkg))
+                return;
+            Uri uri = Uri.parse("market://details?id=" + appPkg);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            if (!TextUtils.isEmpty(marketPkg))
+                intent.setPackage(marketPkg);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initNV() {
@@ -131,7 +301,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }
         });
     }
-
 
     private void gotoLogin() {
         Intent intent = new Intent();
@@ -208,6 +377,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 mHomeFragment.setSubjectId(subjectId);
                 mHomeFragment.initData();
             }
+        }
+        if (requestCode == REQ_UPDATE) { //apk下载完成回调
+            initUpdate();
         }
     }
 
