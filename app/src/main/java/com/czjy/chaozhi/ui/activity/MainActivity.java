@@ -41,6 +41,7 @@ import com.czjy.chaozhi.ui.fragment.home.LimitlessFragment;
 import com.czjy.chaozhi.ui.fragment.home.MineFragment;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.ToastUtil;
+import com.czjy.chaozhi.util.Utils;
 import com.czjy.chaozhi.witget.dialog.UpdateDialogFragment;
 import com.facebook.stetho.common.LogUtil;
 import com.liulishuo.filedownloader.BaseDownloadTask;
@@ -237,7 +238,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     private void initUpdate() {
-        mPresenter.checkVersion("android", "1.0.0");
+        PackageManager manager = mContext.getPackageManager();
+        String name = "";
+        try {
+            PackageInfo info = manager.getPackageInfo(mContext.getPackageName(), 0);
+            name = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (name.isEmpty()) {
+            name = "1.0.0";
+        }
+        mPresenter.checkVersion("android", name);
     }
 
     public static boolean isAvilible(Context context, String packageName) {
