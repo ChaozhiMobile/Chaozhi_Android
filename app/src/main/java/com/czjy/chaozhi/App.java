@@ -8,6 +8,7 @@ import com.czjy.chaozhi.di.componet.DaggerAppComponent;
 import com.czjy.chaozhi.di.module.AppModule;
 import com.czjy.chaozhi.manager.ActivityManager;
 import com.facebook.stetho.Stetho;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -71,6 +72,7 @@ public class App extends MultiDexApplication {
         initDaggerComponent();
         Stetho.initializeWithDefaults(this);
         initCrash();
+        FileDownloader.init(getApplicationContext());
     }
 
 

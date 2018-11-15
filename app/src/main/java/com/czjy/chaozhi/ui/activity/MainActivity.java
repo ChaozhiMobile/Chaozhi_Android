@@ -7,13 +7,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.czjy.chaozhi.App;
+import com.czjy.chaozhi.BuildConfig;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.global.Const;
@@ -68,6 +72,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private int subjectId;
     private long exitTime;
     private int index;
+    private static final String TAG = "MainActivity";
 
     public static final String ACCOUNT_DIR = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static final String APK_PATH = "/apk_cache";
@@ -117,11 +122,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         String version = versionBean.getVersion();
         int grade = versionBean.getGrade();
 
-        LogUtil.i("版本更新===标题："+title+"\n"
-                +"内容："+message+"\n"
-                +"版本："+version+"\n"
-                +"升级："+grade+"\n"
-                +"地址："+url+"\n");
+        LogUtil.i("版本更新===标题：" + title + "\n"
+                + "内容：" + message + "\n"
+                + "版本：" + version + "\n"
+                + "升级：" + grade + "\n"
+                + "地址：" + url + "\n");
 
         switch (grade) {
             case 1://不升级
@@ -137,7 +142,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Subscribe
     public void onEvent(UpdateEvent updateEvent) {
-        LogUtil.i("下载地址："+updateEvent.url);
+        LogUtil.i("下载地址：" + updateEvent.url);
         if (updateEvent.url.endsWith(".apk")) {
             updateApp(updateEvent.url);
         } else {
@@ -175,6 +180,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
                     @Override
                     protected void connected(BaseDownloadTask task, String etag, boolean isContinue, int soFarBytes, int totalBytes) {
+                        Log.d(TAG, "isContinue" + isContinue);
                     }
 
                     @Override
@@ -185,10 +191,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
                     @Override
                     protected void blockComplete(BaseDownloadTask task) {
+                        Log.d(TAG, "blockComplete");
                     }
 
                     @Override
                     protected void retry(final BaseDownloadTask task, final Throwable ex, final int retryingTimes, final int soFarBytes) {
+                        Log.d(TAG, "retry");
                     }
 
                     @Override
@@ -197,31 +205,39 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         progressDialog.dismiss();
                         if (downloadFile.exists()) {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.setDataAndType(Uri.parse("file://" + downloadFile.getAbsolutePath()), "application/vnd.android.package-archive");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                Uri contentUri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileProvider", new File(downloadFile.getAbsolutePath()));
+                                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                            } else {
+                                intent.setDataAndType(Uri.parse("file://" + downloadFile.getAbsolutePath()), "application/vnd.android.package-archive");
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            }
                             MainActivity.this.startActivityForResult(intent, REQ_UPDATE);
                         }
                     }
 
                     @Override
                     protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        Log.d(TAG, "paused");
                     }
 
                     @Override
                     protected void error(BaseDownloadTask task, Throwable e) {
                         progressDialog.dismiss();
                         initUpdate();
-                        ToastUtil.toast(getApplicationContext(),"更新出错");
+                        ToastUtil.toast(getApplicationContext(), "更新出错");
                     }
 
                     @Override
                     protected void warn(BaseDownloadTask task) {
+                        Log.d(TAG, "warn");
                     }
                 }).start();
     }
 
     private void initUpdate() {
-        mPresenter.checkVersion("android","1.0.0");
+        mPresenter.checkVersion("android", "1.0.0");
     }
 
     public static boolean isAvilible(Context context, String packageName) {
