@@ -36,7 +36,7 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                         mView.getVersion(versionBean);
                     }
                 },new RxException<>(e->{
-                    mView.toast("获取失败");
+//                    mView.toast(e.getMessage());
                 }));
         addDispose(disposable);
     }

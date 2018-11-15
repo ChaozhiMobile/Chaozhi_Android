@@ -1,9 +1,15 @@
 package com.czjy.chaozhi.util.rx;
 
 
+import android.content.Intent;
 import android.text.TextUtils;
 
+import com.czjy.chaozhi.App;
+import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.http.HttpResponse;
+import com.czjy.chaozhi.ui.activity.user.LoginActivity;
+import com.czjy.chaozhi.util.SharedPreferencesUtils;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 
@@ -24,6 +30,12 @@ public class RxResult {
             return upstream.flatMap(result -> {
                         if (result.isSuccess()) {
                             return createData(result.getData());
+                        } else if (result.getCode()>=600&&result.getCode()<700) {
+                            App.getInstance().setToken("");
+                            SharedPreferencesUtils.setParam(App.getInstance().getApplicationContext(),Const.KEY_TOKEN,"");
+                            Intent intent = new Intent(App.getInstance().getApplicationContext(), LoginActivity.class);
+                            App.getInstance().getApplicationContext().startActivity(intent);
+                            return Observable.error(new Exception("请您重新登录!"));
                         } else {
                             if (TextUtils.isEmpty(result.getMsg())) {
                                 return Observable.error(new Exception("获取错误"));
