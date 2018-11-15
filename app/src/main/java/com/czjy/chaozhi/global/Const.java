@@ -5,10 +5,10 @@ package com.czjy.chaozhi.global;
  */
 public class Const {
 
-    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
-    public static final String H5_URL  = "http://test.chaozhiedu.com/mobile/";
-//    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
-//    public static final String H5_URL  = "https://m.chaozhiedu.com/";
+//    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
+//    public static final String H5_URL  = "http://test.chaozhiedu.com/mobile/";
+    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
+    public static final String H5_URL  = "https://m.chaozhiedu.com/";
     public static  final String HTTP = "http:";
     //我的优惠券
     public static final String ROUTER_COUPON  = "#/hybrid/coupon/";
