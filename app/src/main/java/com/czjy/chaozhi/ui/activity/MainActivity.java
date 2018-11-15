@@ -208,11 +208,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 Uri contentUri = FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".fileProvider", new File(downloadFile.getAbsolutePath()));
                                 intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
                             } else {
-                                intent.setDataAndType(Uri.parse("file://" + downloadFile.getAbsolutePath()), "application/vnd.android.package-archive");
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setDataAndType(Uri.parse("file://" + downloadFile.getAbsolutePath()), "application/vnd.android.package-archive");
                             }
                             MainActivity.this.startActivityForResult(intent, REQ_UPDATE);
                         }
@@ -248,7 +249,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         }
 
         if (name.isEmpty()) {
-            name = "1.1.0";
+            name = "1.0.0";
         }
         mPresenter.checkVersion("android", name);
     }
