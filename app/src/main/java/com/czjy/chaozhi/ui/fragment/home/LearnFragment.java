@@ -92,7 +92,9 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
                 WebDetailActivity.action(mContext, Const.ROUTER_VIDEO + productId);
                 break;
             case R.id.live_into:
-                SimpleWebActivity.action(mContext, this.mLiveBean.getLive_url());
+                if (mLiveBean != null) {
+                    SimpleWebActivity.action(mContext, this.mLiveBean.getLive_url());
+                }
                 break;
 
         }
@@ -167,11 +169,11 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
     }
 
     private void updateLearnCourse(List<PurchProduct.NewestInfoBean.LearnCourseListBean> learnCourses) {
-        if (learnCourses!=null&&learnCourses.size()>0){
+        if (learnCourses != null && learnCourses.size() > 0) {
             mLearnTitle.setVisibility(View.VISIBLE);
             mLine2.setVisibility(View.VISIBLE);
             mNone.setVisibility(View.GONE);
-        }else {
+        } else {
             mLearnTitle.setVisibility(View.GONE);
             mLine2.setVisibility(View.GONE);
             mNone.setVisibility(View.VISIBLE);

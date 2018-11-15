@@ -98,7 +98,7 @@ public class ResetPwdActivity extends BaseActivity<ResetPresenter> implements Re
                         .doOnNext(new Consumer<Long>() {
                             @Override
                             public void accept(Long aLong) throws Exception {
-                                if (!isFinishing()){
+                                if (!isFinishing()) {
                                     mGetCode.setText(String.format("%d秒", 60 - aLong));
                                 }
 
@@ -114,6 +114,16 @@ public class ResetPwdActivity extends BaseActivity<ResetPresenter> implements Re
                         }).subscribe();
 
                 break;
+        }
+
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDisposable != null) {
+            mDisposable.dispose();
         }
 
     }
