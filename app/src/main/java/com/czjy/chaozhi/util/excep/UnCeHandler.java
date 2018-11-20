@@ -28,8 +28,13 @@ public class UnCeHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        Intent intent = new Intent(App.getInstance(), WelcomeActivity.class);
-        application.startActivity(intent);
+        new Thread() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(App.getInstance(), WelcomeActivity.class);
+                application.startActivity(intent);
+            }
+        }.start();
     }
 
 }
