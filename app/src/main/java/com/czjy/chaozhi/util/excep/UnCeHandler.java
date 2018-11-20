@@ -32,7 +32,9 @@ public class UnCeHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Intent intent = new Intent(App.getInstance(), WelcomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 application.startActivity(intent);
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
         }.start();
     }
