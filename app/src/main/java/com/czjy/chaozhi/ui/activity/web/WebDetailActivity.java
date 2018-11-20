@@ -377,4 +377,15 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         }
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mWebView != null) {
+            mWebView.clearCache(true);
+            mWebView.clearFormData();
+            mWebView.destroy();
+        }
+    }
 }
