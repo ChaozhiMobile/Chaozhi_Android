@@ -105,7 +105,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                 mHandler.sendMessage(msg);
             }
         };
-        api = WXAPIFactory.createWXAPI(this, "wxb4ba3c02aa476ea1",true);
+        api = WXAPIFactory.createWXAPI(this, "wxb4ba3c02aa476ea1", true);
         api.registerApp("wxb4ba3c02aa476ea1");
     }
 
@@ -124,7 +124,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                     String resultInfo = payResult.getResult();// 同步返回需要验证的信息
                     String resultStatus = payResult.getResultStatus();
 
-                    LogUtil.i("支付宝支付结果："+resultStatus);
+                    LogUtil.i("支付宝支付结果：" + resultStatus);
 
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
@@ -135,7 +135,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
                         // 跳转首页-学习页面
                         mIntent.setClass(mContext, MainActivity.class);
-                        mIntent.putExtra("flag","支付成功");
+                        mIntent.putExtra("flag", "支付成功");
                         startActivity(mIntent);
 
                     } else {
@@ -183,12 +183,12 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private void initWebView() {
         initSetting();
         mWebView.addJavascriptInterface(new JSBridge(), "webkit");
-        if (url.contains("http")){
+        if (url.contains("http")) {
             mWebView.loadUrl(url);
-            LogUtil.i("H5 Url："+url);
-        }else{
+            LogUtil.i("H5 Url：" + url);
+        } else {
             mWebView.loadUrl(Const.H5_URL + url);
-            LogUtil.i("H5 Url："+Const.H5_URL + url);
+            LogUtil.i("H5 Url：" + Const.H5_URL + url);
         }
     }
 
@@ -223,12 +223,12 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         settings.setJavaScriptEnabled(true);//支持javaScript
         settings.setDefaultTextEncodingName("utf-8");//设置网页默认编码
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         String userAgent = settings.getUserAgentString();
         settings.setUserAgentString(userAgent + "&&" + agentToken);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.clearCache(true);
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
                 mFilePathCallback = filePathCallback;
@@ -283,7 +283,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         @JavascriptInterface
         public void open(String data) {
 
-            LogUtil.i("H5调原生返回值："+data);
+            LogUtil.i("H5调原生返回值：" + data);
 
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
@@ -312,7 +312,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         @JavascriptInterface
         public void pay(String data) {
 
-            LogUtil.i("H5调原生返回值："+data);
+            LogUtil.i("H5调原生返回值：" + data);
 
             if (!TextUtils.isEmpty(data)) {
                 WebPayBean webPayBean = new Gson().fromJson(data, WebPayBean.class);
@@ -327,10 +327,10 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                     case "wechat":
 
                         String payStr = webPayBean.getPayStr();
-                        WxPayBean wxPayBean = new Gson().fromJson(payStr,WxPayBean.class);
-                        Intent intent = new Intent(mContext,WXPayEntryActivity.class);
-                        intent.putExtra("wxpay",wxPayBean);
-                        startActivityForResult(intent,REQ_CODE);
+                        WxPayBean wxPayBean = new Gson().fromJson(payStr, WxPayBean.class);
+                        Intent intent = new Intent(mContext, WXPayEntryActivity.class);
+                        intent.putExtra("wxpay", wxPayBean);
+                        startActivityForResult(intent, REQ_CODE);
                         break;
                 }
             }
@@ -343,15 +343,15 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
-        startActivityForResult(intent,TAKE_PHOTO);
+        startActivityForResult(intent, TAKE_PHOTO);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==TAKE_PHOTO){
-            if (data!=null){
-                uploadImgFromSysPhotos(resultCode,data);
+        if (requestCode == TAKE_PHOTO) {
+            if (data != null) {
+                uploadImgFromSysPhotos(resultCode, data);
             }
         }
     }
@@ -366,7 +366,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
                     : intent.getData();
 
-            if (uris[0]!=null){
+            if (uris[0] != null) {
 
                 mFilePathCallback.onReceiveValue(uris);
 
@@ -376,5 +376,13 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mWebView != null) {
+            mWebView.destroy();
+        }
     }
 }

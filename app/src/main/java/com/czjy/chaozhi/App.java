@@ -7,6 +7,7 @@ import com.czjy.chaozhi.di.componet.AppComponent;
 import com.czjy.chaozhi.di.componet.DaggerAppComponent;
 import com.czjy.chaozhi.di.module.AppModule;
 import com.czjy.chaozhi.manager.ActivityManager;
+import com.czjy.chaozhi.util.excep.UnCeHandler;
 import com.facebook.stetho.Stetho;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -73,6 +74,8 @@ public class App extends MultiDexApplication {
         Stetho.initializeWithDefaults(this);
         initCrash();
         FileDownloader.init(getApplicationContext());
+        UnCeHandler catchExcep = new UnCeHandler(this);
+        Thread.setDefaultUncaughtExceptionHandler(catchExcep);
     }
 
 
