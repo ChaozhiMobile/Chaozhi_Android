@@ -17,7 +17,6 @@ public class NewsResponse {
     private int total;
     private List<NewBean> rows;
 
-
     public List<NewBean> getRows() {
         return rows;
     }
@@ -26,7 +25,6 @@ public class NewsResponse {
         this.rows = rows;
     }
 
-
     public int getTotal() {
         return total;
     }
@@ -34,8 +32,5 @@ public class NewsResponse {
     public void setTotal(int total) {
         this.total = total;
     }
-
-
-
 
 }

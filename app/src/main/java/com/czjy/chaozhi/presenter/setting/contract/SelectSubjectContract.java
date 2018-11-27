@@ -11,7 +11,6 @@ import java.util.List;
  */
 public interface SelectSubjectContract {
 
-
     interface View extends IBaseView{
         void showSubjects(List<SubjectsResponse> subjects);
     }
@@ -19,6 +18,5 @@ public interface SelectSubjectContract {
     interface Presenter extends IPresenter<View>{
         void getSubjectList();
     }
-
 
 }

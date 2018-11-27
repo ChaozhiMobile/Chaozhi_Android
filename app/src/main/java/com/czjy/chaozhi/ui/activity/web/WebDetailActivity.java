@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -60,6 +61,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
 
     private static final int PAY_TYPE = 1;
+    @BindView(R.id.cl_webview)
+    ConstraintLayout mCLWebview;
     @BindView(R.id.webview)
     WebView mWebView;
 
@@ -383,6 +386,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         super.onDestroy();
 
         if (mWebView != null) {
+            mCLWebview.removeView(mWebView);
             mWebView.clearCache(true);
             mWebView.clearFormData();
             mWebView.destroy();

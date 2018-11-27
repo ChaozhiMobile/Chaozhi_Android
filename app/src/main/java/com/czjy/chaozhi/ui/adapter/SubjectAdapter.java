@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class SubjectAdapter extends BaseQuickAdapter<SubjectsResponse,BaseViewHolder> {
 
-
-
     public SubjectAdapter(int layoutResId, @Nullable List<SubjectsResponse> data) {
         super(layoutResId, data);
     }
@@ -34,6 +32,5 @@ public class SubjectAdapter extends BaseQuickAdapter<SubjectsResponse,BaseViewHo
             helper.setVisible(R.id.item_subject_img,false);
 //            helper.setTextColor(R.id.item_subject_name,mContext.getResources().getColor(R.color._24253D));
         }
-
     }
 }

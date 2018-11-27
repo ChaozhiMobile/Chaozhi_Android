@@ -5,11 +5,18 @@ package com.czjy.chaozhi.global;
  */
 public class Const {
 
+    /**
+     * 接口地址【文档：http://101.201.222.8/showdoc/web/#/1 密码：abc123】
+     * 测试账号：18268686511/15737936517/15068850958 密码：123456 112233
+     */
+
 //    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
 //    public static final String H5_URL  = "http://test.chaozhiedu.com/mobile/";
     public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
     public static final String H5_URL  = "https://m.chaozhiedu.com/";
-    public static  final String HTTP = "http:";
+    public static final String PDF_URL = "https://m.chaozhiedu.com/static/pdf.html?http:";
+    public static final String HTTP = "http:";
+
     //我的优惠券
     public static final String ROUTER_COUPON  = "#/hybrid/coupon/";
     //我的消息
@@ -42,7 +49,6 @@ public class Const {
     public static final String ROUTER_ABOUT = "#/hybrid/chaozhi/about";
 
 
-
     /**
      * sp
      */
@@ -67,7 +73,5 @@ public class Const {
 
     public static final int CODE_REQ= 1111;
     public static final int CODE_RESULT= 9999;
-
-
 
 }

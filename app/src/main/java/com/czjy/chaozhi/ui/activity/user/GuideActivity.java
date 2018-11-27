@@ -50,7 +50,6 @@ public class GuideActivity extends NoActionBarActivity implements ViewPager.OnPa
         Intent intent = new Intent(mContext, MainActivity.class);
         startActivity(intent);
         finish();
-
     }
 
     @Override

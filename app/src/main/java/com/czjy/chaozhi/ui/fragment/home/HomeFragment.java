@@ -164,8 +164,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 initData();
             }
         });
-
-
     }
 
     private void initAdapter() {
@@ -183,7 +181,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mNewsRecycler.setLayoutManager(new LinearLayoutManager(mContext));
         mNewAdapter.setOnItemClickListener(this);
         mNewsRecycler.setAdapter(mNewAdapter);
-
     }
 
     private void initBanner() {

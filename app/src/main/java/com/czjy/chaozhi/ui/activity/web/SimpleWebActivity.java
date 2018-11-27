@@ -51,8 +51,6 @@ public class SimpleWebActivity extends SimpleActivity {
         initIntent();
         initData();
         initWebView();
-
-
     }
 
     private void initIntent() {

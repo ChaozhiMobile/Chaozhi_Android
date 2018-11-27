@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.czjy.chaozhi.di.ActivityScope;
 import com.czjy.chaozhi.di.module.ActivityModule;
 import com.czjy.chaozhi.ui.activity.MainActivity;
+import com.czjy.chaozhi.ui.activity.datalibrary.DataLibraryActivity;
 import com.czjy.chaozhi.ui.activity.setting.SelectSubjectActivity;
 import com.czjy.chaozhi.ui.activity.setting.SettingActivity;
 import com.czjy.chaozhi.ui.activity.user.LoginActivity;
@@ -40,4 +41,6 @@ public interface ActivityComponent {
     void inject(SettingActivity settingActivity);
 
     void inject(WebDetailActivity webDetailActivity);
+
+    void inject(DataLibraryActivity dataLibraryActivity);
 }

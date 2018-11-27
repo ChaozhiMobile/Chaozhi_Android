@@ -22,6 +22,7 @@ import com.czjy.chaozhi.model.bean.PurchProduct;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.LearnPresenter;
 import com.czjy.chaozhi.presenter.main.contract.LearnContract;
+import com.czjy.chaozhi.ui.activity.datalibrary.DataLibraryActivity;
 import com.czjy.chaozhi.ui.activity.web.SimpleWebActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.ui.adapter.LearnAdapter;
@@ -83,7 +84,8 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
                 WebDetailActivity.action(mContext, Const.ROUTER_LIBRARY + productId);
                 break;
             case R.id.doc_layout:
-                WebDetailActivity.action(mContext, Const.ROUTER_DOC + productId);
+//                WebDetailActivity.action(mContext, Const.ROUTER_DOC + productId); //H5
+                DataLibraryActivity.action(mContext, productId); //原生
                 break;
             case R.id.live_layout:
                 WebDetailActivity.action(mContext, Const.ROUTER_LIVE + productId);
