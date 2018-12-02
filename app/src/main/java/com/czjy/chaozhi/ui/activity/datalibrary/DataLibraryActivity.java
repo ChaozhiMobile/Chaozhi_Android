@@ -100,6 +100,18 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
     public void showDataLibraryList(DataLibraryResponse dataLibraryResponse) {
         List<DataLibraryBean> dataLibraryBeans = dataLibraryResponse.getRows();
         if (dataLibraryBeans != null && dataLibraryBeans.size() > 0) {
+            for (int i = 0; i<dataLibraryBeans.size(); i++) {
+                DataLibraryBean dataLibraryBean = dataLibraryBeans.get(i);
+                String pdfUrl = Const.HTTP + dataLibraryBean.getFile();
+                //储存下载文件的SDCard目录
+                String savePath = "/Chaozhi/File";
+                String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + getNameFromUrl(pdfUrl);
+                if (fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
+                    dataLibraryBean.setProgress(101);
+                } else {
+                    dataLibraryBean.setProgress(-1);
+                }
+            }
             mAdapter.setNewData(dataLibraryBeans);
         }
     }

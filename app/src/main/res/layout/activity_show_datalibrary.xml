@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--https://github.com/barteksc/AndroidPdfViewer-->
     <com.github.barteksc.pdfviewer.PDFView
         android:id="@+id/pdf"
         android:layout_width="match_parent"
@@ -12,10 +13,10 @@
     <TextView
         android:id="@+id/tv_page"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="40dp"
         android:layout_alignParentTop="false"
         android:gravity="center_horizontal"
-        android:textColor="@color/_C31A1F"
+        android:textColor="@color/_C8C8C8"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/pdf" />
 </android.support.constraint.ConstraintLayout>

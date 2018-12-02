@@ -134,8 +134,7 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
         } else {
             LogUtil.i("PDF下载：本地Url路径：" + fileName);
             pdf.fromFile(new File(fileName))
-
-                    .defaultPage(1)
+                    .defaultPage(0)
                     .enableSwipe(true)
                     .swipeHorizontal(false)
 
@@ -161,7 +160,7 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
 
     @Override
     public void onPageChanged(int page, int pageCount) {
-        String pager = "页码(" + page + "/" + pageCount + ")";
+        String pager = "" + page + "/" + pageCount + "";
         tvPage.setText(pager);
     }
 }
