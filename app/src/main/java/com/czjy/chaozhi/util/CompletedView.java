@@ -94,7 +94,7 @@ public class CompletedView extends View {
         mTextPaint.setAntiAlias(true);
         mTextPaint.setStyle(Paint.Style.FILL);
         mTextPaint.setColor(mRingColor);
-        mTextPaint.setTextSize(mRadius / 2);
+        mTextPaint.setTextSize(mRadius);
 
         Paint.FontMetrics fm = mTextPaint.getFontMetrics();
         mTxtHeight = (int) Math.ceil(fm.descent - fm.ascent);

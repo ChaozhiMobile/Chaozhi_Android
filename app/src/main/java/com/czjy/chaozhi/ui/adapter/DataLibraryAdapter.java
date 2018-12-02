@@ -26,13 +26,14 @@ public class DataLibraryAdapter extends BaseQuickAdapter<DataLibraryBean, BaseVi
         CompletedView mTasksView = (CompletedView) helper.getView(R.id.tasks_view);
         switch (item.getProgress()) {
             case -1:
+                iconImgView.setImageResource(R.mipmap.ic_down);
                 iconImgView.setVisibility(View.VISIBLE);
                 mTasksView.setVisibility(View.GONE);
                 break;
-            case 0:
-                iconImgView.setVisibility(View.GONE);
-                mTasksView.setVisibility(View.VISIBLE);
-                mTasksView.setProgress(100);
+            case 101:
+                iconImgView.setImageResource(R.mipmap.ic_down_ok);
+                iconImgView.setVisibility(View.VISIBLE);
+                mTasksView.setVisibility(View.GONE);
                 break;
             default:
                 iconImgView.setVisibility(View.GONE);
