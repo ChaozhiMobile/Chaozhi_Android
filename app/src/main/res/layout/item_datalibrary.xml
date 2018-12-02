@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="48dp"
     android:background="@color/colorWhite"
     android:minHeight="48dp">
 
@@ -11,17 +12,17 @@
         android:id="@+id/item_datalibrary_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:visibility="gone"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <TextView
         android:id="@+id/item_datalibrary_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="8dp"
         android:text="[心理测试技能]第一节"
         android:textColor="@color/_24253D"
         android:textSize="13sp"
@@ -33,11 +34,19 @@
         android:id="@+id/item_datalibrary_img"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="16dp"
         android:src="@mipmap/ic_down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.czjy.chaozhi.witget.CustomCircleProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 
     <View
         android:layout_width="match_parent"
