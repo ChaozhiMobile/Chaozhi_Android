@@ -74,9 +74,9 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
     private void downloadFile(String path) {
 
         //储存下载文件的SDCard目录
-        String savePath = Environment.getExternalStorageDirectory() + "/"  + "Chaozhi/File";
+        String savePath = "/Chaozhi/File";
 
-        String pdfStr = savePath + "/" + getNameFromUrl(path);
+        String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + getNameFromUrl(path);
         LogUtil.i("PDF下载：本地Url路径："+pdfStr);
 
         if (fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
@@ -85,7 +85,7 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
             OkHttpUtils.build().download(path, savePath, new OkHttpUtils.OnDownloadListener() {
                 @Override
                 public void onDownloadSuccess(File file) {
-                    LogUtil.i("PDF下载：加载完成正在打开..");
+                    LogUtil.i("PDF下载：加载完成正在打开.."+file.getPath());
                     tvPage.setText("加载完成正在打开..");
                     showPdf(file.getPath());
                 }

@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
+import com.czjy.chaozhi.util.CompletedView;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class DataLibraryAdapter extends BaseQuickAdapter<DataLibraryBean,BaseVie
     @Override
     protected void convert(BaseViewHolder helper, DataLibraryBean item) {
         helper.setText(R.id.item_datalibrary_name,item.getFile_name());
-        ImageView iconImgView = helper.getView(R.id.item_datalibrary_icon);
+        ImageView iconImgView = helper.getView(R.id.item_datalibrary_img);
+        CompletedView mTasksView = (CompletedView) helper.getView(R.id.tasks_view);
     }
 }

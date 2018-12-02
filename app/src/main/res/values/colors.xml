@@ -27,7 +27,10 @@
     <color name="_000012">#000012</color>
     <color name="text_gray_64">#646464</color>
     <color name="color_B5B5B5">#B5B5B5</color>
-    <color name="white">#ffffff</color>
     <color name="color_main_theme">#00CF1F</color>
     <color name="color_DEDEDE">#DEDEDE</color>
+
+    <color name="white2">#f5f3f3</color>
+    <color name="colorRed">#d50f09</color>
+
 </resources>
