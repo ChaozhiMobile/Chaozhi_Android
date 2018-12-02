@@ -10,12 +10,13 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
+import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
 import com.czjy.chaozhi.model.response.DataLibraryResponse;
 import com.czjy.chaozhi.presenter.datalibrary.DataLibraryPresenter;
 import com.czjy.chaozhi.presenter.datalibrary.contract.DataLibraryContract;
 import com.czjy.chaozhi.ui.adapter.DataLibraryAdapter;
-import com.czjy.chaozhi.util.ToastUtil;
+import com.facebook.stetho.common.LogUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -89,18 +90,6 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        List<DataLibraryBean> dataLibraryBeans = adapter.getData();
-        DataLibraryBean dataLibraryBean = dataLibraryBeans.get(position);
-        if (dataLibraryBean != null) {
-            //执行下载
-            ToastUtil.toast(this,dataLibraryBean.getFile());
-
-//            WebDetailActivity.action(mContext, Const.PDF_URL + dataLibraryBean.getFile());
-        }
-    }
-
-    @Override
     public void showDataLibraryList(DataLibraryResponse dataLibraryResponse) {
         List<DataLibraryBean> dataLibraryBeans = dataLibraryResponse.getRows();
         if (dataLibraryBeans != null && dataLibraryBeans.size() > 0) {
@@ -127,5 +116,20 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
                 initData();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        List<DataLibraryBean> dataLibraryBeans = adapter.getData();
+        DataLibraryBean dataLibraryBean = dataLibraryBeans.get(position);
+        if (dataLibraryBean != null) {
+            //执行下载
+            String pdfUrl = Const.HTTP+dataLibraryBean.getFile();
+            LogUtil.i("PDF下载：标题："+dataLibraryBean.getFile_name());
+            LogUtil.i("PDF下载：网络Url路径："+pdfUrl);
+            ShowDataLibraryActivity.action(mContext,dataLibraryBean.getFile_name(),pdfUrl);
+
+//            WebDetailActivity.action(mContext, Const.PDF_URL + dataLibraryBean.getFile());
+        }
     }
 }

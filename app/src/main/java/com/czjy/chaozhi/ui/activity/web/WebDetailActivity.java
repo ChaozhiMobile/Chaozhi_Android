@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -22,9 +21,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
-import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.PayTask;
 import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.R;
@@ -42,11 +39,9 @@ import com.czjy.chaozhi.util.AuthResult;
 import com.czjy.chaozhi.util.PayResult;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.ToastUtil;
-import com.czjy.chaozhi.util.Utils;
 import com.czjy.chaozhi.wxapi.WXPayEntryActivity;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
-import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -186,7 +181,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private void initWebView() {
         initSetting();
         mWebView.addJavascriptInterface(new JSBridge(), "webkit");
-        if (url.contains("http")) {
+        if (url.contains("http") || url.contains("file")) {
             mWebView.loadUrl(url);
             LogUtil.i("H5 Url：" + url);
         } else {

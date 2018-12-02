@@ -63,6 +63,9 @@
         <activity android:name=".ui.activity.datalibrary.DataLibraryActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.activity.datalibrary.ShowDataLibraryActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
