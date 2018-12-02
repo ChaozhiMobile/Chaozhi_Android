@@ -41,13 +41,11 @@ import com.czjy.chaozhi.ui.fragment.home.LimitlessFragment;
 import com.czjy.chaozhi.ui.fragment.home.MineFragment;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.ToastUtil;
-import com.czjy.chaozhi.util.Utils;
 import com.czjy.chaozhi.witget.dialog.UpdateDialogFragment;
 import com.facebook.stetho.common.LogUtil;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -416,7 +414,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        CrashReport.testJavaCrash();
+//        CrashReport.testJavaCrash();
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
