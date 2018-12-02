@@ -3,7 +3,6 @@ package com.czjy.chaozhi.ui.activity.datalibrary;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
@@ -30,10 +29,13 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
     PDFView pdf;
 
     private String titleStr;
+    private String fileID;
     private String pdfUrl;
     private String TAG = "ShowDataLibraryActivity";
-    public static void action(Context context, String titleStr, String pdfUrl) {
+
+    public static void action(Context context, String fileID, String titleStr, String pdfUrl) {
         Intent intent = new Intent(context, ShowDataLibraryActivity.class);
+        intent.putExtra("fileID", fileID); //文件ID
         intent.putExtra("titleStr", titleStr); //标题
         intent.putExtra("pdfUrl", pdfUrl); //pdf下载地址
         context.startActivity(intent);
@@ -47,7 +49,8 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
 
     private void initIntent() {
         Intent intent = getIntent();
-        if (intent!=null){
+        if (intent!=null) {
+            fileID = intent.getStringExtra("fileID");
             titleStr = intent.getStringExtra("titleStr");
             pdfUrl = intent.getStringExtra("pdfUrl");
 
@@ -78,13 +81,13 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
         //储存下载文件的SDCard目录
         String savePath = "/Chaozhi/File";
 
-        String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + getNameFromUrl(path);
+        String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + fileID;
         LogUtil.i("PDF下载：本地Url路径："+pdfStr);
 
         if (fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
             showPdf(pdfStr);
         } else {
-            OkHttpUtils.build().download(path, "/Chaozhi/File", new OkHttpUtils.OnDownloadListener() {
+            OkHttpUtils.build().download(path, savePath, fileID, new OkHttpUtils.OnDownloadListener() {
                 @Override
                 public void onDownloadSuccess(File file) {
                     LogUtil.i("PDF下载：加载完成正在打开.."+file.getPath());
@@ -103,14 +106,6 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
                 }
             });
         }
-    }
-
-    /**
-     * 从下载连接中解析出文件名
-     */
-    @NonNull
-    private String getNameFromUrl(String url) {
-        return url.substring(url.lastIndexOf("/") + 1);
     }
 
     /**

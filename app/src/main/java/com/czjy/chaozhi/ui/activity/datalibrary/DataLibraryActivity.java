@@ -105,7 +105,7 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
                 String pdfUrl = Const.HTTP + dataLibraryBean.getFile();
                 //储存下载文件的SDCard目录
                 String savePath = "/Chaozhi/File";
-                String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + getNameFromUrl(pdfUrl);
+                String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + String.valueOf(dataLibraryBean.getFile_id());
                 if (fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
                     dataLibraryBean.setProgress(101);
                 } else {
@@ -150,13 +150,13 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
             //储存下载文件的SDCard目录
             String savePath = "/Chaozhi/File";
 
-            String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + getNameFromUrl(pdfUrl);
+            String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + String.valueOf(dataLibraryBean.getFile_id());
             LogUtil.i("PDF下载：本地Url路径："+pdfStr);
 
             if (fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
-                ShowDataLibraryActivity.action(mContext,dataLibraryBean.getFile_name(),Const.HTTP + dataLibraryBean.getFile());
+                ShowDataLibraryActivity.action(mContext, String.valueOf(dataLibraryBean.getFile_id()), dataLibraryBean.getFile_name(),Const.HTTP + dataLibraryBean.getFile());
             } else {
-                OkHttpUtils.build().download(pdfUrl, savePath, new OkHttpUtils.OnDownloadListener() {
+                OkHttpUtils.build().download(pdfUrl, savePath, String.valueOf(dataLibraryBean.getFile_id()), new OkHttpUtils.OnDownloadListener() {
                     @Override
                     public void onDownloadSuccess(File file) {
                         LogUtil.i("PDF下载：加载完成正在打开.." + file.getPath());
@@ -198,7 +198,7 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
                     dataLibraryBean.setProgress(101);
                     mAdapter.setData(clickPosition, dataLibraryBean);
 
-                    ShowDataLibraryActivity.action(mContext,dataLibraryBean.getFile_name(),Const.HTTP + dataLibraryBean.getFile());
+                    ShowDataLibraryActivity.action(mContext, String.valueOf(dataLibraryBean.getFile_id()), dataLibraryBean.getFile_name(),Const.HTTP + dataLibraryBean.getFile());
                     break;
                 case 1://进行中
                     int progress = msg.arg1;
@@ -208,14 +208,6 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
             }
         }
     };
-
-    /**
-     * 从下载连接中解析出文件名
-     */
-    @NonNull
-    private String getNameFromUrl(String url) {
-        return url.substring(url.lastIndexOf("/") + 1);
-    }
 
     /**
      * 判断文件是否存在
