@@ -59,7 +59,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="立即升级"
-            android:textColor="@color/white"
+            android:textColor="@color/colorWhite"
             android:textSize="15sp"
             android:background="@drawable/shape_update_app_now"
             />

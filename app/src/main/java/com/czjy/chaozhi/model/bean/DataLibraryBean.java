@@ -11,6 +11,15 @@ public class DataLibraryBean {
     private int file_id;
     private String file_name;
     private String file;
+    private int progress=-1;
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
 
     public int getFile_id() {
         return file_id;
