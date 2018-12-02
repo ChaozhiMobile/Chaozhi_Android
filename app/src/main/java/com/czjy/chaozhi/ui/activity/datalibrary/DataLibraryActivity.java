@@ -132,9 +132,6 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
             String pdfUrl = Const.HTTP+dataLibraryBean.getFile();
             LogUtil.i("PDF下载：网络Url路径："+pdfUrl);
 
-//            //执行下载
-//            downloadFile(pdfUrl);
-
             //储存下载文件的SDCard目录
             String savePath = "/Chaozhi/File";
 
@@ -177,36 +174,6 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
                     mTasksView.setVisibility(View.GONE);
                 }
             });
-
-//            WebDetailActivity.action(mContext, Const.PDF_URL + dataLibraryBean.getFile());
         }
-    }
-
-    /**
-     * 下载
-     */
-    private void downloadFile(String path) {
-
-        //储存下载文件的SDCard目录
-        String savePath = "/Chaozhi/File";
-
-        OkHttpUtils.build().download(path, savePath, new OkHttpUtils.OnDownloadListener() {
-            @Override
-            public void onDownloadSuccess(File file) {
-                LogUtil.i("PDF下载：加载完成正在打开.." + file.getPath());
-
-                ShowDataLibraryActivity.action(mContext,dataLibraryBean.getFile_name(),path);
-            }
-
-            @Override
-            public void onDownloading(int progress) {
-                LogUtil.i("PDF下载：正在加载(" + progress + "/100)");
-            }
-
-            @Override
-            public void onDownloadFailed() {
-                LogUtil.i("PDF下载：加载失败..");
-            }
-        });
     }
 }
