@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,9 +13,10 @@ import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.util.OkHttpUtils;
 import com.facebook.stetho.common.LogUtil;
-import com.joanzapata.pdfview.PDFView;
-import com.joanzapata.pdfview.listener.OnLoadCompleteListener;
-import com.joanzapata.pdfview.listener.OnPageChangeListener;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnErrorListener;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 
 import java.io.File;
 
@@ -29,7 +31,7 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
 
     private String titleStr;
     private String pdfUrl;
-
+    private String TAG = "ShowDataLibraryActivity";
     public static void action(Context context, String titleStr, String pdfUrl) {
         Intent intent = new Intent(context, ShowDataLibraryActivity.class);
         intent.putExtra("titleStr", titleStr); //标题
@@ -134,9 +136,8 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
             pdf.fromFile(new File(fileName))
 
                     .defaultPage(1)
-                    .showMinimap(false)
                     .enableSwipe(true)
-                    .swipeVertical(false)
+                    .swipeHorizontal(false)
 
                     .onLoad(new OnLoadCompleteListener() {
                         @Override
@@ -145,6 +146,12 @@ public class ShowDataLibraryActivity extends BaseActivity implements OnPageChang
                             float viewWidth = pdf.getWidth();
                             pdf.zoomTo(viewWidth / pageWidth);
                             pdf.loadPages();
+                        }
+                    })
+                    .onError(new OnErrorListener() {
+                        @Override
+                        public void onError(Throwable t) {
+                            Log.d("TAG",t.getMessage());
                         }
                     })
                     .onPageChange(this)
