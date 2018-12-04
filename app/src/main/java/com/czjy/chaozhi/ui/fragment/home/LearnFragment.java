@@ -81,28 +81,25 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.library_layout:
-                WebDetailActivity.action(mContext, Const.ROUTER_LIBRARY + productId);
+                WebDetailActivity.action(mContext, Const.ROUTER_LIBRARY + productId, "题库");
                 break;
             case R.id.doc_layout:
-//                WebDetailActivity.action(mContext, Const.ROUTER_DOC + productId); //H5
+//                WebDetailActivity.action(mContext, Const.ROUTER_DOC + productId, "资料库"); //H5
                 DataLibraryActivity.action(mContext, productId); //原生
                 break;
             case R.id.live_layout:
-                WebDetailActivity.action(mContext, Const.ROUTER_LIVE + productId);
+                WebDetailActivity.action(mContext, Const.ROUTER_LIVE + productId, "直播课程");
                 break;
             case R.id.video_layout:
-                WebDetailActivity.action(mContext, Const.ROUTER_VIDEO + productId);
+                WebDetailActivity.action(mContext, Const.ROUTER_VIDEO + productId, "录播课程");
                 break;
             case R.id.live_into:
                 if (mLiveBean != null) {
-                    SimpleWebActivity.action(mContext, this.mLiveBean.getLive_url());
+                    SimpleWebActivity.action(mContext, this.mLiveBean.getLive_url(), this.mLiveBean.getLive_name());
                 }
                 break;
-
         }
-
     }
-
 
     private LearnAdapter mAdapter;
     private List<PurchProduct.NewestInfoBean.LearnCourseListBean> learnCourses;
@@ -116,7 +113,6 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
         LearnFragment learnFragment = new LearnFragment();
         return learnFragment;
     }
-
 
     @Override
     protected void initInject() {
@@ -166,8 +162,6 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
 
             }
         });
-
-
     }
 
     private void updateLearnCourse(List<PurchProduct.NewestInfoBean.LearnCourseListBean> learnCourses) {
@@ -182,7 +176,6 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
         }
         mAdapter.setNewData(learnCourses);
     }
-
 
     private void updateLiveInfo(List<PurchProduct.NewestInfoBean.LiveListBean> liveInfos) {
         if (liveInfos != null && liveInfos.size() > 0) {
@@ -257,7 +250,6 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
         }
     }
 
-
     @Override
     public void finishRefresh() {
 
@@ -268,7 +260,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
         List<PurchProduct.NewestInfoBean.LearnCourseListBean> listBeans = adapter.getData();
         PurchProduct.NewestInfoBean.LearnCourseListBean learnCourseListBean = listBeans.get(position);
         if (learnCourseListBean != null) {
-            SimpleWebActivity.action(mContext, learnCourseListBean.getView_url());
+            SimpleWebActivity.action(mContext, learnCourseListBean.getView_url(), learnCourseListBean.getName());
         }
     }
 

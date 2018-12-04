@@ -49,7 +49,6 @@ public abstract class BaseActivity<T extends IPresenter> extends ToolbarActivity
         init();
     }
 
-
     protected ActivityComponent getActivityComponent() {
         return DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))
@@ -57,15 +56,10 @@ public abstract class BaseActivity<T extends IPresenter> extends ToolbarActivity
                 .build();
     }
 
-
-
-
-
     @Subscribe
     public void onEvent(BaseEvent event){
 
     }
-
 
     @Override
     protected void onDestroy() {
@@ -77,7 +71,6 @@ public abstract class BaseActivity<T extends IPresenter> extends ToolbarActivity
         ((App) getApplication()).getActivityManager().finishActivity(this);
     }
 
-
     public void initSavedInstance(Bundle savedInstanceState) {
 
     }
@@ -88,7 +81,6 @@ public abstract class BaseActivity<T extends IPresenter> extends ToolbarActivity
         if (mProgress != null && !mProgress.isShowing()) {
             mProgress.show();
         }
-
     }
 
     @Override
@@ -102,7 +94,6 @@ public abstract class BaseActivity<T extends IPresenter> extends ToolbarActivity
     public void toast(String message) {
         ToastUtil.toast(mContext, message);
     }
-
 
     @Override
     protected void onStart() {
@@ -125,6 +116,4 @@ public abstract class BaseActivity<T extends IPresenter> extends ToolbarActivity
     protected abstract void initInject();
 
     protected abstract int getLayoutId();
-
-
 }

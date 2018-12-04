@@ -53,10 +53,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void onClick(View view){
         switch (view.getId()){
             case R.id.mine_info:
-                WebDetailActivity.action(mContext,Const.ROUTER_INFO);
+                WebDetailActivity.action(mContext,Const.ROUTER_INFO,"");
                 break;
         }
-
     }
 
     private List<MineItem> mItems;
@@ -123,16 +122,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         switch (position) {
             case 0://课程订单
-                WebDetailActivity.action(mContext,Const.ROUTER_ORDERS);
+                WebDetailActivity.action(mContext,Const.ROUTER_ORDERS,"");
                 break;
 //            case 1://我的优惠券
 //                WebDetailActivity.action(mContext,Const.ROUTER_COUPON);
 //                break;
             case 1://我的消息
-                WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE);
+                WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE,"");
                 break;
             case 2://问题反馈
-                WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK);
+                WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK,"");
                 break;
             case 3://系统设置
                 mIntent.setClass(mContext,SettingActivity.class);

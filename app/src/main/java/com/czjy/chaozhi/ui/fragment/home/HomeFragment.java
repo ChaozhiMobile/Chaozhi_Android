@@ -98,13 +98,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 startActivityForResult(intent, Const.CODE_REQ);
                 break;
             case R.id.subject_more_layout:
-                WebDetailActivity.action(mContext, Const.ROUTER_STORE + subjectId);
+                WebDetailActivity.action(mContext, Const.ROUTER_STORE + subjectId, "");
                 break;
             case R.id.public_class_try:
-                SimpleWebActivity.action(mContext,mVideoBean.getSrc());
+                SimpleWebActivity.action(mContext,mVideoBean.getSrc(),mVideoBean.getTitle());
                 //WebDetailActivity.action(mContext, Const.ROUTER_DEMO + mVideoBean.getSrc());
                 break;
-
         }
     }
 
@@ -335,7 +334,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<NewBean> newBeans = adapter.getData();
             NewBean newBean = newBeans.get(position);
             if (newBean != null) {
-                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + newBean.getId());
+                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + newBean.getId(), "");
             }
         }
         //课程
@@ -343,7 +342,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<ProductBean> productBeans = adapter.getData();
             ProductBean productBean = productBeans.get(position);
             if (productBean != null) {
-                WebDetailActivity.action(mContext, Const.ROUTER_PRODUCT + productBean.getId());
+                WebDetailActivity.action(mContext, Const.ROUTER_PRODUCT + productBean.getId(),"");
             }
         }
         //活动
@@ -351,7 +350,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<ActivityBean> activityBeans = adapter.getData();
             ActivityBean activityBean = activityBeans.get(position);
             if (activityBean != null) {
-                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + activityBean.getId());
+                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + activityBean.getId(), "");
             }
         }
     }

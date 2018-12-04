@@ -63,6 +63,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     private String agentToken;
     private String url;
+    private String title;
     private Intent mIntent = new Intent();
     private String orderInfo;
     private Runnable payRunnable;
@@ -73,9 +74,10 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private IWXAPI api;
     private static final int REQ_CODE = 9999;
 
-    public static void action(Context context, String url) {
+    public static void action(Context context, String url, String title) {
         Intent intent = new Intent(context, WebDetailActivity.class);
         intent.putExtra("url", url);
+        intent.putExtra("title", title);
         context.startActivity(intent);
     }
 
@@ -85,7 +87,6 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         initData();
         initWebView();
         initPay();
-
     }
 
     private void initPay() {
@@ -106,7 +107,6 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         api = WXAPIFactory.createWXAPI(this, "wxb4ba3c02aa476ea1", true);
         api.registerApp("wxb4ba3c02aa476ea1");
     }
-
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -168,6 +168,10 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         Intent intent = getIntent();
         if (intent != null) {
             url = intent.getStringExtra("url");
+            title = intent.getStringExtra("title");
+            if (!title.isEmpty()) {
+                mTitle.setText(title);
+            }
         }
     }
 
@@ -214,7 +218,6 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         });
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
     private void initSetting() {
         WebSettings settings = mWebView.getSettings();
@@ -253,7 +256,9 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             closeProgress();
-            mTitle.setText(view.getTitle());
+            if (title.isEmpty()) {
+                mTitle.setText(view.getTitle());
+            }
         }
 
         @Override
@@ -286,7 +291,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
-                    WebDetailActivity.action(mContext, webBean.getUrl());
+                    WebDetailActivity.action(mContext, webBean.getUrl(), webBean.getTitle());
                     break;
                 case "app":
                     switch (webBean.getTo()) {

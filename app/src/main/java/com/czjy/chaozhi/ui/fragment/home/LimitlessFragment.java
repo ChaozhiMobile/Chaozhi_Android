@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
-import android.support.v7.widget.Toolbar;
 import android.webkit.HttpAuthHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
@@ -25,7 +24,6 @@ import com.czjy.chaozhi.presenter.main.contract.LimitlessContract;
 import com.czjy.chaozhi.ui.activity.MainActivity;
 import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.ui.activity.web.SimpleWebActivity;
-import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
@@ -154,7 +152,7 @@ public class LimitlessFragment extends BaseFragment<LimitlessPresenter> implemen
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
-                    SimpleWebActivity.action(mContext,webBean.getUrl());
+                    SimpleWebActivity.action(mContext,webBean.getUrl(),"");
                     break;
                 case "app":
                     switch (webBean.getTo()) {

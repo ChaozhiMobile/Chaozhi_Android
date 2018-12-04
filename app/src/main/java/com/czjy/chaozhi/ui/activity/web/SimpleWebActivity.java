@@ -27,17 +27,17 @@ import butterknife.BindView;
  */
 public class SimpleWebActivity extends SimpleActivity {
 
-
     @BindView(R.id.webview)
     WebView mWebView;
 
     private String agentToken;
     private String url;
+    private String title;
 
-
-    public static void action(Context context, String url) {
+    public static void action(Context context, String url, String title) {
         Intent intent = new Intent(context, SimpleWebActivity.class);
         intent.putExtra("url", url);
+        intent.putExtra("title", title);
         context.startActivity(intent);
     }
 
@@ -57,6 +57,11 @@ public class SimpleWebActivity extends SimpleActivity {
         Intent intent = getIntent();
         if (intent!=null){
             url = intent.getStringExtra("url");
+            title = intent.getStringExtra("title");
+
+            if (!title.isEmpty()) {
+                mTitle.setText(title);
+            }
         }
     }
 
@@ -76,7 +81,6 @@ public class SimpleWebActivity extends SimpleActivity {
     public void setActionBar() {
 
     }
-
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initSetting() {
@@ -110,7 +114,9 @@ public class SimpleWebActivity extends SimpleActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             closeProgress();
-            mTitle.setText(view.getTitle());
+            if (title.isEmpty()) {
+                mTitle.setText(view.getTitle());
+            }
         }
 
         @Override
