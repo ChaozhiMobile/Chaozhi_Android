@@ -45,6 +45,8 @@ public class Const {
     public static final String ROUTER_STORE = "#/hybrid/store/";
     //首页-公开课列表【课程分类id】
     public static final String ROUTER_DEMO = "#/hybrid/demo/";
+    //首页-讲师详情【讲师id】
+    public static final String ROUTER_TEACHER_DETAIL = "#/hybrid/teacher/";
     //关于
     public static final String ROUTER_ABOUT = "#/hybrid/chaozhi/about";
 

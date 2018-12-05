@@ -219,7 +219,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             mTeacherScroll.removeAllViews();
             for (TeacherBean teacherBean : teachers) {
-                mTeacherScroll.addView(initTeacherView(), params);
+                View view = initTeacherView();
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        WebDetailActivity.action(mContext, Const.ROUTER_TEACHER_DETAIL + teacherBean.getId(),teacherBean.getName());
+                    }
+                });
+                mTeacherScroll.addView(view, params);
                 mTeacherName.setText(teacherBean.getName());
                 mTeacherPostion.setText(teacherBean.getInfo());
                 CommonGlideImageLoader.getInstance().displayNetImage(mContext, teacherBean.getPhoto(), mTeacherImg);
