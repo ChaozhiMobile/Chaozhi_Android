@@ -9,19 +9,17 @@
     <LinearLayout
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="18dp"
         android:background="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/teacher_img"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:src="@drawable/img_home_teacher"
             android:scaleType="fitXY"
-            />
+            android:src="@drawable/img_home_teacher" />
 
         <TextView
             android:id="@+id/teacher_name"
@@ -29,13 +27,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:ellipsize="end"
-            android:gravity="center"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:lines="1"
             android:text="夏月老师"
             android:textColor="@color/_494949"
-            android:textSize="13sp"
-            />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/teacher_position"
@@ -43,14 +40,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
-            android:gravity="center"
-            android:minLines="5"
-            android:maxLines="5"
-            android:text="ACI讲师"
             android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="5"
+            android:minLines="5"
+            android:text="ACI讲师"
             android:textColor="@color/_494949"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:minHeight="120dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingTop="10dp"
+    android:paddingRight="12dp">
 
     <ImageView
         android:id="@+id/item_product_img"
@@ -19,9 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingTop="5dp"
-        android:paddingRight="8dp">
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/tv_money"
@@ -48,7 +49,6 @@
         android:layout_height="35dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center_vertical"
-        android:paddingStart="8dp"
         android:paddingTop="2dp"
         android:text="ACI国际心理咨询师"
         android:textAlignment="textStart"
@@ -59,9 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center_vertical"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:paddingRight="8dp">
+        android:paddingTop="8dp">
 
         <ImageView
             android:id="@+id/imageView"

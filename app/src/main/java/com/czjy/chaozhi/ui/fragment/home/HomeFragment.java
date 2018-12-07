@@ -169,7 +169,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mFeatureAdapter = new FeatureProductAdapter(R.layout.item_feature_product, mProducts);
         mFeatureAdapter.setOnItemClickListener(this);
         mSubjectRecycler.setLayoutManager(new GridLayoutManager(mContext, 2));
-        mSubjectRecycler.addItemDecoration(new DividerGridItemDecoration(CommonUtil.dp2px(mContext, 20), getResources().getColor(R.color.colorWhite)));
+        mSubjectRecycler.addItemDecoration(new DividerGridItemDecoration(CommonUtil.dp2px(mContext, 1), getResources().getColor(R.color._F0F0F0)));
         mSubjectRecycler.setAdapter(mFeatureAdapter);
         mActivityAdapter = new ActivityAdapter(R.layout.item_home_activity, mActivitys);
         mAcRecycler.setLayoutManager(new LinearLayoutManager(mContext));

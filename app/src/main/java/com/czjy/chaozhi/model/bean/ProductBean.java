@@ -32,6 +32,7 @@ public class ProductBean {
     private String syllabus;
     private String tags;
     private int review_num;
+    private float review_star;
     private String img;
     private String description;
     private int status;
@@ -107,6 +108,14 @@ public class ProductBean {
 
     public void setReview_num(int review_num) {
         this.review_num = review_num;
+    }
+
+    public float getReview_star() {
+        return review_star;
+    }
+
+    public void setReview_star(float review_star) {
+        this.review_star = review_star;
     }
 
     public String getImg() {
