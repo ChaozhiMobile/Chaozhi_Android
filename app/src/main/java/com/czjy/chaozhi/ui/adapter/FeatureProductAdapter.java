@@ -33,6 +33,7 @@ public class FeatureProductAdapter extends BaseQuickAdapter<ProductBean,BaseView
         tvDiscount.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         RatingBar ratingBar = helper.getView(R.id.ratingBar);
         ratingBar.setRating(item.getReview_star());
+        ratingBar.setIsIndicator(true); //星级不可更改
         ImageView imageView = helper.getView(R.id.item_product_img);
         CommonGlideImageLoader.getInstance().displayNetImage(mContext,item.getImg(),imageView,mContext.getResources().getDrawable(R.mipmap.default_course));
     }

@@ -10,10 +10,10 @@ public class Const {
      * 测试账号：18268686511/15737936517/15068850958 密码：123456 112233
      */
 
-    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
-    public static final String H5_URL = "http://test.chaozhiedu.com/mobile/";
-//    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
-//    public static final String H5_URL  = "https://m.chaozhiedu.com/";
+//    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
+//    public static final String H5_URL = "http://test.chaozhiedu.com/mobile/";
+    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
+    public static final String H5_URL = "https://m.chaozhiedu.com/";
     public static final String PDF_URL = "https://m.chaozhiedu.com/static/pdf.html?http:";
     public static final String HTTP = "http:";
 
