@@ -49,7 +49,7 @@
         android:textSize="12sp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="6dp"
-        android:maxLines="3"
+        android:maxLines="2"
         android:ellipsize="end"
         android:layout_marginRight="12dp"
         app:layout_constraintLeft_toRightOf="@id/item_new_img"
@@ -57,6 +57,16 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="2018-12-12 17:00"
+        android:textColor="@color/_B4B4B4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/item_new_content" />
 
     <View
         android:layout_width="match_parent"

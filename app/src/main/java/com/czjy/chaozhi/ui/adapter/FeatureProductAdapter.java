@@ -27,8 +27,8 @@ public class FeatureProductAdapter extends BaseQuickAdapter<ProductBean,BaseView
     protected void convert(BaseViewHolder helper, ProductBean item) {
         helper.setText(R.id.item_product_text,item.getName());
         helper.setText(R.id.tv_comment,String.valueOf(item.getReview_num()));
-        helper.setText(R.id.tv_money,item.getOriginal_price());
-        helper.setText(R.id.tv_discount,item.getPrice());
+        helper.setText(R.id.tv_money,item.getPrice());
+        helper.setText(R.id.tv_discount,item.getOriginal_price());
         TextView tvDiscount = helper.getView(R.id.tv_discount);
         tvDiscount.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         RatingBar ratingBar = helper.getView(R.id.ratingBar);

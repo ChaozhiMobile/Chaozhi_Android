@@ -37,7 +37,6 @@ import butterknife.OnClick;
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View, BaseQuickAdapter.OnItemClickListener {
 
-
     @BindView(R.id.mine_title)
     TextView mTitle;
     @BindView(R.id.mine_avatar)
@@ -84,7 +83,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init() {
         initItem();
         initView();
-        initData();
+//        initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mPresenter.getUserInfo();
     }
 
     private void initData() {
