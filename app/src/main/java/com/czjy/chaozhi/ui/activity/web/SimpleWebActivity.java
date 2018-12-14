@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.os.Build;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -86,6 +87,10 @@ public class SimpleWebActivity extends SimpleActivity {
     private void initSetting() {
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);//支持javaScript
+        settings.setBlockNetworkImage(false);//解决图片不显示
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         settings.setDefaultTextEncodingName("utf-8");//设置网页默认编码
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
