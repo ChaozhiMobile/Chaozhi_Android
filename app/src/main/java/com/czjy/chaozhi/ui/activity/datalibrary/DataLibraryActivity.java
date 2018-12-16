@@ -13,6 +13,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
+import com.czjy.chaozhi.db.DataLibraryDao;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
 import com.czjy.chaozhi.model.response.DataLibraryResponse;
@@ -20,6 +21,7 @@ import com.czjy.chaozhi.presenter.datalibrary.DataLibraryPresenter;
 import com.czjy.chaozhi.presenter.datalibrary.contract.DataLibraryContract;
 import com.czjy.chaozhi.ui.adapter.DataLibraryAdapter;
 import com.czjy.chaozhi.util.OkHttpUtils;
+import com.czjy.chaozhi.util.Utils;
 import com.facebook.stetho.common.LogUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,6 +32,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 资料库
+ */
 public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> implements DataLibraryContract.View, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.refresh)
@@ -102,12 +107,20 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
         if (dataLibraryBeans != null && dataLibraryBeans.size() > 0) {
             for (int i = 0; i<dataLibraryBeans.size(); i++) {
                 DataLibraryBean dataLibraryBean = dataLibraryBeans.get(i);
-                String pdfUrl = Const.HTTP + dataLibraryBean.getFile();
                 //储存下载文件的SDCard目录
                 String savePath = "/Chaozhi/File";
                 String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + String.valueOf(dataLibraryBean.getFile_id());
-                if (fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
+                dataLibraryBean.setFile_localurl(pdfStr);
+                dataLibraryBean.setFile_size("20.0MB");
+                if (Utils.fileIsExists(pdfStr)) { //文件存在
                     dataLibraryBean.setProgress(101);
+
+                    //如果文件已经下载，没有存储数据库，重新存储一遍
+                    DataLibraryDao dataLibraryDao = new DataLibraryDao(this);
+                    DataLibraryBean libraryBean = dataLibraryDao.select(dataLibraryBean.getFile_id());
+                    if (libraryBean==null) {
+                        dataLibraryDao.insert(dataLibraryBean);
+                    }
                 } else {
                     dataLibraryBean.setProgress(-1);
                 }
@@ -150,11 +163,11 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
             //储存下载文件的SDCard目录
             String savePath = "/Chaozhi/File";
 
-            String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + String.valueOf(dataLibraryBean.getFile_id());
+            String pdfStr = dataLibraryBean.getFile_localurl();
             LogUtil.i("PDF下载：本地Url路径："+pdfStr);
 
-            if (fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
-                ShowDataLibraryActivity.action(mContext, String.valueOf(dataLibraryBean.getFile_id()), dataLibraryBean.getFile_name(),Const.HTTP + dataLibraryBean.getFile());
+            if (Utils.fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
+                ShowDataLibraryActivity.action(mContext, dataLibraryBean.getFile_name(),dataLibraryBean.getFile_localurl());
             } else {
                 OkHttpUtils.build().download(pdfUrl, savePath, String.valueOf(dataLibraryBean.getFile_id()), new OkHttpUtils.OnDownloadListener() {
                     @Override
@@ -198,7 +211,11 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
                     dataLibraryBean.setProgress(101);
                     mAdapter.setData(clickPosition, dataLibraryBean);
 
-                    ShowDataLibraryActivity.action(mContext, String.valueOf(dataLibraryBean.getFile_id()), dataLibraryBean.getFile_name(),Const.HTTP + dataLibraryBean.getFile());
+                    //调用DataLibraryDao插入方法进行插入
+                    DataLibraryDao dao = new DataLibraryDao(mContext);
+                    dao.insert(dataLibraryBean);
+
+                    ShowDataLibraryActivity.action(mContext, dataLibraryBean.getFile_name(),dataLibraryBean.getFile_localurl());
                     break;
                 case 1://进行中
                     int progress = msg.arg1;
@@ -208,19 +225,4 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
             }
         }
     };
-
-    /**
-     * 判断文件是否存在
-     */
-    public boolean fileIsExists(String strFile) {
-        try {
-            File f=new File(strFile);
-            if(!f.exists()) {
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
 }

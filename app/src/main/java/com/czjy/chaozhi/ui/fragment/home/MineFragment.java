@@ -17,6 +17,7 @@ import com.czjy.chaozhi.model.bean.UserBean;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.MinePresenter;
 import com.czjy.chaozhi.presenter.main.contract.MineContract;
+import com.czjy.chaozhi.ui.activity.datalibrary.MyDataLibraryActivity;
 import com.czjy.chaozhi.ui.activity.setting.SettingActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.ui.adapter.MineAdapter;
@@ -83,14 +84,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init() {
         initItem();
         initView();
-//        initData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        mPresenter.getUserInfo();
+        initData();
     }
 
     private void initData() {
@@ -100,7 +100,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initItem() {
         mItems = new ArrayList<>();
         mItems.add(new MineItem(R.mipmap.ic_course, "课程订单", false));
-//        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的优惠券", false));
+        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的下载资料", false));
         mItems.add(new MineItem(R.mipmap.ic_message, "我的消息", true));
         mItems.add(new MineItem(R.mipmap.ic_feedback, "问题反馈", false));
         mItems.add(new MineItem(R.mipmap.ic_setting, "系统设置", false));
@@ -130,16 +130,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             case 0://课程订单
                 WebDetailActivity.action(mContext,Const.ROUTER_ORDERS,"");
                 break;
-//            case 1://我的优惠券
-//                WebDetailActivity.action(mContext,Const.ROUTER_COUPON);
-//                break;
-            case 1://我的消息
+            case 1://我的下载资料
+                MyDataLibraryActivity.action(mContext);
+                break;
+            case 2://我的消息
                 WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE,"");
                 break;
-            case 2://问题反馈
+            case 3://问题反馈
                 WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK,"");
                 break;
-            case 3://系统设置
+            case 4://系统设置
                 mIntent.setClass(mContext,SettingActivity.class);
                 startActivity(mIntent);
                 break;
