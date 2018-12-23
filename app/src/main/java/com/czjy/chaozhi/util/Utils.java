@@ -58,7 +58,6 @@ public class Utils {
         } else {
             size = div(length, 1024*1024, 1) + "MB";
         }
-        LogUtil.i("文件尺寸：" + length + "Byte");
         return size;
     }
 

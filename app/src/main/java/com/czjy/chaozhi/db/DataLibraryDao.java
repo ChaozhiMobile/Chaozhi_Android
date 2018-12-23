@@ -23,7 +23,7 @@ public class DataLibraryDao {
     public void insert(DataLibraryBean dataLibraryBean) {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.execSQL(
-                "insert into tab_datalibrary values(?,?,?,?,?)",
+                "insert into tab_datalibrary values(?,?,?,?)",
                 new Object[] { dataLibraryBean.getFile_id(), dataLibraryBean.getFile_name(), dataLibraryBean.getFile(),
                         dataLibraryBean.getFile_localurl()});
         db.close();
