@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 
 import com.facebook.stetho.common.LogUtil;
 
@@ -77,5 +78,19 @@ public class Utils {
         BigDecimal b1 = new BigDecimal(Double.toString(v1));
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
         return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    /**
+     * 删除已存储的文件
+     * @param filePath 文件路径
+     */
+    public static void deleteFile(String filePath) {
+        try {
+            // 找到文件所在的路径并删除该文件
+            File file = new File(filePath);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

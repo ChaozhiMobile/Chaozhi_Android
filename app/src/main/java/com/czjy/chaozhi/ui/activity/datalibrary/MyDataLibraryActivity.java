@@ -13,6 +13,7 @@ import com.czjy.chaozhi.db.DataLibraryDao;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
 import com.czjy.chaozhi.ui.adapter.DataLibraryDownloadAdapter;
 import com.czjy.chaozhi.ui.adapter.DataLibraryDownloadAdapter.InnerItemOnclickListener;
+import com.czjy.chaozhi.util.Utils;
 
 import java.util.List;
 
@@ -99,9 +100,10 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
         switch (v.getId()) {
             case R.id.item_datalibrary_delete:
                 if (bean != null) {
-                    dataLibraryDao.delete(bean.getFile_id());
-                    dataLibraryBeans.remove(bean);
-                    mAdapter.notifyItemRemoved(position);
+                    dataLibraryDao.delete(bean.getFile_id()); //删除数据库记录
+                    Utils.deleteFile(bean.getFile_localurl()); //删除本地文件
+                    dataLibraryBeans.remove(bean); //删除列表数据源
+                    mAdapter.notifyItemRemoved(position); //刷新列表
                 }
                 break;
                 default:
