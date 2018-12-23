@@ -12,6 +12,7 @@ import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.db.DataLibraryDao;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
 import com.czjy.chaozhi.ui.adapter.DataLibraryAdapter;
+import com.czjy.chaozhi.ui.adapter.DataLibraryDownloadAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
     RecyclerView mRecycler;
 
     private LinearLayoutManager mManager;
-    private DataLibraryAdapter mAdapter;
+    private DataLibraryDownloadAdapter mAdapter;
     private List<DataLibraryBean> dataLibraryBeans;
     private DataLibraryBean dataLibraryBean;
 
@@ -48,7 +49,7 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
     }
 
     private void initView() {
-        mAdapter = new DataLibraryAdapter(R.layout.item_datalibrary, dataLibraryBeans);
+        mAdapter = new DataLibraryDownloadAdapter(R.layout.item_datalibrary_download, dataLibraryBeans);
         mAdapter.setOnItemClickListener(this);
         mManager = new LinearLayoutManager(mContext);
         mRecycler.setLayoutManager(mManager);
@@ -67,7 +68,7 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
 
     @Override
     public void setActionBar() {
-        mTitle.setText("我的下载资料");
+        mTitle.setText("我的下载");
     }
 
     @Override

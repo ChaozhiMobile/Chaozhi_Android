@@ -100,8 +100,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initItem() {
         mItems = new ArrayList<>();
         mItems.add(new MineItem(R.mipmap.ic_course, "课程订单", false));
-        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的下载资料", false));
         mItems.add(new MineItem(R.mipmap.ic_message, "我的消息", true));
+        mItems.add(new MineItem(R.mipmap.ic_fav, "我的收藏", true));
+        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的下载", false));
         mItems.add(new MineItem(R.mipmap.ic_feedback, "问题反馈", false));
         mItems.add(new MineItem(R.mipmap.ic_setting, "系统设置", false));
     }
@@ -130,16 +131,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             case 0://课程订单
                 WebDetailActivity.action(mContext,Const.ROUTER_ORDERS,"");
                 break;
-            case 1://我的下载资料
-                MyDataLibraryActivity.action(mContext);
-                break;
-            case 2://我的消息
+            case 1://我的消息
                 WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE,"");
                 break;
-            case 3://问题反馈
+            case 2://我的收藏
+                WebDetailActivity.action(mContext,Const.ROUTER_MY_FAV,"");
+                break;
+            case 3://我的下载
+                MyDataLibraryActivity.action(mContext);
+                break;
+            case 4://问题反馈
                 WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK,"");
                 break;
-            case 4://系统设置
+            case 5://系统设置
                 mIntent.setClass(mContext,SettingActivity.class);
                 startActivity(mIntent);
                 break;

@@ -23,6 +23,8 @@ public class Const {
     public static final String ROUTER_MESSAGE = "#/hybrid/message/";
     //我的订单
     public static final String ROUTER_ORDERS = "#/hybrid/orders/";
+    //我的收藏
+    public static final String ROUTER_MY_FAV = "#/hybrid/me/fav";
     //个人中心
     public static final String ROUTER_INFO = "#/hybrid/me/info/";
     //问题反馈
@@ -43,8 +45,8 @@ public class Const {
     public static final String ROUTER_PRODUCT = "#/hybrid/store/product/";
     //首页-推荐课程列表【课程分类id】
     public static final String ROUTER_STORE = "#/hybrid/store/";
-    //首页-公开课列表【课程分类id】
-    public static final String ROUTER_DEMO = "#/hybrid/demo/";
+    //首页-更多公开课
+    public static final String ROUTER_STORE_FREE = "#/hybrid/store/free";
     //首页-讲师详情【讲师id】
     public static final String ROUTER_TEACHER_DETAIL = "#/hybrid/teacher/";
     //关于

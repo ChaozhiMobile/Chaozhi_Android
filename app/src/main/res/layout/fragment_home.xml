@@ -188,6 +188,31 @@
                         android:background="@color/_F0F0F0"
                         app:layout_constraintTop_toBottomOf="@+id/public_class_tip" />
 
+                    <LinearLayout
+                        android:id="@+id/public_subject_more_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多公开课 "
+                            android:textColor="@color/_4A4A4A"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/ic_arrow_more" />
+
+                    </LinearLayout>
+
                 </android.support.constraint.ConstraintLayout>
 
 

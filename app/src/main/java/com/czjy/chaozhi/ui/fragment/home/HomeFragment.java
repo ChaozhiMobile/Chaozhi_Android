@@ -90,7 +90,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     ConstraintLayout mNewsLayout;
 
 
-    @OnClick({R.id.home_menu, R.id.subject_more_layout, R.id.public_class_try})
+    @OnClick({R.id.home_menu, R.id.subject_more_layout, R.id.public_subject_more_layout, R.id.public_class_try})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_menu:
@@ -99,6 +99,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 break;
             case R.id.subject_more_layout:
                 WebDetailActivity.action(mContext, Const.ROUTER_STORE + subjectId, "");
+                break;
+            case R.id.public_subject_more_layout:
+                WebDetailActivity.action(mContext, Const.ROUTER_STORE_FREE, "");
                 break;
             case R.id.public_class_try:
                 SimpleWebActivity.action(mContext,mVideoBean.getSrc(),mVideoBean.getTitle());
