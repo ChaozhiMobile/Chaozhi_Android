@@ -11,10 +11,9 @@ import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.db.DataLibraryDao;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
-import com.czjy.chaozhi.ui.adapter.DataLibraryAdapter;
 import com.czjy.chaozhi.ui.adapter.DataLibraryDownloadAdapter;
+import com.czjy.chaozhi.ui.adapter.DataLibraryDownloadAdapter.InnerItemOnclickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,7 +21,7 @@ import butterknife.BindView;
 /**
  * 我的下载资料
  */
-public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, InnerItemOnclickListener {
 
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
@@ -31,6 +30,7 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
     private DataLibraryDownloadAdapter mAdapter;
     private List<DataLibraryBean> dataLibraryBeans;
     private DataLibraryBean dataLibraryBean;
+    private DataLibraryDao dataLibraryDao;
 
     public static void action(Context context) {
         Intent intent = new Intent(context, MyDataLibraryActivity.class);
@@ -44,13 +44,14 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
     }
 
     private void initData() {
-        DataLibraryDao dataLibraryDao = new DataLibraryDao(this);
+        dataLibraryDao = new DataLibraryDao(this);
         dataLibraryBeans = dataLibraryDao.getAllData();
     }
 
     private void initView() {
         mAdapter = new DataLibraryDownloadAdapter(R.layout.item_datalibrary_download, dataLibraryBeans);
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnInnerItemOnClickListener(this);
         mManager = new LinearLayoutManager(mContext);
         mRecycler.setLayoutManager(mManager);
         mRecycler.setAdapter(mAdapter);
@@ -71,12 +72,40 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
         mTitle.setText("我的下载");
     }
 
+    /**
+     * 列表点击事件
+     * @param adapter
+     * @param view
+     * @param position
+     */
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         List<DataLibraryBean> dataLibraryBeans = adapter.getData();
         dataLibraryBean = dataLibraryBeans.get(position);
         if (dataLibraryBean != null) {
             ShowDataLibraryActivity.action(mContext, dataLibraryBean.getFile_name(),dataLibraryBean.getFile_localurl());
+        }
+    }
+
+    /**
+     * 列表内部按钮点击事件
+     * @param v
+     */
+    @Override
+    public void itemClick(View v) {
+        int position;
+        position = (Integer) v.getTag();
+        DataLibraryBean bean = dataLibraryBeans.get(position);
+        switch (v.getId()) {
+            case R.id.item_datalibrary_delete:
+                if (bean != null) {
+                    dataLibraryDao.delete(bean.getFile_id());
+                    dataLibraryBeans.remove(bean);
+                    mAdapter.notifyItemRemoved(position);
+                }
+                break;
+                default:
+                    break;
         }
     }
 }
