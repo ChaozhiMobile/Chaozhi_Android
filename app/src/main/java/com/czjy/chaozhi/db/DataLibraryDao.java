@@ -25,7 +25,7 @@ public class DataLibraryDao {
         db.execSQL(
                 "insert into tab_datalibrary values(?,?,?,?,?)",
                 new Object[] { dataLibraryBean.getFile_id(), dataLibraryBean.getFile_name(), dataLibraryBean.getFile(),
-                        dataLibraryBean.getFile_localurl(), dataLibraryBean.getFile_size()});
+                        dataLibraryBean.getFile_localurl()});
         db.close();
     }
 
@@ -43,8 +43,7 @@ public class DataLibraryDao {
             String file_name = cursor.getString(cursor.getColumnIndex("file_name"));
             String file = cursor.getString(cursor.getColumnIndex("file"));
             String file_localurl = cursor.getString(cursor.getColumnIndex("file_localurl"));
-            String file_size = cursor.getString(cursor.getColumnIndex("file_size"));
-            dataLibraryBean = new DataLibraryBean(file_id, file_name, file, file_localurl, file_size);
+            dataLibraryBean = new DataLibraryBean(file_id, file_name, file, file_localurl);
         }
         cursor.close();
         db.close();
@@ -75,10 +74,9 @@ public class DataLibraryDao {
             String file_name = cursor.getString(cursor.getColumnIndex("file_name"));
             String file = cursor.getString(cursor.getColumnIndex("file"));
             String file_localurl = cursor.getString(cursor.getColumnIndex("file_localurl"));
-            String file_size = cursor.getString(cursor.getColumnIndex("file_size"));
 
             if (Utils.fileIsExists(file_localurl)) { //文件存在
-                DataLibraryBean dataLibraryBean = new DataLibraryBean(file_id, file_name, file, file_localurl, file_size);
+                DataLibraryBean dataLibraryBean = new DataLibraryBean(file_id, file_name, file, file_localurl);
                 listItem.add(dataLibraryBean);
             } else {
                 //如果数据库中的文件已经被删除，则把数据库中的记录也删除

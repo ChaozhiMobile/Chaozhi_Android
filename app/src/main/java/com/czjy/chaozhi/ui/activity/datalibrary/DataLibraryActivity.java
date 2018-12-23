@@ -111,10 +111,8 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
                 String savePath = "/Chaozhi/File";
                 String pdfStr = Environment.getExternalStorageDirectory() + savePath + "/" + String.valueOf(dataLibraryBean.getFile_id());
                 dataLibraryBean.setFile_localurl(pdfStr);
-                dataLibraryBean.setFile_size("20.0MB");
                 if (Utils.fileIsExists(pdfStr)) { //文件存在
                     dataLibraryBean.setProgress(101);
-
                     //如果文件已经下载，没有存储数据库，重新存储一遍
                     DataLibraryDao dataLibraryDao = new DataLibraryDao(this);
                     DataLibraryBean libraryBean = dataLibraryDao.select(dataLibraryBean.getFile_id());

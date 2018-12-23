@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
+import com.czjy.chaozhi.util.Utils;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class DataLibraryDownloadAdapter extends BaseQuickAdapter<DataLibraryBean
     @Override
     protected void convert(BaseViewHolder helper, DataLibraryBean item) {
         helper.setText(R.id.item_datalibrary_name, item.getFile_name());
+        helper.setText(R.id.item_datalibrary_size, Utils.getFileSize(item.getFile_localurl()));
         Button deleteBtn = helper.getView(R.id.item_datalibrary_delete);
         deleteBtn.setOnClickListener(this);
         int position = 0;

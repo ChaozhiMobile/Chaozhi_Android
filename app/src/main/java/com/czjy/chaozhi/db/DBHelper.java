@@ -7,16 +7,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
-        super(context, "chaozhi.db", null, 1);
-    }
+            super(context, "chaozhi.db", null, 1);
+        }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        /*
-         * 创建tab_datalibrary【资料库表】
-         */
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            /*
+             * 创建tab_datalibrary【资料库表】
+             */
         String createTableDataLibrary = "create table tab_datalibrary (file_id int , file_name varchar(100), " +
-                "file varchar(150) , file_localurl varchar(150) , file_size varchar(50) , primary key('file_id')) ";
+                "file varchar(150) , file_localurl varchar(150) , primary key('file_id')) ";
         db.execSQL(createTableDataLibrary);
     }
 

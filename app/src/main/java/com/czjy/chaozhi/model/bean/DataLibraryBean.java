@@ -12,15 +12,13 @@ public class DataLibraryBean {
     private String file_name;
     private String file;
     private String file_localurl;
-    private String file_size;
     private int progress=-1;
 
-    public DataLibraryBean(int file_id, String file_name, String file, String file_localurl, String file_size) {
+    public DataLibraryBean(int file_id, String file_name, String file, String file_localurl) {
         this.file_id = file_id;
         this.file_name = file_name;
         this.file = file;
         this.file_localurl = file_localurl;
-        this.file_size = file_size;
     }
 
     public void setProgress(int progress) {
@@ -61,13 +59,5 @@ public class DataLibraryBean {
 
     public void setFile_localurl(String file_localurl) {
         this.file_localurl = file_localurl;
-    }
-
-    public String getFile_size() {
-        return file_size;
-    }
-
-    public void setFile_size(String file_size) {
-        this.file_size = file_size;
     }
 }
