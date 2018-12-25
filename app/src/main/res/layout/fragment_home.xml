@@ -215,22 +215,22 @@
 
                 </android.support.constraint.ConstraintLayout>
 
-
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/class_teacher_layout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_marginTop="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/public_class_tip_layout">
 
-
                     <ImageView
                         android:id="@+id/class_teacher_avatar"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@drawable/img_teacher_avatar" />
+                        android:layout_marginLeft="32dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/default_course" />
 
                     <TextView
                         android:id="@+id/class_name"
@@ -263,13 +263,12 @@
                         android:layout_width="120dp"
                         android:layout_height="28dp"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="16dp"
                         android:background="@drawable/shape_audition"
                         android:gravity="center"
                         android:text="马上试听"
                         android:textColor="@color/colorWhite"
                         android:textSize="12sp"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/class_teacher_avatar"
                         app:layout_constraintTop_toBottomOf="@id/class_teacher" />
 
