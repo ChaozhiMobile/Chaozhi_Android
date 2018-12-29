@@ -1,5 +1,6 @@
 package com.czjy.chaozhi.model.http.api;
 
+import com.czjy.chaozhi.model.bean.PurchaseBean;
 import com.czjy.chaozhi.model.bean.UserBean;
 import com.czjy.chaozhi.model.http.BaseResponse;
 import com.czjy.chaozhi.model.http.HttpResponse;
@@ -45,4 +46,11 @@ public interface UserApi {
     @POST("api/phone-captcha")
     Observable<BaseResponse> getCode(@Field("phone") String phone,
                                      @Field("type") String type);
+
+    /**
+     * 报班状态
+     */
+    @FormUrlEncoded
+    @POST("api/user/purchase-status")
+    Observable<HttpResponse<PurchaseBean>> getPurchaseStatus(@Field("data") String data);
 }

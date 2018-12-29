@@ -13,6 +13,7 @@ import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseFragment;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.MineItem;
+import com.czjy.chaozhi.model.bean.PurchaseBean;
 import com.czjy.chaozhi.model.bean.UserBean;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.MinePresenter;
@@ -23,6 +24,7 @@ import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.ui.adapter.MineAdapter;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.glide.CommonGlideImageLoader;
+import com.facebook.stetho.common.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,6 +61,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private List<MineItem> mItems;
+    private List<PurchaseBean.ChatBean> chatBeans;
     private LinearLayoutManager mManager;
     private MineAdapter mAdapter;
     private Intent mIntent = new Intent();
@@ -84,17 +87,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init() {
         initItem();
         initView();
+        initData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        initData();
+        mPresenter.getUserInfo();
     }
 
     private void initData() {
         mPresenter.getUserInfo();
+        mPresenter.getPurchaseStatus();
     }
 
     private void initItem() {
@@ -105,6 +110,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         mItems.add(new MineItem(R.mipmap.ic_coupon, "我的下载", false));
         mItems.add(new MineItem(R.mipmap.ic_feedback, "问题反馈", false));
         mItems.add(new MineItem(R.mipmap.ic_setting, "系统设置", false));
+
+        chatBeans = new ArrayList<>();
     }
 
     private void initView() {
@@ -127,28 +134,35 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        switch (position) {
-            case 0://课程订单
-                WebDetailActivity.action(mContext,Const.ROUTER_ORDERS,"");
-                break;
-            case 1://我的消息
-                WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE,"");
-                break;
-            case 2://我的收藏
-                WebDetailActivity.action(mContext,Const.ROUTER_MY_FAV,"");
-                break;
-            case 3://我的下载
-                MyDataLibraryActivity.action(mContext);
-                break;
-            case 4://问题反馈
-                WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK,"");
-                break;
-            case 5://系统设置
-                mIntent.setClass(mContext,SettingActivity.class);
-                startActivity(mIntent);
-                break;
-        }
 
+        MineItem mineItem = mItems.get(position);
+
+        if (mineItem.getItem().equals("我的班主任")) {
+            PurchaseBean.ChatBean chatBean = chatBeans.get(0);
+            WebDetailActivity.action(mContext,chatBean.getChat_url(),mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("报考资料")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_APPLY,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("课程订单")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_ORDERS,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("我的消息")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("我的收藏")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_MY_FAV,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("我的下载")) {
+            MyDataLibraryActivity.action(mContext);
+        }
+        if (mineItem.getItem().equals("问题反馈")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("系统设置")) {
+            mIntent.setClass(mContext,SettingActivity.class);
+            startActivity(mIntent);
+        }
     }
 
     @Subscribe(sticky = true)
@@ -164,5 +178,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void showUserInfo(UserBean userBean) {
         CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext,userBean.getHead_img_url(),mAvatar,mContext.getResources().getDrawable(R.mipmap.ic_red_mine));
+    }
+
+    @Override
+    public void showPurchaseStatus(PurchaseBean purchaseBean) {
+        if (purchaseBean.getIs_purchase() == 1 && purchaseBean.getChat().size()>0) { //已报班
+            chatBeans = purchaseBean.getChat();
+            MineItem mineItem = mItems.get(0);
+            if (!mineItem.getItem().equals("我的班主任")) {
+                mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
+                mItems.add(1, new MineItem(R.mipmap.ic_examdata, "报考资料", true));
+                mAdapter.notifyDataSetChanged();
+            }
+
+        }
     }
 }

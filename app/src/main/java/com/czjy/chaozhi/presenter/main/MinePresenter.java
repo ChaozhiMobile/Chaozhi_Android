@@ -2,6 +2,7 @@ package com.czjy.chaozhi.presenter.main;
 
 import com.czjy.chaozhi.base.RxPresenter;
 import com.czjy.chaozhi.model.bean.PurchProduct;
+import com.czjy.chaozhi.model.bean.PurchaseBean;
 import com.czjy.chaozhi.model.bean.UserBean;
 import com.czjy.chaozhi.model.http.ApiFactory;
 import com.czjy.chaozhi.presenter.main.contract.MineContract;
@@ -38,6 +39,22 @@ public class MinePresenter extends RxPresenter<MineContract.View> implements Min
                     @Override
                     public void accept(UserBean userBean) throws Exception {
                         mView.showUserInfo(userBean);
+                    }
+                }, new RxException<>(e -> {
+                    mView.toast("获取失败");
+                }));
+        addDispose(disposable);
+    }
+
+    @Override
+    public void getPurchaseStatus() {
+        Disposable disposable = mApiFactory.getUserApi().getPurchaseStatus("")
+                .compose(RxSchedulers.io_main())
+                .compose(RxResult.handleResult())
+                .subscribe(new Consumer<PurchaseBean>() {
+                    @Override
+                    public void accept(PurchaseBean purchaseBean) throws Exception {
+                        mView.showPurchaseStatus(purchaseBean);
                     }
                 }, new RxException<>(e -> {
                     mView.toast("获取失败");

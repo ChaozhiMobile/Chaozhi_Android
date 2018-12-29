@@ -2,6 +2,7 @@ package com.czjy.chaozhi.presenter.main.contract;
 
 import com.czjy.chaozhi.base.IBaseView;
 import com.czjy.chaozhi.base.IPresenter;
+import com.czjy.chaozhi.model.bean.PurchaseBean;
 import com.czjy.chaozhi.model.bean.UserBean;
 
 /**
@@ -11,9 +12,11 @@ public interface MineContract {
 
     interface View extends IBaseView{
         void showUserInfo(UserBean userBean);
+        void showPurchaseStatus(PurchaseBean purchaseBean);
     }
 
     interface Presenter extends IPresenter<View>{
         void getUserInfo();
+        void getPurchaseStatus();
     }
 }
