@@ -182,15 +182,31 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void showPurchaseStatus(PurchaseBean purchaseBean) {
-        if (purchaseBean.getIs_purchase() == 1 && purchaseBean.getChat().size()>0) { //已报班
-            chatBeans = purchaseBean.getChat();
-            MineItem mineItem = mItems.get(0);
-            if (!mineItem.getItem().equals("我的班主任")) {
-                mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
-                mItems.add(1, new MineItem(R.mipmap.ic_examdata, "报考资料", true));
-                mAdapter.notifyDataSetChanged();
-            }
 
+        if (purchaseBean.getIs_purchase() == 1) { //已报班
+
+            if (!isTitleExist("报考资料")) {
+                mItems.add(0, new MineItem(R.mipmap.ic_examdata, "报考资料", false));
+            }
+            if (purchaseBean.getChat().size() > 0) { //已分配班主任
+                chatBeans = purchaseBean.getChat();
+                if (!isTitleExist("我的班主任")) {
+                    mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
+                }
+            }
+            mAdapter.notifyDataSetChanged();
         }
+    }
+
+    // 判断标题是否已经存在
+    public boolean isTitleExist(String title) {
+
+        for (int i = 0; i<mItems.size(); i++) {
+            MineItem mineItem = mItems.get(i);
+            if (title.equals(mineItem.getItem())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
