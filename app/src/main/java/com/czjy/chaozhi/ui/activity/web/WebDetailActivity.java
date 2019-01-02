@@ -232,7 +232,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         String userAgent = settings.getUserAgentString();
         settings.setUserAgentString(userAgent + "&&" + agentToken);
-        mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.setWebViewClient(new
+                MyWebViewClient());
         mWebView.clearCache(true);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -254,7 +255,9 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            showProgress();
+            if (!title.equals("我的班主任")) {
+                showProgress();
+            }
         }
 
         @Override
