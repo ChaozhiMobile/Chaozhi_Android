@@ -71,7 +71,7 @@ public class ResetPresenter extends RxPresenter<ResetContract.View> implements R
                         if (response.isSuccess()) {
                             mView.toast("验证码发送成功");
                         } else {
-                            mView.toast("验证码发送失败");
+                            mView.toast(response.getMsg());
                         }
                     }
                 }, new RxException<>(e -> {

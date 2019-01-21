@@ -99,7 +99,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void initData() {
         mPresenter.getUserInfo();
-        mPresenter.getPurchaseStatus();
     }
 
     private void initItem() {
@@ -177,11 +176,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void showUserInfo(UserBean userBean) {
-        CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext,userBean.getHead_img_url(),mAvatar,mContext.getResources().getDrawable(R.mipmap.ic_red_mine));
-    }
 
-    @Override
-    public void showPurchaseStatus(PurchaseBean purchaseBean) {
+        CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext,userBean.getHead_img_url(),mAvatar,mContext.getResources().getDrawable(R.mipmap.ic_red_mine));
+
+        PurchaseBean purchaseBean = userBean.getPurchase();
 
         if (purchaseBean.getIs_purchase() == 1) { //已报班
 

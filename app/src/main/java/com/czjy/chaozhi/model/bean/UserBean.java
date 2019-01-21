@@ -26,6 +26,17 @@ public class UserBean {
      * autograph : null
      * brief : null
      * head_img_url :
+     * "purchase": {
+     *             "is_purchase": 1,
+     *             "order_count": 13,
+     *             "chat": [
+     *                 {
+     *                     "product_id": 10,
+     *                     "product_name": "ACI注册心理咨询师-VIP保障实操班",
+     *                     "chat_url": "http://kf-dev.chaozhiedu.com:88/index/index/home?visiter_id=45405&visiter_name=18268686511%28%E7%8E%8B%E5%B0%8F%E5%B0%8F%29&avatar=&business_id=admin&groupid=0&cle_info=eyJuYW1lIjoiMTgyNjg2ODY1MTEoXHU3MzhiXHU1YzBmXHU1YzBmKSIsImNsZV9udW0iOjQ1NDA1LCJ0ZWwiOiIxODI2ODY4NjUxMSIsImN0eXBlIjoiQUNJXHU2Y2U4XHU1MThjXHU1ZmMzXHU3NDA2XHU1NGE4XHU4YmUyXHU1ZTA4LVZJUFx1NGZkZFx1OTY5Y1x1NWI5ZVx1NjRjZFx1NzNlZCJ9"
+     *                 }
+     *             ]
+     *         }
      */
 
     private int id;
@@ -45,6 +56,7 @@ public class UserBean {
     private Object autograph;
     private Object brief;
     private String head_img_url;
+    private PurchaseBean purchase;
 
     public int getId() {
         return id;
@@ -184,5 +196,13 @@ public class UserBean {
 
     public void setHead_img_url(String head_img_url) {
         this.head_img_url = head_img_url;
+    }
+
+    public PurchaseBean getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(PurchaseBean purchase) {
+        this.purchase = purchase;
     }
 }

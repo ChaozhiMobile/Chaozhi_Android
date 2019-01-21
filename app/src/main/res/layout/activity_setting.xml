@@ -163,21 +163,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4006-777-098"
+                android:text="010-68979999"
                 android:textColor="@color/_C31A1F"
                 android:textSize="15sp"
                 />
-
-
-
-
         </LinearLayout>
-
-
-
     </LinearLayout>
-
-
 
     <TextView
         android:id="@+id/setting_logout"

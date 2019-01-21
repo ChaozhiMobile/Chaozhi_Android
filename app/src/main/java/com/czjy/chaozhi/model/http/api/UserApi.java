@@ -46,11 +46,4 @@ public interface UserApi {
     @POST("api/phone-captcha")
     Observable<BaseResponse> getCode(@Field("phone") String phone,
                                      @Field("type") String type);
-
-    /**
-     * 报班状态
-     */
-    @FormUrlEncoded
-    @POST("api/user/purchase-status")
-    Observable<HttpResponse<PurchaseBean>> getPurchaseStatus(@Field("data") String data);
 }

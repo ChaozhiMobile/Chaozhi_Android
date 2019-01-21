@@ -73,7 +73,7 @@ public class RegPresenter extends RxPresenter<RegContract.View> implements RegCo
                         if (response.isSuccess()) {
                             mView.toast("验证码发送成功");
                         } else {
-                            mView.toast("验证码发送失败");
+                            mView.toast(response.getMsg());
                         }
                     }
                 }, new RxException<>(e -> {
