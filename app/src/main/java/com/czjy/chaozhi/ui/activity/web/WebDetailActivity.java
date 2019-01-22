@@ -222,6 +222,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     @SuppressLint("SetJavaScriptEnabled")
     private void initSetting() {
         WebSettings settings = mWebView.getSettings();
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptEnabled(true);//支持javaScript
         settings.setBlockNetworkImage(false);//解决图片不显示
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
