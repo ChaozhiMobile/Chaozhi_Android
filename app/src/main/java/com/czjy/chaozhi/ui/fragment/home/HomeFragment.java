@@ -209,7 +209,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             if (videoBean != null) {
                 CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext, videoBean.getImg(), mTeacherAvatar, getResources().getDrawable(R.drawable.default_course));
                 mClassName.setText(videoBean.getTitle());
-                mClassTeacher.setText("主讲老师："+videoBean.getTeacher());
+                mClassTeacher.setText("主讲讲师："+videoBean.getTeacher());
             }
         } else {
             mClassLayout.setVisibility(View.GONE);

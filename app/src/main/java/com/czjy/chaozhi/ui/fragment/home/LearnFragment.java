@@ -185,7 +185,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
             this.mLiveBean = liveListBean;
             if (liveListBean != null) {
                 mLiveTitle.setText(liveListBean.getLive_name());
-                mLiveTeacher.setText(String.format("主讲老师：%s老师", liveListBean.getTeacher()));
+                mLiveTeacher.setText(String.format("主讲讲师：%s", liveListBean.getTeacher()));
                 mLiveTime.setText(String.format("开始时间：%s", liveListBean.getLive_st()));
                 if (liveListBean.getStatus() == 0) {
                     mLiveStart.setText("即将开始");

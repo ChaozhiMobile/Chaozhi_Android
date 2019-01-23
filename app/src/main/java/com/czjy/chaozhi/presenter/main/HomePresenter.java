@@ -1,5 +1,6 @@
 package com.czjy.chaozhi.presenter.main;
 
+import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.base.RxPresenter;
 import com.czjy.chaozhi.model.bean.VersionBean;
 import com.czjy.chaozhi.model.http.ApiFactory;
@@ -7,6 +8,8 @@ import com.czjy.chaozhi.model.response.HomeCategoryResponse;
 import com.czjy.chaozhi.model.response.HomeResponse;
 import com.czjy.chaozhi.model.response.NewsResponse;
 import com.czjy.chaozhi.presenter.main.contract.HomeContract;
+import com.czjy.chaozhi.util.OkHttpUtils;
+import com.czjy.chaozhi.util.Utils;
 import com.czjy.chaozhi.util.rx.RxException;
 import com.czjy.chaozhi.util.rx.RxResult;
 import com.czjy.chaozhi.util.rx.RxSchedulers;
@@ -42,7 +45,7 @@ public class HomePresenter extends RxPresenter<HomeContract.View> implements Hom
                     }
                 },new RxException<>(e->{
                     mView.finishRefresh();
-                    mView.toast("获取失败");
+                    mView.toast(e.getMessage());
                 }));
         addDispose(disposable);
     }
@@ -60,7 +63,7 @@ public class HomePresenter extends RxPresenter<HomeContract.View> implements Hom
                     }
                 },new RxException<>(e->{
                     mView.finishRefresh();
-                    mView.toast("获取失败");
+                    mView.toast(e.getMessage());
                 }));
         addDispose(disposable);
     }

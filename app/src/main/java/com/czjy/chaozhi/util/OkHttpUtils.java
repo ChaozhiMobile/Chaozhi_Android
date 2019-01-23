@@ -153,7 +153,7 @@ public class OkHttpUtils {
     /**
      * 判断是否有网络连接
      */
-    private boolean isNetworkConnected(@NonNull Context context) {
+    public static boolean isNetworkConnected(@NonNull Context context) {
         ConnectivityManager mConnectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
