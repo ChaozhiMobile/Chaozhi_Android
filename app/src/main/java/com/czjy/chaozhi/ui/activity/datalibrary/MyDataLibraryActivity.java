@@ -101,7 +101,9 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
             case R.id.item_datalibrary_delete:
                 if (bean != null) {
                     dataLibraryDao.delete(bean.getFile_id()); //删除数据库记录
-                    Utils.deleteFile(bean.getFile_localurl()); //删除本地文件
+                    if (Utils.fileIsExists(bean.getFile_localurl())) {
+                        Utils.deleteFile(bean.getFile_localurl()); //删除本地文件
+                    }
                     dataLibraryBeans.remove(bean); //删除列表数据源
                     mAdapter.notifyItemRemoved(position); //刷新列表
                 }

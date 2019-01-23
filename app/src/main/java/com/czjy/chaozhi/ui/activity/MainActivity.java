@@ -248,7 +248,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         }
 
         if (name.isEmpty()) {
-            name = "1.1.0";
+            name = "1.1.1";
         }
         mPresenter.checkVersion("android", name);
     }
