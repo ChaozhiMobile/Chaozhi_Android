@@ -12,7 +12,6 @@ import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.db.DataLibraryDao;
 import com.czjy.chaozhi.model.bean.DataLibraryBean;
 import com.czjy.chaozhi.ui.adapter.DataLibraryDownloadAdapter;
-import com.czjy.chaozhi.ui.adapter.DataLibraryDownloadAdapter.InnerItemOnclickListener;
 import com.czjy.chaozhi.util.Utils;
 
 import java.util.List;
@@ -22,7 +21,7 @@ import butterknife.BindView;
 /**
  * 我的下载资料
  */
-public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, InnerItemOnclickListener {
+public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
@@ -51,8 +50,8 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
 
     private void initView() {
         mAdapter = new DataLibraryDownloadAdapter(R.layout.item_datalibrary_download, dataLibraryBeans);
+        mAdapter.setOnItemChildClickListener(this);
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setOnInnerItemOnClickListener(this);
         mManager = new LinearLayoutManager(mContext);
         mRecycler.setLayoutManager(mManager);
         mRecycler.setAdapter(mAdapter);
@@ -75,6 +74,7 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
 
     /**
      * 列表点击事件
+     *
      * @param adapter
      * @param view
      * @param position
@@ -84,32 +84,19 @@ public class MyDataLibraryActivity extends BaseActivity implements BaseQuickAdap
         List<DataLibraryBean> dataLibraryBeans = adapter.getData();
         dataLibraryBean = dataLibraryBeans.get(position);
         if (dataLibraryBean != null) {
-            ShowDataLibraryActivity.action(mContext, dataLibraryBean.getFile_name(),dataLibraryBean.getFile_localurl());
+            ShowDataLibraryActivity.action(mContext, dataLibraryBean.getFile_name(), dataLibraryBean.getFile_localurl());
         }
     }
 
-    /**
-     * 列表内部按钮点击事件
-     * @param v
-     */
     @Override
-    public void itemClick(View v) {
-        int position;
-        position = (Integer) v.getTag();
-        DataLibraryBean bean = dataLibraryBeans.get(position);
-        switch (v.getId()) {
-            case R.id.item_datalibrary_delete:
-                if (bean != null) {
-                    dataLibraryDao.delete(bean.getFile_id()); //删除数据库记录
-                    if (Utils.fileIsExists(bean.getFile_localurl())) {
-                        Utils.deleteFile(bean.getFile_localurl()); //删除本地文件
-                    }
-                    dataLibraryBeans.remove(bean); //删除列表数据源
-                    mAdapter.notifyItemRemoved(position); //刷新列表
-                }
-                break;
-                default:
-                    break;
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        List<DataLibraryBean> mDatas = adapter.getData();
+        DataLibraryBean bean = mDatas.get(position);
+        if (bean != null) {
+            dataLibraryDao.delete(bean.getFile_id()); //删除数据库记录
+            Utils.deleteFile(bean.getFile_localurl()); //删除本地文件
+            mDatas.remove(position);
+            mAdapter.notifyItemRemoved(position);
         }
     }
 }

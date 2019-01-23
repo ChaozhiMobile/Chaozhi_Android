@@ -12,27 +12,11 @@ import com.czjy.chaozhi.util.Utils;
 
 import java.util.List;
 
-public class DataLibraryDownloadAdapter extends BaseQuickAdapter<DataLibraryBean, BaseViewHolder> implements View.OnClickListener {
+public class DataLibraryDownloadAdapter extends BaseQuickAdapter<DataLibraryBean, BaseViewHolder> {
 
-    private List<DataLibraryBean> mData;
-    private InnerItemOnclickListener mListener;
-
-    public interface InnerItemOnclickListener {
-        public void itemClick(View v);
-    }
-
-    public void setOnInnerItemOnClickListener(InnerItemOnclickListener listener){
-        this.mListener=listener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        mListener.itemClick(v);
-    }
 
     public DataLibraryDownloadAdapter(int layoutResId, @Nullable List<DataLibraryBean> data) {
         super(layoutResId, data);
-        mData = data;
     }
 
 
@@ -40,16 +24,6 @@ public class DataLibraryDownloadAdapter extends BaseQuickAdapter<DataLibraryBean
     protected void convert(BaseViewHolder helper, DataLibraryBean item) {
         helper.setText(R.id.item_datalibrary_name, item.getFile_name());
         helper.setText(R.id.item_datalibrary_size, Utils.getFileSize(item.getFile_localurl()));
-        Button deleteBtn = helper.getView(R.id.item_datalibrary_delete);
-        deleteBtn.setOnClickListener(this);
-        int position = 0;
-        for (int i = 0; i<mData.size(); i++) {
-            DataLibraryBean dataLibraryBean = mData.get(i);
-            if (dataLibraryBean.getFile_id() == item.getFile_id()) {
-                position = i;
-                break;
-            }
-        }
-        deleteBtn.setTag(position);
+        helper.addOnClickListener(R.id.item_datalibrary_delete);
     }
 }
