@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.czjy.chaozhi.presenter.datalibrary.DataLibraryPresenter;
 import com.czjy.chaozhi.presenter.datalibrary.contract.DataLibraryContract;
 import com.czjy.chaozhi.ui.adapter.DataLibraryAdapter;
 import com.czjy.chaozhi.util.OkHttpUtils;
+import com.czjy.chaozhi.util.ToastUtil;
 import com.czjy.chaozhi.util.Utils;
 import com.facebook.stetho.common.LogUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -45,9 +47,10 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
     private LinearLayoutManager mManager;
     private DataLibraryAdapter mAdapter;
     private List<DataLibraryBean> dataLibraryBeans;
-    private DataLibraryBean dataLibraryBean;
+    private DataLibraryBean currentDataLibraryBean;
     private int pid;
     private int clickPosition;
+    private static boolean waitDownload;
 
     public static void action(Context context, int pid) {
         Intent intent = new Intent(context, DataLibraryActivity.class);
@@ -148,11 +151,15 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
         });
     }
 
+    /**
+     * @param adapter
+     * @param view
+     * @param position
+     */
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        clickPosition = position;
         List<DataLibraryBean> dataLibraryBeans = adapter.getData();
-        dataLibraryBean = dataLibraryBeans.get(position);
+        DataLibraryBean dataLibraryBean = dataLibraryBeans.get(position);
         if (dataLibraryBean != null) {
 
             String pdfUrl = Const.HTTP + dataLibraryBean.getFile();
@@ -164,35 +171,48 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
             String pdfStr = dataLibraryBean.getFile_localurl();
             LogUtil.i("PDF下载：本地Url路径："+pdfStr);
 
-            if (Utils.fileIsExists(pdfStr)) { //如果文件已经下载直接打开，否则下载
+            if (dataLibraryBean.getProgress()!=-1
+                    && dataLibraryBean.getProgress()!=101) { //正在下载，什么也不做
+
+            }
+            else if (Utils.fileIsExists(pdfStr)
+                    && dataLibraryBean.getProgress()==101) { //如果文件已经下载(过滤掉正在下载的文件)直接打开，否则下载
                 ShowDataLibraryActivity.action(mContext, dataLibraryBean.getFile_name(),dataLibraryBean.getFile_localurl());
-            } else {
-                OkHttpUtils.build().download(pdfUrl, savePath, String.valueOf(dataLibraryBean.getFile_id()), new OkHttpUtils.OnDownloadListener() {
-                    @Override
-                    public void onDownloadSuccess(File file) {
-                        LogUtil.i("PDF下载：加载完成正在打开.." + file.getPath());
-                        Message message = Message.obtain();
-                        message.what = 0;
-                        mHandler.sendMessage(message);
-                    }
+            }
+            else {
+                if (waitDownload==true) {
+                    ToastUtil.toast(getApplicationContext(),"不支持多文件同时下载");
+                } else {
+                    waitDownload = true;
+                    clickPosition = position;
+                    currentDataLibraryBean = dataLibraryBean;
+                    OkHttpUtils.build().download(pdfUrl, savePath, String.valueOf(dataLibraryBean.getFile_id()), new OkHttpUtils.OnDownloadListener() {
+                        @Override
+                        public void onDownloadSuccess(File file) {
+                            LogUtil.i("PDF下载：加载完成正在打开.." + file.getPath());
+                            Message message = Message.obtain();
+                            message.what = 0;
+                            mHandler.sendMessage(message);
+                        }
 
-                    @Override
-                    public void onDownloading(int progress) {
-                        LogUtil.i("PDF下载：正在加载(" + progress + "/100)");
-                        Message message = Message.obtain();
-                        message.what = 1;
-                        message.arg1 = progress;
-                        mHandler.sendMessage(message);
-                    }
+                        @Override
+                        public void onDownloading(int progress) {
+                            LogUtil.i("PDF下载：正在加载(" + progress + "/100)");
+                            Message message = Message.obtain();
+                            message.what = 1;
+                            message.arg1 = progress;
+                            mHandler.sendMessage(message);
+                        }
 
-                    @Override
-                    public void onDownloadFailed() {
-                        LogUtil.i("PDF下载：加载失败..");
-                        Message message = Message.obtain();
-                        message.what = -1;
-                        mHandler.sendMessage(message);
-                    }
-                });
+                        @Override
+                        public void onDownloadFailed() {
+                            LogUtil.i("PDF下载：加载失败..");
+                            Message message = Message.obtain();
+                            message.what = -1;
+                            mHandler.sendMessage(message);
+                        }
+                    });
+                }
             }
         }
     }
@@ -200,25 +220,28 @@ public class DataLibraryActivity extends BaseActivity<DataLibraryPresenter> impl
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+
             switch (msg.what) {
                 case -1://失败
-                    dataLibraryBean.setProgress(-1);
-                    mAdapter.setData(clickPosition, dataLibraryBean);
+                    waitDownload = false;
+                    currentDataLibraryBean.setProgress(-1);
+                    mAdapter.setData(clickPosition, currentDataLibraryBean);
                     break;
                 case 0://成功
-                    dataLibraryBean.setProgress(101);
-                    mAdapter.setData(clickPosition, dataLibraryBean);
+                    waitDownload = false;
+                    currentDataLibraryBean.setProgress(101);
+                    mAdapter.setData(clickPosition, currentDataLibraryBean);
 
                     //调用DataLibraryDao插入方法进行插入
                     DataLibraryDao dao = new DataLibraryDao(mContext);
-                    dao.insert(dataLibraryBean);
+                    dao.insert(currentDataLibraryBean);
 
-                    ShowDataLibraryActivity.action(mContext, dataLibraryBean.getFile_name(),dataLibraryBean.getFile_localurl());
+                    ShowDataLibraryActivity.action(mContext, currentDataLibraryBean.getFile_name(),currentDataLibraryBean.getFile_localurl());
                     break;
                 case 1://进行中
                     int progress = msg.arg1;
-                    dataLibraryBean.setProgress(progress);
-                    mAdapter.setData(clickPosition, dataLibraryBean);
+                    currentDataLibraryBean.setProgress(progress);
+                    mAdapter.setData(clickPosition, currentDataLibraryBean);
                     break;
             }
         }
