@@ -130,8 +130,8 @@ public class ResetPwdActivity extends BaseActivity<ResetPresenter> implements Re
 
     @Override
     public void resetSuccess() {
-        Intent intent = new Intent(mContext, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(mContext, MainActivity.class);
+//        startActivity(intent);
         finish();
     }
 }
