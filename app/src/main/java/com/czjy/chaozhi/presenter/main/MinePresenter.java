@@ -1,5 +1,7 @@
 package com.czjy.chaozhi.presenter.main;
 
+import android.text.TextUtils;
+
 import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.base.RxPresenter;
 import com.czjy.chaozhi.model.bean.PurchProduct;
@@ -34,17 +36,19 @@ public class MinePresenter extends RxPresenter<MineContract.View> implements Min
 
     @Override
     public void getUserInfo() {
-        Disposable disposable = mApiFactory.getUserApi().getUserInfo("")
-                .compose(RxSchedulers.io_main())
-                .compose(RxResult.handleResult())
-                .subscribe(new Consumer<UserBean>() {
-                    @Override
-                    public void accept(UserBean userBean) throws Exception {
-                        mView.showUserInfo(userBean);
-                    }
-                }, new RxException<>(e -> {
-                    mView.toast(e.getMessage());
-                }));
-        addDispose(disposable);
+        if (!TextUtils.isEmpty(App.getInstance().getToken())) {
+            Disposable disposable = mApiFactory.getUserApi().getUserInfo("")
+                    .compose(RxSchedulers.io_main())
+                    .compose(RxResult.handleResult())
+                    .subscribe(new Consumer<UserBean>() {
+                        @Override
+                        public void accept(UserBean userBean) throws Exception {
+                            mView.showUserInfo(userBean);
+                        }
+                    }, new RxException<>(e -> {
+                        mView.toast(e.getMessage());
+                    }));
+            addDispose(disposable);
+        }
     }
 }
