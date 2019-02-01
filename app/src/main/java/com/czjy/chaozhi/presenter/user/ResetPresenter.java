@@ -43,13 +43,14 @@ public class ResetPresenter extends RxPresenter<ResetContract.View> implements R
                         if (response.isSuccess()) {
                             mView.toast("密码找回成功，请重新登录");
                             mView.resetSuccess();
-                        } else {
-                            mView.toast("密码找回失败");
+                        }
+                        else {
+                            mView.toast(response.getMsg());
                         }
                     }
                 },new RxException<>(e->{
                     mView.closeProgress();
-                    mView.toast("密码找回失败");
+                    mView.toast(e.getMessage());
                 }));
         addDispose(disposable);
     }
