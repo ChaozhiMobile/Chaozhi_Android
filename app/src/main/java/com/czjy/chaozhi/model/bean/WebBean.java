@@ -7,6 +7,7 @@ public class WebBean {
 
     private String type;
     private String title;
+    private String content;
     private String url;
     private String to;
 
@@ -24,6 +25,14 @@ public class WebBean {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getUrl() {

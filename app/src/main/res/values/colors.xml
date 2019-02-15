@@ -33,5 +33,7 @@
 
     <color name="white2">#f5f3f3</color>
     <color name="colorRed">#d50f09</color>
+    <color name="color_05C247">#05C247</color>
+    <color name="color_00CF1F">#00CF1F</color>
 
 </resources>

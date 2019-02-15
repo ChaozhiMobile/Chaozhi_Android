@@ -41,7 +41,7 @@ import com.czjy.chaozhi.ui.fragment.home.LimitlessFragment;
 import com.czjy.chaozhi.ui.fragment.home.MineFragment;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.ToastUtil;
-import com.czjy.chaozhi.witget.dialog.UpdateDialogFragment;
+import com.czjy.chaozhi.widget.dialog.UpdateDialogFragment;
 import com.facebook.stetho.common.LogUtil;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;

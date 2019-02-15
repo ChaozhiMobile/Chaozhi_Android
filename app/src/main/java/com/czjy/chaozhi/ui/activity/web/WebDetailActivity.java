@@ -40,6 +40,7 @@ import com.czjy.chaozhi.util.AuthResult;
 import com.czjy.chaozhi.util.PayResult;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.ToastUtil;
+import com.czjy.chaozhi.widget.dialog.AppDialogFragment;
 import com.czjy.chaozhi.wxapi.WXPayEntryActivity;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
@@ -74,6 +75,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private ValueCallback<Uri[]> mFilePathCallback;
     private IWXAPI api;
     private static final int REQ_CODE = 9999;
+    private WebBean backTipWebBean;
 
     public static void action(Context context, String url, String title) {
         Intent intent = new Intent(context, WebDetailActivity.class);
@@ -210,10 +212,14 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mWebView.canGoBack()) {
-                    mWebView.goBack();
+                if (backTipWebBean != null) {
+                    tapBackAction();
                 } else {
-                    finish();
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    } else {
+                        finish();
+                    }
                 }
             }
         });
@@ -284,10 +290,49 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     @Override
     public void onBackPressed() {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
+
+        if (backTipWebBean != null) {
+            tapBackAction();
         } else {
-            super.onBackPressed();
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
+
+    /* 返回H5弹窗提示 */
+    private void tapBackAction() {
+        switch (backTipWebBean.getType()) {
+            case "alert": {
+                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
+                appDialogFragment.setTitle(backTipWebBean.getTitle());
+                appDialogFragment.setMessage(backTipWebBean.getContent());
+                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        backTipWebBean = null;
+                        finish();
+                    }
+                });
+                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
+            }
+            break;
+            case "confirm": {
+                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
+                appDialogFragment.setTitle(backTipWebBean.getTitle());
+                appDialogFragment.setMessage(backTipWebBean.getContent());
+                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        backTipWebBean = null;
+                        finish();
+                    }
+                });
+                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
+            }
+            break;
         }
     }
 
@@ -320,6 +365,14 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         @JavascriptInterface
         public void close(String data) {
             finish();
+        }
+
+        @JavascriptInterface
+        public void tapBack(String data) {
+
+            LogUtil.i("H5调原生返回值：" + data);
+
+            backTipWebBean = new Gson().fromJson(data, WebBean.class);
         }
 
         @JavascriptInterface

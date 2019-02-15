@@ -1,4 +1,4 @@
-package com.czjy.chaozhi.witget.dialog;
+package com.czjy.chaozhi.widget.dialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

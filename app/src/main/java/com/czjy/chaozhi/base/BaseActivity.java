@@ -10,7 +10,7 @@ import com.czjy.chaozhi.di.componet.DaggerActivityComponent;
 import com.czjy.chaozhi.di.module.ActivityModule;
 import com.czjy.chaozhi.model.event.BaseEvent;
 import com.czjy.chaozhi.util.ToastUtil;
-import com.czjy.chaozhi.witget.dialog.CircleProgressDialog;
+import com.czjy.chaozhi.widget.dialog.CircleProgressDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
