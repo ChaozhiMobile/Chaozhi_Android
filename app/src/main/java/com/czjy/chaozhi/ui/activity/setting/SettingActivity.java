@@ -21,6 +21,7 @@ import com.suke.widget.SwitchButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by huyg on 2018/10/8.
@@ -100,6 +101,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
                 startActivity(mIntent);
                 break;
             case R.id.setting_logout:
+                JPushInterface.deleteAlias(App.getInstance(),0);
                 App.getInstance().setToken("");
                 SharedPreferencesUtils.setParam(mContext,Const.KEY_TOKEN,"");
                 mIntent.setClass(mContext,LoginActivity.class);

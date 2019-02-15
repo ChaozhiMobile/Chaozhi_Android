@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -138,14 +139,19 @@ public class RegisterActivity extends BaseActivity<RegPresenter> implements RegC
 
     @Override
     public void regSuccess() {
+        setAlias();
         Intent intent = new Intent(mContext, MainActivity.class);
         startActivity(intent);
+    }
+
+    /* 极光推送设置别名 */
+    private void setAlias() {
+        JPushInterface.setAlias(mContext, 0, mPhone.getText().toString().trim());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     @Override

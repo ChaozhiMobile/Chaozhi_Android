@@ -16,6 +16,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by huyg on 2018/9/28
  */
@@ -76,6 +78,9 @@ public class App extends MultiDexApplication {
         FileDownloader.init(getApplicationContext());
         UnCeHandler catchExcep = new UnCeHandler(this);
         Thread.setDefaultUncaughtExceptionHandler(catchExcep);
+        //极光推送初始化
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(getApplicationContext());
     }
 
 

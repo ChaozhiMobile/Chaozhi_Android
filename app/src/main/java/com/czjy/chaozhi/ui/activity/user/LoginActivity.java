@@ -19,12 +19,12 @@ import com.czjy.chaozhi.util.SharedPreferencesUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by huyg on 2018/9/28.
  */
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
-
 
     @BindView(R.id.app_logo)
     ImageView mLogo;
@@ -105,6 +105,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         SharedPreferencesUtils.setParam(mContext, Const.KEY_PHONE, mPhone.getText().toString());
         App.getInstance().setToken(response.getToken());
         App.getInstance().setPhone(mPhone.getText().toString());
+        setAlias();
         mIntent.setClass(mContext, MainActivity.class);
         startActivity(mIntent);
         finish();
@@ -116,5 +117,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mIntent.setClass(mContext, MainActivity.class);
         startActivity(mIntent);
         finish();
+    }
+
+    /* 极光推送设置别名 */
+    private void setAlias() {
+        JPushInterface.setAlias(mContext, 0, mPhone.getText().toString());
     }
 }

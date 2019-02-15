@@ -16,8 +16,20 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [JPUSH_APPKEY : "4f61ceadf98f55845bf8b36f",
+                                    JPUSH_PKGNAME: "com.czjy.chaozhi",
+                                    JPUSH_CHANNEL: "developer-default",
+                                    AUTH         : "@xml/authenticator"]
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [JPUSH_APPKEY : "4f61ceadf98f55845bf8b36f",
+                                    JPUSH_PKGNAME: "com.czjy.chaozhi",
+                                    JPUSH_CHANNEL: "developer-default",
+                                    AUTH         : "@xml/authenticator"]
         }
     }
 }
@@ -76,4 +88,7 @@ dependencies {
 
     implementation 'com.liulishuo.filedownloader:library:1.7.5'
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    //极光推送
+    implementation 'cn.jiguang.sdk:jpush:3.1.5'
+    implementation 'cn.jiguang.sdk:jcore:1.2.3'
 }
