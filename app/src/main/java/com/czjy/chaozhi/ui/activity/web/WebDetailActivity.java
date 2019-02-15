@@ -313,6 +313,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                     @Override
                     public void onClick(View v) {
                         backTipWebBean = null;
+                        mWebView.loadUrl("javascript:fn_tapBack()");
                         finish();
                     }
                 });
@@ -327,6 +328,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                     @Override
                     public void onClick(View v) {
                         backTipWebBean = null;
+                        mWebView.loadUrl("javascript:fn_tapBack()");
                         finish();
                     }
                 });
