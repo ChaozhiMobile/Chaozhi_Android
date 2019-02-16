@@ -7,7 +7,6 @@ import com.czjy.chaozhi.global.Const;
  */
 public class UserBean {
 
-
     /**
      * id : 10207
      * status : 0

@@ -22,11 +22,11 @@ public class MineAdapter extends BaseQuickAdapter<MineItem, BaseViewHolder> {
     protected void convert(BaseViewHolder helper, MineItem item) {
         helper.setImageResource(R.id.item_mine_img, item.getSourceId());
         helper.setText(R.id.item_mine_content, item.getItem());
-//        if (item.isHasDot()) {
-//            helper.setVisible(R.id.item_mine_point, true);
-//        } else {
-//            helper.setVisible(R.id.item_mine_point, false);
-//        }
+        if (item.isHasDot()) {
+            helper.setVisible(R.id.item_mine_point, true);
+        } else {
+            helper.setVisible(R.id.item_mine_point, false);
+        }
         if (helper.getLayoutPosition() == getData().size() - 1) {
             helper.setVisible(R.id.item_mine_line,false);
         } else {

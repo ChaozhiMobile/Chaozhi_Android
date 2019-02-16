@@ -13,6 +13,7 @@ import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseFragment;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.MineItem;
+import com.czjy.chaozhi.model.bean.NotifyBean;
 import com.czjy.chaozhi.model.bean.PurchaseBean;
 import com.czjy.chaozhi.model.bean.UserBean;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
@@ -87,14 +88,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     protected void init() {
         initItem();
         initView();
-        initData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        mPresenter.getUserInfo();
+        initData();
     }
 
     private void initData() {
@@ -104,8 +104,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void initItem() {
         mItems = new ArrayList<>();
         mItems.add(new MineItem(R.mipmap.ic_course, "课程订单", false));
-        mItems.add(new MineItem(R.mipmap.ic_message, "我的消息", true));
-        mItems.add(new MineItem(R.mipmap.ic_fav, "我的收藏", true));
+        mItems.add(new MineItem(R.mipmap.ic_message, "我的消息", false));
+        mItems.add(new MineItem(R.mipmap.ic_fav, "我的收藏", false));
         mItems.add(new MineItem(R.mipmap.ic_coupon, "我的下载", false));
         mItems.add(new MineItem(R.mipmap.ic_feedback, "问题反馈", false));
         mItems.add(new MineItem(R.mipmap.ic_setting, "系统设置", false));
@@ -168,12 +168,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void onEvent(UpdateFgEvent event){
         int index = event.index;
         if (index==3){
-            initView();
-            initData();
             EventBus.getDefault().removeStickyEvent(event);
         }
     }
 
+    /**
+     * @param userBean
+     */
     @Override
     public void showUserInfo(UserBean userBean) {
 
@@ -191,9 +192,22 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 if (!isTitleExist("我的班主任")) {
                     mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
                 }
+                mPresenter.getNotifyInfo(); //我的班主任存在，再去调用班主任新消息通知接口
             }
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showNotifyInfo(NotifyBean notifyBean) {
+        if (notifyBean.getTeacher_unread() == 0) {
+            mItems.remove(0);
+            mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
+        } else {
+            mItems.remove(0);
+            mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", true));
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     // 判断标题是否已经存在
