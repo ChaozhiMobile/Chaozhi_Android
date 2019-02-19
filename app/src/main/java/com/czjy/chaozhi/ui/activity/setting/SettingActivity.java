@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -104,10 +106,18 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
                 JPushInterface.deleteAlias(App.getInstance(),0);
                 App.getInstance().setToken("");
                 SharedPreferencesUtils.setParam(mContext,Const.KEY_TOKEN,"");
+                clearWebViewCache();
                 mIntent.setClass(mContext,LoginActivity.class);
                 startActivity(mIntent);
                 finish();
                 break;
         }
     }
+
+    public void clearWebViewCache() {
+        // 清除cookie即可彻底清除缓存
+        CookieSyncManager.createInstance(mContext);
+        CookieManager.getInstance().removeAllCookie();
+    }
+
 }

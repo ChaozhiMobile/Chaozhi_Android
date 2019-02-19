@@ -1,14 +1,19 @@
 package com.czjy.chaozhi.jpush;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.czjy.chaozhi.App;
+import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
+import com.czjy.chaozhi.widget.dialog.AppDialogFragment;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
 import org.json.JSONException;
@@ -53,23 +58,19 @@ public class JpushServer extends BroadcastReceiver {
                 int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
                 Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
+                new android.support.v7.app.AlertDialog.Builder(context).setMessage("您有一条新的推送消息").setPositiveButton("取消", null).setNegativeButton("查看", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String type = message.getType();
+                        String value = message.getValue();
+                        handlePushMsg(context,type,value); //处理推送消息
+                    }
+                }).show();
+
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) { //用户点击了通知
-                LogUtil.e(message.getType());
                 String type = message.getType();
                 String value = message.getValue();
-                if (type.equals("h5_myteacher")) {
-                    if (TextUtils.isEmpty(App.getInstance().getToken())) {
-                        Intent loginIntent = new Intent(context, LoginActivity.class);
-                        loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(loginIntent);
-                    } else {
-                        Intent webIntent = new Intent(context, WebDetailActivity.class);
-                        webIntent.putExtra("url", value+"?token="+App.getInstance().getToken());
-                        webIntent.putExtra("title", "我的班主任");
-                        webIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(webIntent);
-                    }
-                }
+                handlePushMsg(context,type,value); //处理推送消息
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 Logger.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
                 //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
@@ -81,6 +82,23 @@ public class JpushServer extends BroadcastReceiver {
             }
         } catch (Exception e) {
 
+        }
+    }
+
+    // 处理推送消息
+    private void handlePushMsg(Context context, String type, String value) {
+        if (type.equals("h5_myteacher")) {
+            if (TextUtils.isEmpty(App.getInstance().getToken())) {
+                Intent loginIntent = new Intent(context, LoginActivity.class);
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(loginIntent);
+            } else {
+                Intent webIntent = new Intent(context, WebDetailActivity.class);
+                webIntent.putExtra("url", value+"?token="+App.getInstance().getToken());
+                webIntent.putExtra("title", "我的班主任");
+                webIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(webIntent);
+            }
         }
     }
 
