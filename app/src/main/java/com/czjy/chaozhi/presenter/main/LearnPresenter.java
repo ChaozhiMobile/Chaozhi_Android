@@ -1,9 +1,11 @@
 package com.czjy.chaozhi.presenter.main;
 
+import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.base.RxPresenter;
 import com.czjy.chaozhi.model.bean.PurchProduct;
 import com.czjy.chaozhi.model.http.ApiFactory;
 import com.czjy.chaozhi.presenter.main.contract.LearnContract;
+import com.czjy.chaozhi.util.OkHttpUtils;
 import com.czjy.chaozhi.util.rx.RxException;
 import com.czjy.chaozhi.util.rx.RxResult;
 import com.czjy.chaozhi.util.rx.RxSchedulers;
@@ -40,7 +42,7 @@ public class LearnPresenter extends RxPresenter<LearnContract.View> implements L
                     }
                 }, new RxException<>(e -> {
                     mView.finishRefresh();
-                    mView.toast("获取失败");
+                    mView.toast(e.getMessage());
                 }));
         addDispose(disposable);
     }

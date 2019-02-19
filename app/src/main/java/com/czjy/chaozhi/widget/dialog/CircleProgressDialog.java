@@ -1,4 +1,4 @@
-package com.czjy.chaozhi.witget.dialog;
+package com.czjy.chaozhi.widget.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.czjy.chaozhi.App;
-import com.czjy.chaozhi.witget.dialog.CircleProgressDialog;
+import com.czjy.chaozhi.widget.dialog.CircleProgressDialog;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;

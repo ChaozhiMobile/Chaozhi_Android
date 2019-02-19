@@ -13,15 +13,19 @@ import com.czjy.chaozhi.R;
 import com.czjy.chaozhi.base.BaseFragment;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.model.bean.MineItem;
+import com.czjy.chaozhi.model.bean.NotifyBean;
+import com.czjy.chaozhi.model.bean.PurchaseBean;
 import com.czjy.chaozhi.model.bean.UserBean;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.presenter.main.MinePresenter;
 import com.czjy.chaozhi.presenter.main.contract.MineContract;
+import com.czjy.chaozhi.ui.activity.datalibrary.MyDataLibraryActivity;
 import com.czjy.chaozhi.ui.activity.setting.SettingActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.ui.adapter.MineAdapter;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.glide.CommonGlideImageLoader;
+import com.facebook.stetho.common.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,7 +40,6 @@ import butterknife.OnClick;
  * Created by huyg on 2018/9/29.
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View, BaseQuickAdapter.OnItemClickListener {
-
 
     @BindView(R.id.mine_title)
     TextView mTitle;
@@ -53,13 +56,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void onClick(View view){
         switch (view.getId()){
             case R.id.mine_info:
-                WebDetailActivity.action(mContext,Const.ROUTER_INFO);
+                WebDetailActivity.action(mContext,Const.ROUTER_INFO,"");
                 break;
         }
-
     }
 
     private List<MineItem> mItems;
+    private List<PurchaseBean.ChatBean> chatBeans;
     private LinearLayoutManager mManager;
     private MineAdapter mAdapter;
     private Intent mIntent = new Intent();
@@ -84,26 +87,26 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     protected void init() {
         initItem();
-        initView();
-        initData();
+        initRecycler();
     }
 
-    private void initData() {
+    @Override
+    public void onResume() {
+        super.onResume();
+
         mPresenter.getUserInfo();
     }
 
     private void initItem() {
         mItems = new ArrayList<>();
         mItems.add(new MineItem(R.mipmap.ic_course, "课程订单", false));
-//        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的优惠券", false));
-        mItems.add(new MineItem(R.mipmap.ic_message, "我的消息", true));
+        mItems.add(new MineItem(R.mipmap.ic_message, "我的消息", false));
+        mItems.add(new MineItem(R.mipmap.ic_fav, "我的收藏", false));
+        mItems.add(new MineItem(R.mipmap.ic_coupon, "我的下载", false));
         mItems.add(new MineItem(R.mipmap.ic_feedback, "问题反馈", false));
         mItems.add(new MineItem(R.mipmap.ic_setting, "系统设置", false));
-    }
 
-    private void initView() {
-        mPhone.setText((String)SharedPreferencesUtils.getParam(mContext,Const.KEY_PHONE,""));
-        initRecycler();
+        chatBeans = new ArrayList<>();
     }
 
     private void initRecycler() {
@@ -121,39 +124,93 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        switch (position) {
-            case 0://课程订单
-                WebDetailActivity.action(mContext,Const.ROUTER_ORDERS);
-                break;
-//            case 1://我的优惠券
-//                WebDetailActivity.action(mContext,Const.ROUTER_COUPON);
-//                break;
-            case 1://我的消息
-                WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE);
-                break;
-            case 2://问题反馈
-                WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK);
-                break;
-            case 3://系统设置
-                mIntent.setClass(mContext,SettingActivity.class);
-                startActivity(mIntent);
-                break;
-        }
 
+        MineItem mineItem = mItems.get(position);
+
+        if (mineItem.getItem().equals("我的班主任")) {
+            PurchaseBean.ChatBean chatBean = chatBeans.get(0);
+            WebDetailActivity.action(mContext,chatBean.getChat_url(),mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("报考资料")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_APPLY,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("课程订单")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_ORDERS,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("我的消息")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_MESSAGE,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("我的收藏")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_MY_FAV,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("我的下载")) {
+            MyDataLibraryActivity.action(mContext);
+        }
+        if (mineItem.getItem().equals("问题反馈")) {
+            WebDetailActivity.action(mContext,Const.ROUTER_FEEDBACK,mineItem.getItem());
+        }
+        if (mineItem.getItem().equals("系统设置")) {
+            mIntent.setClass(mContext,SettingActivity.class);
+            startActivity(mIntent);
+        }
     }
 
     @Subscribe(sticky = true)
     public void onEvent(UpdateFgEvent event){
         int index = event.index;
         if (index==3){
-            initView();
-            initData();
             EventBus.getDefault().removeStickyEvent(event);
         }
     }
 
+    /**
+     * @param userBean
+     */
     @Override
     public void showUserInfo(UserBean userBean) {
+
         CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext,userBean.getHead_img_url(),mAvatar,mContext.getResources().getDrawable(R.mipmap.ic_red_mine));
+        mPhone.setText(userBean.getPhone());
+
+        PurchaseBean purchaseBean = userBean.getPurchase();
+
+        if (purchaseBean.getIs_purchase() == 1) { //已报班
+
+            if (!isTitleExist("报考资料")) {
+                mItems.add(0, new MineItem(R.mipmap.ic_examdata, "报考资料", false));
+            }
+            if (purchaseBean.getChat().size() > 0) { //已分配班主任
+                chatBeans = purchaseBean.getChat();
+                if (!isTitleExist("我的班主任")) {
+                    mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
+                }
+                mPresenter.getNotifyInfo(); //我的班主任存在，再去调用班主任新消息通知接口
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void showNotifyInfo(NotifyBean notifyBean) {
+        if (notifyBean.getTeacher_unread() == 0) {
+            mItems.remove(0);
+            mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
+        } else {
+            mItems.remove(0);
+            mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", true));
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    // 判断标题是否已经存在
+    public boolean isTitleExist(String title) {
+
+        for (int i = 0; i<mItems.size(); i++) {
+            MineItem mineItem = mItems.get(i);
+            if (title.equals(mineItem.getItem())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

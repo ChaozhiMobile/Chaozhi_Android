@@ -13,7 +13,7 @@ import com.czjy.chaozhi.di.componet.DaggerFragmentComponent;
 import com.czjy.chaozhi.di.componet.FragmentComponent;
 import com.czjy.chaozhi.di.module.FragmentModule;
 import com.czjy.chaozhi.util.ToastUtil;
-import com.czjy.chaozhi.witget.dialog.CircleProgressDialog;
+import com.czjy.chaozhi.widget.dialog.CircleProgressDialog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.greenrobot.eventbus.EventBus;

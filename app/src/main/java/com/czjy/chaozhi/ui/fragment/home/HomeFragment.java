@@ -90,7 +90,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     ConstraintLayout mNewsLayout;
 
 
-    @OnClick({R.id.home_menu, R.id.subject_more_layout, R.id.public_class_try})
+    @OnClick({R.id.home_menu, R.id.subject_more_layout, R.id.public_subject_more_layout, R.id.public_class_try})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_menu:
@@ -98,13 +98,15 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 startActivityForResult(intent, Const.CODE_REQ);
                 break;
             case R.id.subject_more_layout:
-                WebDetailActivity.action(mContext, Const.ROUTER_STORE + subjectId);
+                WebDetailActivity.action(mContext, Const.ROUTER_STORE + subjectId, "");
+                break;
+            case R.id.public_subject_more_layout:
+                WebDetailActivity.action(mContext, Const.ROUTER_STORE_FREE, "");
                 break;
             case R.id.public_class_try:
-                SimpleWebActivity.action(mContext,mVideoBean.getSrc());
+                SimpleWebActivity.action(mContext,mVideoBean.getSrc(),mVideoBean.getTitle());
                 //WebDetailActivity.action(mContext, Const.ROUTER_DEMO + mVideoBean.getSrc());
                 break;
-
         }
     }
 
@@ -170,7 +172,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mFeatureAdapter = new FeatureProductAdapter(R.layout.item_feature_product, mProducts);
         mFeatureAdapter.setOnItemClickListener(this);
         mSubjectRecycler.setLayoutManager(new GridLayoutManager(mContext, 2));
-        mSubjectRecycler.addItemDecoration(new DividerGridItemDecoration(CommonUtil.dp2px(mContext, 20), getResources().getColor(R.color.colorWhite)));
+        mSubjectRecycler.addItemDecoration(new DividerGridItemDecoration(CommonUtil.dp2px(mContext, 1), getResources().getColor(R.color._F0F0F0)));
         mSubjectRecycler.setAdapter(mFeatureAdapter);
         mActivityAdapter = new ActivityAdapter(R.layout.item_home_activity, mActivitys);
         mAcRecycler.setLayoutManager(new LinearLayoutManager(mContext));
@@ -205,9 +207,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             VideoBean videoBean = videos.get(0);
             this.mVideoBean = videoBean;
             if (videoBean != null) {
-                CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext, videoBean.getImg(), mTeacherAvatar, getResources().getDrawable(R.drawable.img_teacher_avatar));
+                CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext, videoBean.getImg(), mTeacherAvatar, getResources().getDrawable(R.drawable.default_course));
                 mClassName.setText(videoBean.getTitle());
-                mClassTeacher.setText("主讲老师："+videoBean.getTeacher());
+                mClassTeacher.setText("主讲讲师："+videoBean.getTeacher());
             }
         } else {
             mClassLayout.setVisibility(View.GONE);
@@ -220,7 +222,14 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             mTeacherScroll.removeAllViews();
             for (TeacherBean teacherBean : teachers) {
-                mTeacherScroll.addView(initTeacherView(), params);
+                View view = initTeacherView();
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        WebDetailActivity.action(mContext, Const.ROUTER_TEACHER_DETAIL + teacherBean.getId(),teacherBean.getName());
+                    }
+                });
+                mTeacherScroll.addView(view, params);
                 mTeacherName.setText(teacherBean.getName());
                 mTeacherPostion.setText(teacherBean.getInfo());
                 CommonGlideImageLoader.getInstance().displayNetImage(mContext, teacherBean.getPhoto(), mTeacherImg);
@@ -335,7 +344,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<NewBean> newBeans = adapter.getData();
             NewBean newBean = newBeans.get(position);
             if (newBean != null) {
-                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + newBean.getId());
+                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + newBean.getId(), "");
             }
         }
         //课程
@@ -343,7 +352,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<ProductBean> productBeans = adapter.getData();
             ProductBean productBean = productBeans.get(position);
             if (productBean != null) {
-                WebDetailActivity.action(mContext, Const.ROUTER_PRODUCT + productBean.getId());
+                WebDetailActivity.action(mContext, Const.ROUTER_PRODUCT + productBean.getId(),"");
             }
         }
         //活动
@@ -351,7 +360,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<ActivityBean> activityBeans = adapter.getData();
             ActivityBean activityBean = activityBeans.get(position);
             if (activityBean != null) {
-                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + activityBean.getId());
+                WebDetailActivity.action(mContext, Const.ROUTER_NEWS + activityBean.getId(), "");
             }
         }
     }

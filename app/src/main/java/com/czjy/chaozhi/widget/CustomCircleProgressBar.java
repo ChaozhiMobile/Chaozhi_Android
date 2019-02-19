@@ -1,4 +1,4 @@
-package com.czjy.chaozhi.witget;
+package com.czjy.chaozhi.widget;
 
 /**
  * Created by huyg on 2018/11/30.

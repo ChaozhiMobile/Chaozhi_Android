@@ -1,9 +1,11 @@
 package com.czjy.chaozhi.presenter.setting;
 
+import com.czjy.chaozhi.App;
 import com.czjy.chaozhi.base.RxPresenter;
 import com.czjy.chaozhi.model.http.ApiFactory;
 import com.czjy.chaozhi.model.response.SubjectsResponse;
 import com.czjy.chaozhi.presenter.setting.contract.SelectSubjectContract;
+import com.czjy.chaozhi.util.OkHttpUtils;
 import com.czjy.chaozhi.util.rx.RxException;
 import com.czjy.chaozhi.util.rx.RxResult;
 import com.czjy.chaozhi.util.rx.RxSchedulers;
@@ -38,7 +40,7 @@ public class SelectSubjectPresenter extends RxPresenter<SelectSubjectContract.Vi
                         mView.showSubjects(subjectsResponses);
                     }
                 }, new RxException<>(e -> {
-                    mView.toast("获取失败");
+                    mView.toast(e.getMessage());
                 }));
         addDispose(disposable);
     }

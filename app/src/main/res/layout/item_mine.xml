@@ -2,11 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="50dp"
+    android:minHeight="44dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     >
-
 
     <ImageView
         android:id="@+id/item_mine_img"
@@ -17,7 +16,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
-
 
     <TextView
         android:id="@+id/item_mine_content"
@@ -34,14 +32,14 @@
 
     <View
         android:id="@+id/item_mine_point"
-        android:layout_width="4dp"
-        android:layout_height="4dp"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/shape_item_mine_dot"
-        android:layout_marginStart="2dp"
-        app:layout_constraintLeft_toRightOf="@id/item_mine_content"
-        app:layout_constraintTop_toTopOf="@id/item_mine_content"
         android:visibility="gone"
-        />
+        app:layout_constraintRight_toLeftOf="@id/item_mine_more"
+        app:layout_constraintTop_toTopOf="@id/item_mine_content" />
 
     <ImageView
         android:id="@+id/item_mine_more"

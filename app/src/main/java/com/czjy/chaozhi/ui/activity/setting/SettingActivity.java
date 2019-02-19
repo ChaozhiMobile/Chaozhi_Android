@@ -15,13 +15,13 @@ import com.czjy.chaozhi.presenter.setting.SettingPresenter;
 import com.czjy.chaozhi.presenter.setting.contract.SettingContract;
 import com.czjy.chaozhi.ui.activity.user.LoginActivity;
 import com.czjy.chaozhi.ui.activity.user.ResetPwdActivity;
-import com.czjy.chaozhi.ui.activity.web.SimpleWebActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.suke.widget.SwitchButton;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by huyg on 2018/10/8.
@@ -94,13 +94,14 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_about:
-                WebDetailActivity.action(mContext,Const.ROUTER_ABOUT);
+                WebDetailActivity.action(mContext,Const.ROUTER_ABOUT,"");
                 break;
             case R.id.setting_modify_pwd:
                 mIntent.setClass(mContext,ResetPwdActivity.class);
                 startActivity(mIntent);
                 break;
             case R.id.setting_logout:
+                JPushInterface.deleteAlias(App.getInstance(),0);
                 App.getInstance().setToken("");
                 SharedPreferencesUtils.setParam(mContext,Const.KEY_TOKEN,"");
                 mIntent.setClass(mContext,LoginActivity.class);

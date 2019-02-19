@@ -11,7 +11,6 @@ import com.czjy.chaozhi.base.BaseActivity;
 import com.czjy.chaozhi.global.Const;
 import com.czjy.chaozhi.presenter.user.ResetPresenter;
 import com.czjy.chaozhi.presenter.user.contract.ResetContract;
-import com.czjy.chaozhi.ui.activity.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -130,8 +129,6 @@ public class ResetPwdActivity extends BaseActivity<ResetPresenter> implements Re
 
     @Override
     public void resetSuccess() {
-        Intent intent = new Intent(mContext, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

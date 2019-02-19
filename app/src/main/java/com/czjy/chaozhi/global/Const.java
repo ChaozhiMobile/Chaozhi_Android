@@ -8,21 +8,26 @@ public class Const {
     /**
      * 接口地址【文档：http://101.201.222.8/showdoc/web/#/1 密码：abc123】
      * 测试账号：18268686511/15737936517/15068850958 密码：123456 112233
+     * 客服系统：http://kf-dev.chaozhiedu.com:88 admin/admin/qwer1234
      */
 
-//    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
-//    public static final String H5_URL  = "http://test.chaozhiedu.com/mobile/";
-    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
-    public static final String H5_URL  = "https://m.chaozhiedu.com/";
+    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
+    public static final String H5_URL = "http://mtest.chaozhiedu.com/";
+//    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
+//    public static final String H5_URL = "https://m.chaozhiedu.com/";
     public static final String PDF_URL = "https://m.chaozhiedu.com/static/pdf.html?http:";
     public static final String HTTP = "http:";
 
+    //我的报考资料
+    public static final String ROUTER_APPLY  = "#/hybrid/me/apply";
     //我的优惠券
     public static final String ROUTER_COUPON  = "#/hybrid/coupon/";
     //我的消息
     public static final String ROUTER_MESSAGE = "#/hybrid/message/";
     //我的订单
     public static final String ROUTER_ORDERS = "#/hybrid/orders/";
+    //我的收藏
+    public static final String ROUTER_MY_FAV = "#/hybrid/me/fav";
     //个人中心
     public static final String ROUTER_INFO = "#/hybrid/me/info/";
     //问题反馈
@@ -43,8 +48,10 @@ public class Const {
     public static final String ROUTER_PRODUCT = "#/hybrid/store/product/";
     //首页-推荐课程列表【课程分类id】
     public static final String ROUTER_STORE = "#/hybrid/store/";
-    //首页-公开课列表【课程分类id】
-    public static final String ROUTER_DEMO = "#/hybrid/demo/";
+    //首页-更多公开课
+    public static final String ROUTER_STORE_FREE = "#/hybrid/store/free";
+    //首页-讲师详情【讲师id】
+    public static final String ROUTER_TEACHER_DETAIL = "#/hybrid/teacher/";
     //关于
     public static final String ROUTER_ABOUT = "#/hybrid/chaozhi/about";
 

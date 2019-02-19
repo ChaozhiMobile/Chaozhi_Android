@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ import com.czjy.chaozhi.util.AuthResult;
 import com.czjy.chaozhi.util.PayResult;
 import com.czjy.chaozhi.util.SharedPreferencesUtils;
 import com.czjy.chaozhi.util.ToastUtil;
+import com.czjy.chaozhi.widget.dialog.AppDialogFragment;
 import com.czjy.chaozhi.wxapi.WXPayEntryActivity;
 import com.facebook.stetho.common.LogUtil;
 import com.google.gson.Gson;
@@ -63,6 +65,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     private String agentToken;
     private String url;
+    private String title;
     private Intent mIntent = new Intent();
     private String orderInfo;
     private Runnable payRunnable;
@@ -72,10 +75,12 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private ValueCallback<Uri[]> mFilePathCallback;
     private IWXAPI api;
     private static final int REQ_CODE = 9999;
+    private WebBean backTipWebBean;
 
-    public static void action(Context context, String url) {
+    public static void action(Context context, String url, String title) {
         Intent intent = new Intent(context, WebDetailActivity.class);
         intent.putExtra("url", url);
+        intent.putExtra("title", title);
         context.startActivity(intent);
     }
 
@@ -85,7 +90,6 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         initData();
         initWebView();
         initPay();
-
     }
 
     private void initPay() {
@@ -106,7 +110,6 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         api = WXAPIFactory.createWXAPI(this, "wxb4ba3c02aa476ea1", true);
         api.registerApp("wxb4ba3c02aa476ea1");
     }
-
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -168,6 +171,10 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         Intent intent = getIntent();
         if (intent != null) {
             url = intent.getStringExtra("url");
+            title = intent.getStringExtra("title");
+            if (!title.isEmpty()) {
+                mTitle.setText(title);
+            }
         }
     }
 
@@ -205,26 +212,36 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mWebView.canGoBack()) {
-                    mWebView.goBack();
+                if (backTipWebBean != null) {
+                    tapBackAction();
                 } else {
-                    finish();
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    } else {
+                        finish();
+                    }
                 }
             }
         });
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
     private void initSetting() {
         WebSettings settings = mWebView.getSettings();
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptEnabled(true);//支持javaScript
+        settings.setBlockNetworkImage(false);//解决图片不显示
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         settings.setDefaultTextEncodingName("utf-8");//设置网页默认编码
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         String userAgent = settings.getUserAgentString();
         settings.setUserAgentString(userAgent + "&&" + agentToken);
-        mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.setWebViewClient(new
+                MyWebViewClient());
         mWebView.clearCache(true);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -246,14 +263,18 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            showProgress();
+            if (!title.equals("我的班主任")) {
+                showProgress();
+            }
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             closeProgress();
-            mTitle.setText(view.getTitle());
+            if (title.isEmpty()) {
+                mTitle.setText(view.getTitle());
+            }
         }
 
         @Override
@@ -269,10 +290,51 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     @Override
     public void onBackPressed() {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
+
+        if (backTipWebBean != null) {
+            tapBackAction();
         } else {
-            super.onBackPressed();
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
+
+    /* 返回H5弹窗提示 */
+    private void tapBackAction() {
+        switch (backTipWebBean.getType()) {
+            case "alert": {
+                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
+                appDialogFragment.setTitle(backTipWebBean.getTitle());
+                appDialogFragment.setMessage(backTipWebBean.getContent());
+                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        backTipWebBean = null;
+                        mWebView.loadUrl("javascript:fn_tapBack()");
+                        finish();
+                    }
+                });
+                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
+            }
+            break;
+            case "confirm": {
+                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
+                appDialogFragment.setTitle(backTipWebBean.getTitle());
+                appDialogFragment.setMessage(backTipWebBean.getContent());
+                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        backTipWebBean = null;
+                        mWebView.loadUrl("javascript:fn_tapBack()");
+                        finish();
+                    }
+                });
+                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
+            }
+            break;
         }
     }
 
@@ -286,7 +348,7 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
             WebBean webBean = new Gson().fromJson(data, WebBean.class);
             switch (webBean.getType()) {
                 case "web":
-                    WebDetailActivity.action(mContext, webBean.getUrl());
+                    WebDetailActivity.action(mContext, webBean.getUrl(), webBean.getTitle());
                     break;
                 case "app":
                     switch (webBean.getTo()) {
@@ -305,6 +367,14 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         @JavascriptInterface
         public void close(String data) {
             finish();
+        }
+
+        @JavascriptInterface
+        public void tapBack(String data) {
+
+            LogUtil.i("H5调原生返回值：" + data);
+
+            backTipWebBean = new Gson().fromJson(data, WebBean.class);
         }
 
         @JavascriptInterface

@@ -13,7 +13,6 @@ import javax.security.auth.Subject;
  */
 public class SubjectsResponse {
 
-
     /**
      * id : 38
      * img : //test-aci-api.chaozhiedu.com/api/file/10806

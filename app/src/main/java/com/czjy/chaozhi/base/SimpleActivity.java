@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 
 import com.czjy.chaozhi.App;
-import com.czjy.chaozhi.witget.dialog.CircleProgressDialog;
+import com.czjy.chaozhi.widget.dialog.CircleProgressDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

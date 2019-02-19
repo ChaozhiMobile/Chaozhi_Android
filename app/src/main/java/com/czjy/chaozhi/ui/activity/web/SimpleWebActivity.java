@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.os.Build;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -27,17 +28,17 @@ import butterknife.BindView;
  */
 public class SimpleWebActivity extends SimpleActivity {
 
-
     @BindView(R.id.webview)
     WebView mWebView;
 
     private String agentToken;
     private String url;
+    private String title;
 
-
-    public static void action(Context context, String url) {
+    public static void action(Context context, String url, String title) {
         Intent intent = new Intent(context, SimpleWebActivity.class);
         intent.putExtra("url", url);
+        intent.putExtra("title", title);
         context.startActivity(intent);
     }
 
@@ -57,6 +58,11 @@ public class SimpleWebActivity extends SimpleActivity {
         Intent intent = getIntent();
         if (intent!=null){
             url = intent.getStringExtra("url");
+            title = intent.getStringExtra("title");
+
+            if (!title.isEmpty()) {
+                mTitle.setText(title);
+            }
         }
     }
 
@@ -77,11 +83,14 @@ public class SimpleWebActivity extends SimpleActivity {
 
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
     private void initSetting() {
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);//支持javaScript
+        settings.setBlockNetworkImage(false);//解决图片不显示
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         settings.setDefaultTextEncodingName("utf-8");//设置网页默认编码
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -110,7 +119,9 @@ public class SimpleWebActivity extends SimpleActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             closeProgress();
-            mTitle.setText(view.getTitle());
+            if (title.isEmpty()) {
+                mTitle.setText(view.getTitle());
+            }
         }
 
         @Override

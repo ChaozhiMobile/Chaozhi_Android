@@ -1,5 +1,7 @@
 package com.czjy.chaozhi.model.http.api;
 
+import com.czjy.chaozhi.model.bean.NotifyBean;
+import com.czjy.chaozhi.model.bean.PurchaseBean;
 import com.czjy.chaozhi.model.bean.UserBean;
 import com.czjy.chaozhi.model.http.BaseResponse;
 import com.czjy.chaozhi.model.http.HttpResponse;
@@ -22,8 +24,6 @@ public interface UserApi {
     Observable<LoginResponse> login(@Field("phone") String phone,
                                     @Field("password") String password);
 
-
-
     @FormUrlEncoded
     @POST("api/user/reg")
     Observable<RegisterResponse> register(@Field("phone") String phone,
@@ -45,4 +45,8 @@ public interface UserApi {
     @POST("api/phone-captcha")
     Observable<BaseResponse> getCode(@Field("phone") String phone,
                                      @Field("type") String type);
+
+    @FormUrlEncoded
+    @POST("api/notify/notify")
+    Observable<HttpResponse<NotifyBean>> getNotifyInfo(@Field("data") String data);
 }
