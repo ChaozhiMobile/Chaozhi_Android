@@ -87,17 +87,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     protected void init() {
         initItem();
-        initView();
+        initRecycler();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        initData();
-    }
-
-    private void initData() {
         mPresenter.getUserInfo();
     }
 
@@ -111,11 +107,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         mItems.add(new MineItem(R.mipmap.ic_setting, "系统设置", false));
 
         chatBeans = new ArrayList<>();
-    }
-
-    private void initView() {
-        mPhone.setText((String)SharedPreferencesUtils.getParam(mContext,Const.KEY_PHONE,""));
-        initRecycler();
     }
 
     private void initRecycler() {
@@ -179,6 +170,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public void showUserInfo(UserBean userBean) {
 
         CommonGlideImageLoader.getInstance().displayNetImageWithCircle(mContext,userBean.getHead_img_url(),mAvatar,mContext.getResources().getDrawable(R.mipmap.ic_red_mine));
+        mPhone.setText(userBean.getPhone());
 
         PurchaseBean purchaseBean = userBean.getPurchase();
 

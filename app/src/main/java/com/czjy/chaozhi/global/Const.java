@@ -8,6 +8,7 @@ public class Const {
     /**
      * 接口地址【文档：http://101.201.222.8/showdoc/web/#/1 密码：abc123】
      * 测试账号：18268686511/15737936517/15068850958 密码：123456 112233
+     * 客服系统：http://kf-dev.chaozhiedu.com:88 admin/admin/qwer1234
      */
 
     public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
