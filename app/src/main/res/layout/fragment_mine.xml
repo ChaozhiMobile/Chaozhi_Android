@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:clickable="false"
-            android:text="13429323525"
+            android:text=""
             android:textColor="@color/_4A4A4A"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"

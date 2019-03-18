@@ -66,7 +66,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private LinearLayoutManager mManager;
     private MineAdapter mAdapter;
     private Intent mIntent = new Intent();
-
+    private boolean isExistTeacher;
 
     public static MineFragment newInstance() {
         MineFragment mineFragment = new MineFragment();
@@ -184,20 +184,29 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 if (!isTitleExist("我的班主任")) {
                     mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
                 }
-                mPresenter.getNotifyInfo(); //我的班主任存在，再去调用班主任新消息通知接口
+                isExistTeacher = true;
+            } else {
+                isExistTeacher = false;
             }
             mAdapter.notifyDataSetChanged();
         }
+
+        mPresenter.getNotifyInfo(); //调用新消息通知接口
     }
 
     @Override
     public void showNotifyInfo(NotifyBean notifyBean) {
-        if (notifyBean.getTeacher_unread() == 0) {
-            mItems.remove(0);
-            mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
-        } else {
-            mItems.remove(0);
-            mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", true));
+        if (isExistTeacher == true) {
+            int teacherIndex = mItems.indexOf(new MineItem(R.mipmap.ic_chat, "我的班主任", false));
+            if (notifyBean.getTeacher_unread() != 0) {
+                mItems.remove(teacherIndex);
+                mItems.add(teacherIndex, new MineItem(R.mipmap.ic_chat, "我的班主任", true));
+            }
+        }
+        int messageIndex = mItems.indexOf(new MineItem(R.mipmap.ic_message, "我的消息", false));
+        if (notifyBean.getMsg_unread() != 0) {
+            mItems.remove(messageIndex);
+            mItems.add(messageIndex, new MineItem(R.mipmap.ic_message, "我的消息", true));
         }
         mAdapter.notifyDataSetChanged();
     }

@@ -75,7 +75,8 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
     private ValueCallback<Uri[]> mFilePathCallback;
     private IWXAPI api;
     private static final int REQ_CODE = 9999;
-    private WebBean backTipWebBean;
+//    private WebBean backTipWebBean;
+    private boolean h5TapBack;
 
     public static void action(Context context, String url, String title) {
         Intent intent = new Intent(context, WebDetailActivity.class);
@@ -212,17 +213,33 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (backTipWebBean != null) {
-                    tapBackAction();
-                } else {
-                    if (mWebView.canGoBack()) {
-                        mWebView.goBack();
-                    } else {
-                        finish();
-                    }
-                }
+                backAction();
             }
         });
+    }
+
+    private void backAction() {
+
+//        if (backTipWebBean != null) {
+//            tapBackAction();
+//        } else {
+//            if (mWebView.canGoBack()) {
+//                mWebView.goBack();
+//            } else {
+//                finish();
+//            }
+//        }
+
+        if (h5TapBack) {
+            mWebView.loadUrl("javascript:fn_tapBack()");
+            h5TapBack = false;
+        } else {
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();
+            } else {
+                finish();
+            }
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -290,53 +307,44 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
     @Override
     public void onBackPressed() {
-
-        if (backTipWebBean != null) {
-            tapBackAction();
-        } else {
-            if (mWebView.canGoBack()) {
-                mWebView.goBack();
-            } else {
-                super.onBackPressed();
-            }
-        }
+        backAction();
     }
 
-    /* 返回H5弹窗提示 */
-    private void tapBackAction() {
-        switch (backTipWebBean.getType()) {
-            case "alert": {
-                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
-                appDialogFragment.setTitle(backTipWebBean.getTitle());
-                appDialogFragment.setMessage(backTipWebBean.getContent());
-                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        backTipWebBean = null;
-                        mWebView.loadUrl("javascript:fn_tapBack()");
-                        finish();
-                    }
-                });
-                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
-            }
-            break;
-            case "confirm": {
-                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
-                appDialogFragment.setTitle(backTipWebBean.getTitle());
-                appDialogFragment.setMessage(backTipWebBean.getContent());
-                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        backTipWebBean = null;
-                        mWebView.loadUrl("javascript:fn_tapBack()");
-                        finish();
-                    }
-                });
-                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
-            }
-            break;
-        }
-    }
+//    /* 返回H5弹窗提示 */
+//    private void tapBackAction() {
+//        switch (backTipWebBean.getType()) {
+//            case "alert": {
+//                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
+//                appDialogFragment.setTitle(backTipWebBean.getTitle());
+//                appDialogFragment.setMessage(backTipWebBean.getContent());
+//                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        backTipWebBean = null;
+//                        mWebView.loadUrl("javascript:fn_tapBack()");
+//                        finish();
+//                    }
+//                });
+//                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
+//            }
+//            break;
+//            case "confirm": {
+//                AppDialogFragment appDialogFragment = AppDialogFragment.getInstance();
+//                appDialogFragment.setTitle(backTipWebBean.getTitle());
+//                appDialogFragment.setMessage(backTipWebBean.getContent());
+//                appDialogFragment.setPositiveButton("确定", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        backTipWebBean = null;
+//                        mWebView.loadUrl("javascript:fn_tapBack()");
+//                        finish();
+//                    }
+//                });
+//                appDialogFragment.show(getSupportFragmentManager(), "appDialog");
+//            }
+//            break;
+//        }
+//    }
 
     private class JSBridge {
 
@@ -374,7 +382,9 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
 
             LogUtil.i("H5调原生返回值：" + data);
 
-            backTipWebBean = new Gson().fromJson(data, WebBean.class);
+//            backTipWebBean = new Gson().fromJson(data, WebBean.class);
+
+            h5TapBack = true;
         }
 
         @JavascriptInterface
