@@ -100,6 +100,19 @@ public class JpushServer extends BroadcastReceiver {
                 context.startActivity(webIntent);
             }
         }
+        if (type.equals("h5_message")) {
+            if (TextUtils.isEmpty(App.getInstance().getToken())) {
+                Intent loginIntent = new Intent(context, LoginActivity.class);
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(loginIntent);
+            } else {
+                Intent webIntent = new Intent(context, WebDetailActivity.class);
+                webIntent.putExtra("url", value);
+                webIntent.putExtra("title", "我的消息");
+                webIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(webIntent);
+            }
+        }
     }
 
     // 打印所有的 intent extra 数据
