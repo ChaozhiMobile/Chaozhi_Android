@@ -66,7 +66,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private LinearLayoutManager mManager;
     private MineAdapter mAdapter;
     private Intent mIntent = new Intent();
-    private boolean isExistTeacher;
 
     public static MineFragment newInstance() {
         MineFragment mineFragment = new MineFragment();
@@ -184,9 +183,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 if (!isTitleExist("我的班主任")) {
                     mItems.add(0, new MineItem(R.mipmap.ic_chat, "我的班主任", false));
                 }
-                isExistTeacher = true;
-            } else {
-                isExistTeacher = false;
             }
             mAdapter.notifyDataSetChanged();
         }
@@ -194,21 +190,32 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         mPresenter.getNotifyInfo(); //调用新消息通知接口
     }
 
+    /**
+     * @param notifyBean
+     */
     @Override
     public void showNotifyInfo(NotifyBean notifyBean) {
-        if (isExistTeacher == true) {
-            int teacherIndex = mItems.indexOf(new MineItem(R.mipmap.ic_chat, "我的班主任", false));
-            if (notifyBean.getTeacher_unread() != 0) {
-                mItems.remove(teacherIndex);
-                mItems.add(teacherIndex, new MineItem(R.mipmap.ic_chat, "我的班主任", true));
+
+        if (notifyBean.getTeacher_unread() != 0) { //我的班主任未读消息不为0
+            for (int i = 0; i < mItems.size(); i++) {
+                MineItem mineItem = mItems.get(i);
+                if (mineItem.getItem().equals("我的班主任")) {
+                    mineItem.setHasDot(true);
+                    break;
+                }
             }
         }
-        int messageIndex = mItems.indexOf(new MineItem(R.mipmap.ic_message, "我的消息", false));
-        if (notifyBean.getMsg_unread() != 0) {
-            mItems.remove(messageIndex);
-            mItems.add(messageIndex, new MineItem(R.mipmap.ic_message, "我的消息", true));
+
+        if (notifyBean.getMsg_unread() != 0) { //我的消息未读消息不为0
+            for (int i = 0; i < mItems.size(); i++) {
+                MineItem mineItem = mItems.get(i);
+                if (mineItem.getItem().equals("我的消息")) {
+                    mineItem.setHasDot(true);
+                    break;
+                }
+            }
         }
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setNewData(mItems);
     }
 
     // 判断标题是否已经存在
