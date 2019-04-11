@@ -23,6 +23,7 @@ import com.czjy.chaozhi.model.bean.NewBean;
 import com.czjy.chaozhi.model.bean.ProductBean;
 import com.czjy.chaozhi.model.bean.TeacherBean;
 import com.czjy.chaozhi.model.bean.VideoBean;
+import com.czjy.chaozhi.model.bean.WeikeBean;
 import com.czjy.chaozhi.model.event.UpdateFgEvent;
 import com.czjy.chaozhi.model.response.HomeCategoryResponse;
 import com.czjy.chaozhi.model.response.HomeResponse;
@@ -70,12 +71,22 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     TextView mClassTeacher;
     @BindView(R.id.public_class_try)
     TextView mClassTry;
+    @BindView(R.id.weike_avatar)
+    ImageView mWeikeAvatar;
+    @BindView(R.id.weike_name)
+    TextView mWeikeName;
+    @BindView(R.id.weike_teacher)
+    TextView mWeikeTeacher;
+    @BindView(R.id.weike_count)
+    TextView mWeikeCount;
     @BindView(R.id.day_news_recycler)
     RecyclerView mNewsRecycler;
     @BindView(R.id.refresh)
     SmartRefreshLayout mRefresh;
     @BindView(R.id.public_class_layout)
     ConstraintLayout mClassLayout;
+    @BindView(R.id.weike_layout)
+    ConstraintLayout mWeikeLayout;
     @BindView(R.id.activity_recycler)
     RecyclerView mAcRecycler;
     @BindView(R.id.activity_layout)
@@ -90,22 +101,30 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     ConstraintLayout mNewsLayout;
 
 
-    @OnClick({R.id.home_menu, R.id.subject_more_layout, R.id.public_subject_more_layout, R.id.public_class_try})
+    /**
+     * @param view
+     */
+    @OnClick({R.id.home_menu, R.id.subject_more_layout, R.id.public_subject_more_layout, R.id.public_class_try, R.id.weike_more_layout, R.id.weike_detail_layout})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.home_menu:
+            case R.id.home_menu: //右上角课程分类
                 Intent intent = new Intent(mContext, SelectSubjectActivity.class);
                 startActivityForResult(intent, Const.CODE_REQ);
                 break;
-            case R.id.subject_more_layout:
+            case R.id.subject_more_layout: //更多推荐课程
                 WebDetailActivity.action(mContext, Const.ROUTER_STORE + subjectId, "");
                 break;
-            case R.id.public_subject_more_layout:
+            case R.id.public_subject_more_layout: //更多公开课
                 WebDetailActivity.action(mContext, Const.ROUTER_STORE_FREE, "");
                 break;
-            case R.id.public_class_try:
-                SimpleWebActivity.action(mContext,mVideoBean.getSrc(),mVideoBean.getTitle());
-                //WebDetailActivity.action(mContext, Const.ROUTER_DEMO + mVideoBean.getSrc());
+            case R.id.public_class_try: //马上试听
+                WebDetailActivity.action(mContext, mVideoBean.getSrc(), mVideoBean.getTitle());
+                break;
+            case R.id.weike_more_layout: //更多微课视频
+                WebDetailActivity.action(mContext, Const.ROUTER_WEIKE_LIST, "");
+                break;
+            case R.id.weike_detail_layout: //微课详情
+                WebDetailActivity.action(mContext, Const.ROUTER_WEIKE_DETAIL + mWeikeBean.getId(), mWeikeBean.getTitle());
                 break;
         }
     }
@@ -123,6 +142,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private TextView mTeacherName;
     private TextView mTeacherPostion;
     private VideoBean mVideoBean;
+    private WeikeBean mWeikeBean;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -199,7 +219,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         mPresenter.getHomeCategoryData(subjectId);
     }
 
-
     //试听课程
     private void showVideos(List<VideoBean> videos) {
         if (videos != null && videos.size() > 0) {
@@ -213,6 +232,23 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             }
         } else {
             mClassLayout.setVisibility(View.GONE);
+        }
+    }
+
+    //微课
+    private void showWeikes(List<WeikeBean> weikes) {
+        if (weikes != null && weikes.size() > 0) {
+            mWeikeLayout.setVisibility(View.VISIBLE);
+            WeikeBean weikeBean = weikes.get(0);
+            this.mWeikeBean = weikeBean;
+            if (weikeBean != null) {
+                CommonGlideImageLoader.getInstance().displayNetImage(mContext, weikeBean.getCover(), mWeikeAvatar, getResources().getDrawable(R.drawable.default_course));
+                mWeikeName.setText(weikeBean.getTitle());
+                mWeikeTeacher.setText(weikeBean.getTeacher_name());
+                mWeikeCount.setText(weikeBean.getPlay_num()+"人观看");
+            }
+        } else {
+            mWeikeLayout.setVisibility(View.GONE);
         }
     }
 
@@ -268,9 +304,12 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         List<ProductBean> products = response.getProducts();
         List<TeacherBean> teachers = response.getTeachers();
         List<VideoBean> videos = response.getVideos();
+        List<WeikeBean> weikes = response.getWeikes();
+
         showProducts(products);
         showTeachers(teachers);
         showVideos(videos);
+        showWeikes(weikes);
     }
 
     @Override
