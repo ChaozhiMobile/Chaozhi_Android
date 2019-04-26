@@ -124,6 +124,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 WebDetailActivity.action(mContext, Const.ROUTER_WEIKE_LIST, "");
                 break;
             case R.id.weike_detail_layout: //微课详情
+                if (mWeikeBean==null) {
+                    return;
+                }
                 WebDetailActivity.action(mContext, Const.ROUTER_WEIKE_DETAIL + mWeikeBean.getId(), mWeikeBean.getTitle());
                 break;
         }
@@ -262,6 +265,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (teacherBean==null) {
+                            return;
+                        }
                         WebDetailActivity.action(mContext, Const.ROUTER_TEACHER_DETAIL + teacherBean.getId(),teacherBean.getName());
                     }
                 });
@@ -383,6 +389,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<NewBean> newBeans = adapter.getData();
             NewBean newBean = newBeans.get(position);
             if (newBean != null) {
+                if (newBean==null) {
+                    return;
+                }
                 WebDetailActivity.action(mContext, Const.ROUTER_NEWS + newBean.getId(), "");
             }
         }
@@ -391,6 +400,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<ProductBean> productBeans = adapter.getData();
             ProductBean productBean = productBeans.get(position);
             if (productBean != null) {
+                if (productBean==null) {
+                    return;
+                }
                 WebDetailActivity.action(mContext, Const.ROUTER_PRODUCT + productBean.getId(),"");
             }
         }
@@ -399,6 +411,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             List<ActivityBean> activityBeans = adapter.getData();
             ActivityBean activityBean = activityBeans.get(position);
             if (activityBean != null) {
+                if (activityBean==null) {
+                    return;
+                }
                 WebDetailActivity.action(mContext, Const.ROUTER_NEWS + activityBean.getId(), "");
             }
         }
