@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
     <!--android:roundIcon="@mipmap/ic_launcher_round"-->
     <application
@@ -184,10 +183,45 @@
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="developer-default" />
+            android:value="${JPUSH_CHANNEL}" />
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="${JPUSH_APPKEY}" />
+
+        <meta-data
+            android:name="XIAOMI_APPKEY"
+            android:value="${XIAOMI_APPKEY}" />
+        <meta-data
+            android:name="XIAOMI_APPID"
+            android:value="${XIAOMI_APPID}" />
+
+        <meta-data
+            android:name="HUAWEI_APPID"
+            android:value="${HUAWEI_APPID}" />
+
+        <meta-data
+            android:name="MEIZU_APPKEY"
+            android:value="${MEIZU_APPKEY}" />
+        <meta-data
+            android:name="MEIZU_APPID"
+            android:value="${MEIZU_APPID}" />
+
+        <meta-data
+            android:name="OPPO_APPKEY"
+            android:value="${OPPO_APPKEY}" />
+        <meta-data
+            android:name="OPPO_APPID"
+            android:value="${OPPO_APPID}" />
+        <meta-data
+            android:name="OPPO_APPSECRET"
+            android:value="${OPPO_APPSECRET}" />
+
+        <meta-data
+            android:name="VIVO_APPKEY"
+            android:value="${VIVO_APPKEY}" />
+        <meta-data
+            android:name="VIVO_APPID"
+            android:value="${VIVO_APPID}" />
 
     </application>
 
