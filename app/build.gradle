@@ -17,6 +17,41 @@ android {
         versionCode 7
         versionName "1.1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            //还可以添加 'x86', 'arm64-v8a', 'x86_64', 'mips', 'mips64'
+        }
+
+        //厂商通道相关参数申请教程：http://7ada533e.wiz03.com/share/s/1WSBc-0u_kLk2kYFC-0kPhgJ1XTk1I1HbAGl2ombZD1eNVKF
+        manifestPlaceholders=[
+                JPUSH_PKGNAME:"com.czjy.chaozhi",
+                XIAOMI_APPKEY:"MI‐5171790971239",//小米平台注册的appkey
+                XIAOMI_APPID:"MI‐2882303761517909239",//小米平台注册的appid
+        ]
+        manifestPlaceholders=[
+                JPUSH_PKGNAME:"com.czjy.chaozhi",
+                HUAWEI_APPID:"100496933",//华为平台注册的appid
+        ]
+        manifestPlaceholders=[
+                JPUSH_PKGNAME:"com.czjy.chaozhi",
+                MEIZU_APPKEY:"MZ‐您的应用对应的魅族appkey",//魅族平台注册的appkey
+                MEIZU_APPID:"MZ‐您的应用对应魅族的appid",//魅族平台注册的appid
+        ]
+        manifestPlaceholders=[
+                JPUSH_PKGNAME:"com.czjy.chaozhi",
+                //设置manifest.xml中的变量
+                OPPO_APPKEY : "OP‐cced174e6a2b419aaf480575bf34c2ca", // OPPO平台注册的appkey
+                OPPO_APPID : "OP‐3717692", // OPPO平台注册的appid
+                OPPO_APPSECRET: "OP‐db983f821876438983f380fb3faa00bc",//OPPO平台注册的appsecret
+        ]
+        manifestPlaceholders=[
+                JPUSH_PKGNAME:"com.czjy.chaozhi",
+                //设置manifest.xml中的变量
+                VIVO_APPKEY : "214e56d9d4729ab6b863", // VIVO平台注册的appkey
+                VIVO_APPID : "100247121", // VIVO平台注册的appid
+        ]
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -96,6 +131,11 @@ dependencies {
     implementation 'com.liulishuo.filedownloader:library:1.7.5'
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     //极光推送
-    implementation 'cn.jiguang.sdk:jpush:3.1.5'
-    implementation 'cn.jiguang.sdk:jcore:1.2.3'
+    implementation 'cn.jiguang.sdk:jpush:3.2.0'
+    implementation 'cn.jiguang.sdk:jcore:1.2.7'
+    implementation 'cn.jiguang.sdk.plugin:xiaomi:3.2.0'//此版本插件仅支持JPushSDK3.2.0及以上版本
+    implementation 'cn.jiguang.sdk.plugin:huawei:3.2.0'//此版本插件仅支持JPushSDK3.2.0及以上版本
+    implementation 'cn.jiguang.sdk.plugin:meizu:3.2.0'//此版本插件仅支持JPushSDK3.2.0及以上版本
+    implementation 'cn.jiguang.sdk.plugin:oppo:3.1.8'//此版本插件仅支持JPushSDK3.1.8及以上版本
+    implementation 'cn.jiguang.sdk.plugin:vivo:3.x.x'//此版本插件仅支持JPushSDK3.2.0及以上版本
 }

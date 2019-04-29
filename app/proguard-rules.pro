@@ -53,3 +53,19 @@
 -keepattributes Signature
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
+
+#xiaomi
+-dontwarn com.xiaomi.push.**
+-keep class com.xiaomi.push.**{*;}
+
+#huawei
+-keep class com.huawei.hms.**{*;}
+
+#oppo
+-dontwarn com.coloros.mcsdk.**
+-keep class com.coloros.mcsdk.** { *; }
+
+#vivo
+-dontwarn com.vivo.push.**
+-keep class com.vivo.push.**{*; }
+-keep class com.vivo.vms.**{*; }
