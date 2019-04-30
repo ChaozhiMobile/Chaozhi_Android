@@ -17,6 +17,7 @@ android {
         versionCode 8
         versionName "1.1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。

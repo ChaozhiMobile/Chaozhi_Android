@@ -11,10 +11,10 @@ public class Const {
      * 客服系统：http://kf-dev.chaozhiedu.com:88 admin/admin/qwer1234 aci-edu/8888/qwer1234
      */
 
-//    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
-//    public static final String H5_URL = "http://mtest.chaozhiedu.com/";
-    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
-    public static final String H5_URL = "https://m.chaozhiedu.com/";
+    public static final String BASE_URL = "http://test-aci-api.chaozhiedu.com/";
+    public static final String H5_URL = "http://mtest.chaozhiedu.com/";
+//    public static final String BASE_URL = "https://aci-api.chaozhiedu.com/";
+//    public static final String H5_URL = "https://m.chaozhiedu.com/";
     public static final String PDF_URL = "https://m.chaozhiedu.com/static/pdf.html?http:";
     public static final String HTTP = "http:";
 
