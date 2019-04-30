@@ -30,8 +30,8 @@ android {
                 XIAOMI_APPKEY:"MI‐5171790971239",//小米平台注册的appkey
                 XIAOMI_APPID:"MI‐2882303761517909239",//小米平台注册的appid
                 HUAWEI_APPID:"100496933",//华为平台注册的appid
-                MEIZU_APPKEY:"MZ‐您的应用对应的魅族appkey",//魅族平台注册的appkey
-                MEIZU_APPID:"MZ‐您的应用对应魅族的appid",//魅族平台注册的appid
+                MEIZU_APPKEY:"MZ‐1dd0ba1db0c14cb697b88d87ce1d3990",//魅族平台注册的appkey
+                MEIZU_APPID:"MZ‐3246005",//魅族平台注册的appid
                 OPPO_APPKEY : "OP‐cced174e6a2b419aaf480575bf34c2ca", // OPPO平台注册的appkey
                 OPPO_APPID : "OP‐3717692", // OPPO平台注册的appid
                 OPPO_APPSECRET: "OP‐db983f821876438983f380fb3faa00bc",//OPPO平台注册的appsecret
