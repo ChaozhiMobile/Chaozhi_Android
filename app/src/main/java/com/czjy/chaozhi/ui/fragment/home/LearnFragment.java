@@ -27,6 +27,9 @@ import com.czjy.chaozhi.ui.activity.web.SimpleWebActivity;
 import com.czjy.chaozhi.ui.activity.web.WebDetailActivity;
 import com.czjy.chaozhi.ui.adapter.LearnAdapter;
 import com.czjy.chaozhi.util.CommonUtil;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -76,6 +79,8 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
     TextView mNone;
     @BindView(R.id.learn_live_title)
     TextView mLearnLiveTitle;
+//    @BindView(R.id.refresh)
+//    SmartRefreshLayout mRefresh;
 
     @OnClick({R.id.library_layout, R.id.doc_layout, R.id.live_layout, R.id.video_layout, R.id.live_into})
     public void onClick(View view) {
@@ -125,14 +130,29 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
     }
 
     @Override
-    protected void init() {
-        initView();
+    public void onResume() {
+        super.onResume();
         initData();
     }
 
+    @Override
+    protected void init() {
+        initView();
+//        initRefresh();
+    }
+
+//    private void initRefresh() {
+//        mRefresh.setEnableLoadMore(false);
+//        mRefresh.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(RefreshLayout refreshLayout) {
+//                initData();
+//            }
+//        });
+//    }
+
     private void initView() {
         initRecycler();
-        initViewPager();
     }
 
     private void initViewPager() {
@@ -219,6 +239,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
 
     @Override
     public void showPurchProducts(List<PurchProduct> purchProducts) {
+
         if (purchProducts != null && purchProducts.size() > 0) {
             noBookLayout.setVisibility(View.GONE);
             bookLayout.setVisibility(View.VISIBLE);
@@ -243,7 +264,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
             updateLiveInfo(purchProducts.get(0).getNewest_info().getLive_list());
             RadioButton radioButton = (RadioButton) mRadioGroup.getChildAt(0);
             radioButton.setChecked(true);
-            mViewpagerAdapter.notifyDataSetChanged();
+            initViewPager();
         } else {
             noBookLayout.setVisibility(View.VISIBLE);
             bookLayout.setVisibility(View.GONE);
@@ -252,7 +273,7 @@ public class LearnFragment extends BaseFragment<LearnPresenter> implements Learn
 
     @Override
     public void finishRefresh() {
-
+//        mRefresh.finishRefresh();
     }
 
     @Override
