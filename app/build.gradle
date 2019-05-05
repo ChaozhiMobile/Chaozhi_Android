@@ -27,12 +27,15 @@ android {
 
         //厂商通道相关参数申请教程：http://7ada533e.wiz03.com/share/s/1WSBc-0u_kLk2kYFC-0kPhgJ1XTk1I1HbAGl2ombZD1eNVKF
         manifestPlaceholders=[
+                JPUSH_APPKEY : "4f61ceadf98f55845bf8b36f",
                 JPUSH_PKGNAME:"com.czjy.chaozhi",
+                JPUSH_CHANNEL: "developer-default",
+                AUTH         : "@xml/authenticator",
                 XIAOMI_APPKEY:"MI‐5171790971239",//小米平台注册的appkey
                 XIAOMI_APPID:"MI‐2882303761517909239",//小米平台注册的appid
                 HUAWEI_APPID:"100496933",//华为平台注册的appid
-                MEIZU_APPKEY:"MZ‐1dd0ba1db0c14cb697b88d87ce1d3990",//魅族平台注册的appkey
-                MEIZU_APPID:"MZ‐3246005",//魅族平台注册的appid
+                MEIZU_APPKEY:"MZ‐e6e9690b4c7840b49ebbc892ed899777",//魅族平台注册的appkey
+                MEIZU_APPID:"MZ‐120378",//魅族平台注册的appid
                 OPPO_APPKEY : "OP‐cced174e6a2b419aaf480575bf34c2ca", // OPPO平台注册的appkey
                 OPPO_APPID : "OP‐3717692", // OPPO平台注册的appid
                 OPPO_APPSECRET: "OP‐db983f821876438983f380fb3faa00bc",//OPPO平台注册的appsecret
@@ -48,18 +51,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [JPUSH_APPKEY : "4f61ceadf98f55845bf8b36f",
-                                    JPUSH_PKGNAME: "com.czjy.chaozhi",
-                                    JPUSH_CHANNEL: "developer-default",
-                                    AUTH         : "@xml/authenticator"]
+//            manifestPlaceholders = [JPUSH_APPKEY : "4f61ceadf98f55845bf8b36f",
+//                                    JPUSH_PKGNAME: "com.czjy.chaozhi",
+//                                    JPUSH_CHANNEL: "developer-default",
+//                                    AUTH         : "@xml/authenticator"]
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [JPUSH_APPKEY : "4f61ceadf98f55845bf8b36f",
-                                    JPUSH_PKGNAME: "com.czjy.chaozhi",
-                                    JPUSH_CHANNEL: "developer-default",
-                                    AUTH         : "@xml/authenticator"]
+//            manifestPlaceholders = [JPUSH_APPKEY : "4f61ceadf98f55845bf8b36f",
+//                                    JPUSH_PKGNAME: "com.czjy.chaozhi",
+//                                    JPUSH_CHANNEL: "developer-default",
+//                                    AUTH         : "@xml/authenticator"]
         }
     }
 }

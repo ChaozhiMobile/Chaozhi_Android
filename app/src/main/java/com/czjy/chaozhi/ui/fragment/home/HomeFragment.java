@@ -40,9 +40,11 @@ import com.czjy.chaozhi.ui.adapter.decoration.DividerGridItemDecoration;
 import com.czjy.chaozhi.util.CommonUtil;
 import com.czjy.chaozhi.util.glide.CommonGlideImageLoader;
 import com.czjy.chaozhi.util.glide.GlideImageLoader;
+import com.facebook.stetho.common.LogUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import com.youth.banner.Banner;
 
 import org.greenrobot.eventbus.EventBus;
@@ -165,6 +167,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     protected void init() {
+        //小米推送通道集成
+        String miRegId = MiPushClient.getRegId(getActivity());
+        LogUtil.d("miRegId："+miRegId);
         initView();
         initData();
     }
