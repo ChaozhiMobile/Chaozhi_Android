@@ -268,6 +268,9 @@ public class WebDetailActivity extends BaseActivity<WebDetailPresenter> implemen
                 return true;
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
         LogUtil.i("H5 UserAgent：" + settings.getUserAgentString());
     }
 

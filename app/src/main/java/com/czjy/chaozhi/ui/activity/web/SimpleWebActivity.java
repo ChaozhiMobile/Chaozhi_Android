@@ -98,7 +98,9 @@ public class SimpleWebActivity extends SimpleActivity {
         settings.setUserAgentString(userAgent + "&&" + agentToken);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.clearCache(true);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
         LogUtil.i("UserAgent："+settings.getUserAgentString());
     }
 
