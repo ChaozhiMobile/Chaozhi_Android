@@ -2,7 +2,7 @@ package com.czjy.chaozhi.model.bean;
 
 /**
  * author : hzb
- * e-mail : hanzhanbing@evcoming.com
+ * e-mail :
  * time   : 2019/02/16
  * desc   : 小红点实体类
  * version: 2.7.0

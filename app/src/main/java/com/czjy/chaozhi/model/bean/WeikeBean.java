@@ -4,7 +4,7 @@ import com.czjy.chaozhi.global.Const;
 
 /**
  * author : hzb
- * e-mail : hanzhanbing@evcoming.com
+ * e-mail :
  * time   : 2019/04/11
  * desc   : 微课model
  * version: 3.0.0
